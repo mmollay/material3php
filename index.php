@@ -238,12 +238,6 @@
         </a>
     </div>
 
-    <!-- Theme Selection -->
-    <div class="demo-section">
-        <h2><span class="material-symbols-outlined">palette</span> Theme Selection</h2>
-        <?php echo MD3Theme::toggleChips($currentTheme); ?>
-    </div>
-
     <!-- Component Showcase -->
     <div class="demo-section">
         <h2><span class="material-symbols-outlined">widgets</span> Component Examples</h2>
