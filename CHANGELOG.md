@@ -7,6 +7,19 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.9] - 2025-09-26
+
+### 🐛 Fehlerbehebung
+- **JavaScript Template String Fix:** Weitere Template-String-Syntax-Probleme in MD3List.php behoben
+  - Fehlerhafte String-Concatenation in CSS-Keyframes Animation
+  - Template-Literal-Syntax für CSS-Injection korrekt implementiert
+  - Playground JavaScript-Fehler "expected expression, got '}'" at line 2730 behoben
+- **MD3List Ripple Animation:** CSS-Animation für Ripple-Effekte funktioniert wieder einwandfrei
+
+### 🔧 Technische Verbesserungen
+- Konsistente Template-String-Verwendung in JavaScript-generierten Komponenten
+- Verbesserte CSS-Injection für dynamische Animationen
+
 ## [0.2.8] - 2025-09-26
 
 ### 🐛 Fehlerbehebung
