@@ -25,6 +25,7 @@
 
     echo MD3::init(true, true, $currentTheme);
     echo MD3Theme::getThemeCSS();
+    echo MD3List::getListCSS();
     ?>
     <style>
         body {
@@ -262,29 +263,74 @@
 
         <!-- Lists Demo -->
         <div class="demo-section">
-            <h2><?php echo MD3::icon('list'); ?>Funktionale Listen</h2>
+            <h2><?php echo MD3::icon('list'); ?>Funktionale Listen (Form-Integration)</h2>
 
             <div class="demo-grid">
                 <div class="component-demo">
-                    <h3>Navigation Liste</h3>
+                    <h3>Mehrfachauswahl Liste</h3>
+                    <p style="margin-bottom: 12px; font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Wählen Sie mehrere Services:</p>
                     <?php
-                    echo MD3List::simple([
-                        ['text' => 'Dashboard', 'icon' => 'dashboard', 'href' => '#dashboard'],
-                        ['text' => 'Projekte', 'icon' => 'work', 'href' => '#projects'],
-                        ['text' => 'Einstellungen', 'icon' => 'settings', 'href' => '#settings'],
-                        ['text' => 'Hilfe', 'icon' => 'help', 'href' => '#help']
+                    echo MD3List::selectable([
+                        ['text' => 'Cloud Storage', 'value' => 'storage', 'icon' => 'cloud', 'checked' => true],
+                        ['text' => 'Database Backup', 'value' => 'backup', 'icon' => 'backup'],
+                        ['text' => 'Analytics Service', 'value' => 'analytics', 'icon' => 'analytics', 'checked' => true],
+                        ['text' => 'Email Service', 'value' => 'email', 'icon' => 'email']
+                    ], 'services[]', 'checkbox');
+                    ?>
+                </div>
+
+                <div class="component-demo">
+                    <h3>Prioritäts-Auswahl</h3>
+                    <p style="margin-bottom: 12px; font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Wählen Sie eine Priorität:</p>
+                    <?php
+                    echo MD3List::selectable([
+                        ['text' => 'Niedrig', 'value' => 'low', 'icon' => 'low_priority'],
+                        ['text' => 'Normal', 'value' => 'normal', 'icon' => 'remove', 'checked' => true],
+                        ['text' => 'Hoch', 'value' => 'high', 'icon' => 'priority_high'],
+                        ['text' => 'Kritisch', 'value' => 'critical', 'icon' => 'error']
+                    ], 'priority', 'radio');
+                    ?>
+                </div>
+
+                <div class="component-demo">
+                    <h3>Team-Mitglieder Liste</h3>
+                    <p style="margin-bottom: 12px; font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Projektteam zusammenstellen:</p>
+                    <?php
+                    echo MD3List::withAvatars([
+                        ['text' => 'Max Mustermann (Entwickler)', 'avatar' => 'MM', 'meta' => 'verfügbar', 'onclick' => 'alert("Max zu Team hinzufügen?")'],
+                        ['text' => 'Anna Schmidt (Designer)', 'avatar' => 'AS', 'meta' => 'besetzt', 'onclick' => 'alert("Anna ist bereits besetzt")'],
+                        ['text' => 'Peter Weber (Tester)', 'avatar' => 'PW', 'meta' => 'verfügbar', 'onclick' => 'alert("Peter zu Team hinzufügen?")']
                     ]);
                     ?>
                 </div>
 
                 <div class="component-demo">
-                    <h3>Auswählbare Liste</h3>
+                    <h3>Benachrichtigungen</h3>
                     <?php
-                    echo MD3List::selectable([
-                        ['text' => 'Option A', 'value' => 'a'],
-                        ['text' => 'Option B', 'value' => 'b', 'checked' => true],
-                        ['text' => 'Option C', 'value' => 'c']
-                    ], 'list_selection', 'radio');
+                    echo MD3List::twoLine([
+                        [
+                            'title' => 'Deployment erfolgreich',
+                            'subtitle' => 'Version 2.1.0 wurde erfolgreich deployed',
+                            'icon' => 'check_circle',
+                            'meta' => 'vor 5 min',
+                            'onclick' => 'alert("Deployment-Details anzeigen")'
+                        ],
+                        [
+                            'title' => 'Neue Nachricht',
+                            'subtitle' => 'Sie haben 3 neue Nachrichten erhalten',
+                            'icon' => 'message',
+                            'meta' => 'neu',
+                            'badge' => '3',
+                            'href' => '#messages'
+                        ],
+                        [
+                            'title' => 'Systemfehler',
+                            'subtitle' => 'Database connection timeout',
+                            'icon' => 'error',
+                            'meta' => 'vor 1h',
+                            'onclick' => 'alert("Fehlerdetails: Connection timeout nach 30s")'
+                        ]
+                    ]);
                     ?>
                 </div>
             </div>
@@ -353,6 +399,7 @@
     echo MD3Chip::getChipScript();
     echo MD3Tooltip::getTooltipScript();
     echo MD3Select::getSelectScript();
+    echo MD3List::getListScript();
     echo MD3Theme::getThemeScript();
     ?>
 

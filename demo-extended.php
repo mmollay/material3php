@@ -25,6 +25,7 @@
 
     echo MD3::init(true, true, $currentTheme);
     echo MD3Theme::getThemeCSS();
+    echo MD3List::getListCSS();
     ?>
     <style>
         body {
@@ -138,47 +139,132 @@
 
     <!-- Lists Demo -->
     <div class="demo-section">
-        <h2><?php echo MD3::icon('list'); ?> Listen</h2>
+        <h2><?php echo MD3::icon('list'); ?> Listen (Funktional)</h2>
 
         <div class="demo-grid">
             <div class="component-demo">
-                <h3>Einfache Liste</h3>
+                <h3>Navigationsliste</h3>
+                <?php
+                echo MD3List::navigation([
+                    ['text' => 'Dashboard', 'icon' => 'dashboard', 'href' => '#dashboard', 'badge' => '3'],
+                    ['text' => 'Projekte', 'icon' => 'work', 'href' => '#projects'],
+                    ['text' => 'Einstellungen', 'icon' => 'settings', 'href' => '#settings'],
+                    ['text' => 'Hilfe', 'icon' => 'help', 'href' => '#help']
+                ], '#dashboard');
+                ?>
+            </div>
+
+            <div class="component-demo">
+                <h3>Klickbare Liste mit Badges</h3>
                 <?php
                 echo MD3List::simple([
-                    ['text' => 'Inbox', 'icon' => 'inbox'],
-                    ['text' => 'Starred', 'icon' => 'star'],
-                    ['text' => 'Sent mail', 'icon' => 'send'],
-                    ['text' => 'Drafts', 'icon' => 'drafts']
+                    ['text' => 'Inbox', 'icon' => 'inbox', 'badge' => '12', 'href' => '#inbox'],
+                    ['text' => 'Starred', 'icon' => 'star', 'badge' => '2', 'onclick' => 'alert("Starred angeklickt!")'],
+                    ['text' => 'Sent mail', 'icon' => 'send', 'meta' => 'vor 2h', 'href' => '#sent'],
+                    ['text' => 'Drafts', 'icon' => 'drafts', 'meta' => '5 Entwürfe', 'href' => '#drafts']
                 ]);
                 ?>
             </div>
 
             <div class="component-demo">
-                <h3>Zwei-Zeilen Liste</h3>
+                <h3>Liste mit Avatars</h3>
+                <?php
+                echo MD3List::withAvatars([
+                    ['text' => 'Max Mustermann', 'avatar' => 'MM', 'meta' => 'online'],
+                    ['text' => 'Anna Schmidt', 'avatar' => 'AS', 'meta' => 'vor 5 min'],
+                    ['text' => 'Peter Weber', 'avatar' => 'PW', 'meta' => 'offline']
+                ]);
+                ?>
+            </div>
+
+            <div class="component-demo">
+                <h3>Zwei-Zeilen Liste mit Meta</h3>
                 <?php
                 echo MD3List::twoLine([
                     [
                         'title' => 'Brunch this weekend?',
                         'subtitle' => 'Ali Connors — I\'ll be in your neighborhood...',
-                        'icon' => 'person'
+                        'icon' => 'person',
+                        'meta' => '2 Min',
+                        'href' => '#message1'
                     ],
                     [
                         'title' => 'Summer BBQ',
                         'subtitle' => 'to Alex, Scott, Jennifer — Wish I could come...',
-                        'icon' => 'person'
+                        'icon' => 'person',
+                        'meta' => '1 Std',
+                        'onclick' => 'alert("BBQ Message geöffnet!")'
+                    ],
+                    [
+                        'title' => 'Meeting Reminder',
+                        'subtitle' => 'Daily standup meeting at 9:00 AM tomorrow',
+                        'icon' => 'event',
+                        'meta' => 'heute',
+                        'href' => '#meeting'
                     ]
                 ]);
                 ?>
             </div>
 
             <div class="component-demo">
-                <h3>Auswählbare Liste</h3>
+                <h3>Drei-Zeilen Liste</h3>
                 <?php
-                echo MD3List::selectable([
-                    ['text' => 'Option 1', 'value' => 'opt1'],
-                    ['text' => 'Option 2', 'value' => 'opt2', 'checked' => true],
-                    ['text' => 'Option 3', 'value' => 'opt3']
-                ], 'list_options', 'radio');
+                echo MD3List::threeLine([
+                    [
+                        'title' => 'Projektupdate',
+                        'subtitle' => 'Fortschritt beim neuen Feature',
+                        'description' => 'Das neue Dashboard-Feature ist zu 85% abgeschlossen und wird nächste Woche deployed.',
+                        'icon' => 'update',
+                        'onclick' => 'alert("Projektdetails öffnen!")'
+                    ],
+                    [
+                        'title' => 'Systemwartung',
+                        'subtitle' => 'Geplante Wartung am Wochenende',
+                        'description' => 'Server werden am Samstag zwischen 2-4 Uhr gewartet. Kurze Ausfallzeiten möglich.',
+                        'icon' => 'build',
+                        'href' => '#maintenance'
+                    ]
+                ]);
+                ?>
+            </div>
+
+            <div class="component-demo">
+                <h3>Auswählbare Liste (funktional)</h3>
+                <form style="background: var(--md-sys-color-surface-container-lowest); padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+                    <?php
+                    echo MD3List::selectable([
+                        ['text' => 'E-Mail Benachrichtigungen', 'value' => 'email', 'icon' => 'email', 'checked' => true],
+                        ['text' => 'Push Benachrichtigungen', 'value' => 'push', 'icon' => 'notifications'],
+                        ['text' => 'SMS Benachrichtigungen', 'value' => 'sms', 'icon' => 'sms']
+                    ], 'notifications[]', 'checkbox');
+                    ?>
+                    <div style="margin-top: 12px;">
+                        <button type="submit" style="padding: 8px 16px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; border-radius: 4px; cursor: pointer;">Einstellungen speichern</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="component-demo">
+                <h3>Action Liste</h3>
+                <?php
+                echo MD3List::actions([
+                    ['text' => 'Bearbeiten', 'icon' => 'edit', 'action' => 'alert("Bearbeiten gewählt!")'],
+                    ['text' => 'Teilen', 'icon' => 'share', 'action' => 'alert("Teilen gewählt!")'],
+                    ['text' => 'Kopieren', 'icon' => 'content_copy', 'action' => 'alert("Kopiert!")'],
+                    ['text' => 'Löschen', 'icon' => 'delete', 'action' => 'confirm("Wirklich löschen?") && alert("Gelöscht!")', 'destructive' => true]
+                ]);
+                ?>
+            </div>
+
+            <div class="component-demo">
+                <h3>Liste mit Trennlinien</h3>
+                <?php
+                echo MD3List::withDividers([
+                    ['text' => 'Wichtige Nachrichten', 'icon' => 'priority_high', 'badge' => '!'],
+                    ['text' => 'Normale Nachrichten', 'icon' => 'inbox', 'meta' => '42'],
+                    ['text' => 'Archivierte Nachrichten', 'icon' => 'archive', 'meta' => '128'],
+                    ['text' => 'Papierkorb', 'icon' => 'delete', 'meta' => '5']
+                ]);
                 ?>
             </div>
         </div>
@@ -406,6 +492,7 @@
     echo MD3Search::getSearchScript();
     echo MD3Chip::getChipScript();
     echo MD3Tooltip::getTooltipScript();
+    echo MD3List::getListScript();
     echo MD3Theme::getThemeScript();
     ?>
 </body>

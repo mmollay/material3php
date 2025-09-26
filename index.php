@@ -18,6 +18,7 @@
 
     echo MD3::init(true, true, $currentTheme);
     echo MD3Theme::getThemeCSS();
+    echo MD3List::getListCSS();
     ?>
     <style>
         body {
@@ -312,6 +313,7 @@
         </p>
     </footer>
 
+    <?php echo MD3List::getListScript(); ?>
     <?php echo MD3Theme::getThemeScript(); ?>
 
     <script>
