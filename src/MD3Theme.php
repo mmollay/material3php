@@ -408,39 +408,7 @@ class MD3Theme
                 window.location.href = url.toString();
             }
 
-            // Load saved theme on page load
-            document.addEventListener("DOMContentLoaded", function() {
-                // Initialize color scheme first
-                initializeColorScheme();
-
-                const savedTheme = localStorage.getItem("md3-theme") || "default";
-                const urlParams = new URLSearchParams(window.location.search);
-                const urlTheme = urlParams.get("theme");
-
-                if (urlTheme && urlTheme !== savedTheme) {
-                    localStorage.setItem("md3-theme", urlTheme);
-                } else if (!urlTheme && savedTheme !== "default") {
-                    changeTheme(savedTheme);
-                }
-
-                // Update theme selector if present
-                const themeSelect = document.getElementById("theme-select");
-                if (themeSelect) {
-                    themeSelect.value = urlTheme || savedTheme;
-                }
-
-                // Update chip selector if present
-                const activeTheme = urlTheme || savedTheme;
-                document.querySelectorAll(".theme-toggle-chips .md-filter-chip").forEach(chip => {
-                    if (chip.getAttribute("data-theme") === activeTheme) {
-                        chip.classList.add("selected");
-                    } else {
-                        chip.classList.remove("selected");
-                    }
-                });
-            });
-
-            // Dark/Light Mode Toggle
+            // Dark/Light Mode Toggle - must be defined before DOMContentLoaded
             function toggleMode() {
                 const currentMode = document.documentElement.getAttribute("data-theme") || "light";
                 const newMode = currentMode === "light" ? "dark" : "light";
@@ -483,6 +451,38 @@ class MD3Theme
 
                 console.log("HTML data-theme attribute:", document.documentElement.getAttribute("data-theme"));
             }
+
+            // Load saved theme on page load
+            document.addEventListener("DOMContentLoaded", function() {
+                // Initialize color scheme first
+                initializeColorScheme();
+
+                const savedTheme = localStorage.getItem("md3-theme") || "default";
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlTheme = urlParams.get("theme");
+
+                if (urlTheme && urlTheme !== savedTheme) {
+                    localStorage.setItem("md3-theme", urlTheme);
+                } else if (!urlTheme && savedTheme !== "default") {
+                    changeTheme(savedTheme);
+                }
+
+                // Update theme selector if present
+                const themeSelect = document.getElementById("theme-select");
+                if (themeSelect) {
+                    themeSelect.value = urlTheme || savedTheme;
+                }
+
+                // Update chip selector if present
+                const activeTheme = urlTheme || savedTheme;
+                document.querySelectorAll(".theme-toggle-chips .md-filter-chip").forEach(chip => {
+                    if (chip.getAttribute("data-theme") === activeTheme) {
+                        chip.classList.add("selected");
+                    } else {
+                        chip.classList.remove("selected");
+                    }
+                });
+            });
 
             // Make functions globally available
             window.changeTheme = changeTheme;
