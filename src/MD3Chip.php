@@ -487,7 +487,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 newChip.type = "button";
 
                 newChip.innerHTML = `
-                    <span class="md3-chip__label">${chipValue}</span>
+                    <span class="md3-chip__label">' + chipValue + '</span>
                     <span class="md3-chip__remove">
                         <span class="material-symbols-outlined">close</span>
                     </span>

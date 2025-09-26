@@ -20,15 +20,24 @@
     require_once 'src/MD3Dialog.php';
     require_once 'src/MD3Theme.php';
     require_once 'src/MD3Header.php';
+    require_once 'src/MD3Progress.php';
+    require_once 'src/MD3Slider.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
 
     echo MD3::init(true, true, $currentTheme);
+    ?>
+    <style>
+    <?php
     echo MD3Theme::getThemeCSS();
     echo MD3Header::getCSS();
-    echo MD3List::getListCSS();
+    echo MD3List::getCSS();
+    echo MD3Switch::getCSS();
+    echo MD3Checkbox::getCSS();
+    echo MD3Chip::getCSS();
     ?>
+    </style>
     <style>
         body {
             margin: 0;
@@ -390,14 +399,20 @@
         </footer>
     </div>
 
+    <script>
     <?php
     // Include JavaScript for interactive components
-    echo MD3Header::getScript();
+    echo MD3Chip::getJS();
+    echo MD3List::getJS();
+    echo MD3Switch::getJS();
+    echo MD3Checkbox::getJS();
+    ?>
+    </script>
+
+    <?php
     echo MD3Search::getSearchScript();
-    echo MD3Chip::getChipScript();
     echo MD3Tooltip::getTooltipScript();
     echo MD3Select::getSelectScript();
-    echo MD3List::getListScript();
     echo MD3Theme::getThemeScript();
     ?>
 

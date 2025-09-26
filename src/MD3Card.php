@@ -411,10 +411,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 pointer-events: none;
                 transform: scale(0);
                 animation: md3-ripple-animation 0.6s ease-out;
-                width: ${size}px;
-                height: ${size}px;
-                left: ${x}px;
-                top: ${y}px;
+                width: ' + size + 'px;
+                height: ' + size + 'px;
+                left: ' + x + 'px;
+                top: ' + y + 'px;
                 z-index: 1;
             `;
 

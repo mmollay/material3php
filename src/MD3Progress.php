@@ -487,7 +487,7 @@ class MD3ProgressManager {
                 const progressLength = value * circumference;
                 const remaining = circumference - progressLength;
 
-                circle.setAttribute("stroke-dasharray", `${progressLength} ${remaining}`);
+                circle.setAttribute("stroke-dasharray", `' + progressLength + ' ' + remaining + '`);
             }
         }
 
@@ -566,7 +566,7 @@ class MD3ProgressManager {
 
         // Add new state class
         if (state === "error" || state === "success") {
-            element.classList.add(`md3-progress--${state}`);
+            element.classList.add(`md3-progress--' + state + '`);
         }
     }
 }

@@ -671,7 +671,7 @@
         </main>
     </div>
 
-    <?php echo MD3List::getListScript(); ?>
+    <script><?php echo MD3List::getJS(); ?></script>
     <?php echo MD3NavigationBar::getScript(); ?>
     <?php echo MD3Menu::getScript(); ?>
     <?php echo MD3Dialog::getScript(); ?>
@@ -801,7 +801,7 @@
                     options: {
                         type: 'textarea',
                         label: 'Options (one per line)',
-                        default: 'Option 1\\nOption 2\\nOption 3'
+                        default: 'Option 1\nOption 2\nOption 3'
                     }
                 }
             },
@@ -841,7 +841,7 @@
                     options: {
                         type: 'textarea',
                         label: 'Options (one per line)',
-                        default: 'Option A\\nOption B\\nOption C'
+                        default: 'Option A\nOption B\nOption C'
                     },
                     selected: {
                         type: 'number',
@@ -866,7 +866,7 @@
                     items: {
                         type: 'textarea',
                         label: 'Items (one per line)',
-                        default: 'Inbox\\nStarred\\nSent mail\\nDrafts'
+                        default: 'Inbox\nStarred\nSent mail\nDrafts'
                     }
                 }
             },
@@ -886,7 +886,7 @@
                     labels: {
                         type: 'textarea',
                         label: 'Chip Labels (one per line)',
-                        default: 'Design\\nDevelopment\\nTesting'
+                        default: 'Design\nDevelopment\nTesting'
                     }
                 }
             },
@@ -906,7 +906,7 @@
                     items: {
                         type: 'textarea',
                         label: 'Items (format: icon|label|href)',
-                        default: 'home|Home|/\\nsearch|Search|/search\\nfavorite|Favorites|/favorites\\nnotifications|Alerts|/alerts'
+                        default: 'home|Home|/\nsearch|Search|/search\nfavorite|Favorites|/favorites\nnotifications|Alerts|/alerts'
                     },
                     activeIndex: {
                         type: 'number',
@@ -940,7 +940,7 @@
                     items: {
                         type: 'textarea',
                         label: 'Items (format: icon|text|href)',
-                        default: 'home|Home|/\\ninbox|Inbox|/inbox\\nfavorites|Favorites|/favorites\\n---\\nsettings|Settings|/settings'
+                        default: 'home|Home|/\ninbox|Inbox|/inbox\nfavorites|Favorites|/favorites\n---\nsettings|Settings|/settings'
                     },
                     open: {
                         type: 'checkbox',
@@ -965,7 +965,7 @@
                     items: {
                         type: 'textarea',
                         label: 'Items (format: icon|label|href)',
-                        default: 'home|Home|/\\ninbox|Inbox|/inbox\\nfavorites|Favorites|/favorites\\nsettings|Settings|/settings'
+                        default: 'home|Home|/\ninbox|Inbox|/inbox\nfavorites|Favorites|/favorites\nsettings|Settings|/settings'
                     },
                     fab_icon: {
                         type: 'text',
@@ -994,7 +994,7 @@
                     items: {
                         type: 'textarea',
                         label: 'Menu Items (format: text|icon|action)',
-                        default: 'Settings|settings|settings\\nProfile|person|profile\\n---\\nLogout|logout|logout'
+                        default: 'Settings|settings|settings\nProfile|person|profile\n---\nLogout|logout|logout'
                     },
                     position: {
                         type: 'select',

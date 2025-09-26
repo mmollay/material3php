@@ -396,19 +396,18 @@ class MD3NavigationBar
 
                         const ripple = document.createElement('span');
                         ripple.className = 'md3-ripple';
-                        ripple.style.cssText = \`
-                            position: absolute;
-                            border-radius: 50%;
-                            background: currentColor;
-                            opacity: 0.1;
-                            pointer-events: none;
-                            transform: scale(0);
-                            animation: md3-ripple-animation 0.6s ease-out;
-                            width: \${size}px;
-                            height: \${size}px;
-                            left: \${x}px;
-                            top: \${y}px;
-                        \`;
+                        ripple.style.cssText =
+                            'position: absolute;' +
+                            'border-radius: 50%;' +
+                            'background: currentColor;' +
+                            'opacity: 0.1;' +
+                            'pointer-events: none;' +
+                            'transform: scale(0);' +
+                            'animation: md3-ripple-animation 0.6s ease-out;' +
+                            'width: ' + size + 'px;' +
+                            'height: ' + size + 'px;' +
+                            'left: ' + x + 'px;' +
+                            'top: ' + y + 'px;';
 
                         this.style.position = 'relative';
                         this.style.overflow = 'hidden';
@@ -428,14 +427,13 @@ class MD3NavigationBar
         if (!document.querySelector('#md3-ripple-styles')) {
             const style = document.createElement('style');
             style.id = 'md3-ripple-styles';
-            style.textContent = \`
-                @keyframes md3-ripple-animation {
-                    to {
-                        transform: scale(2);
-                        opacity: 0;
-                    }
-                }
-            \`;
+            style.textContent =
+                '@keyframes md3-ripple-animation {' +
+                    'to {' +
+                        'transform: scale(2);' +
+                        'opacity: 0;' +
+                    '}' +
+                '}';
             document.head.appendChild(style);
         }
         </script>

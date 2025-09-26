@@ -4,6 +4,10 @@
  * Generates components dynamically for the interactive playground
  */
 
+// Error reporting disabled in production
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
@@ -48,6 +52,13 @@ require_once 'src/MD3Checkbox.php';
 require_once 'src/MD3Radio.php';
 require_once 'src/MD3Select.php';
 require_once 'src/MD3Chip.php';
+require_once 'src/MD3Progress.php';
+require_once 'src/MD3Slider.php';
+require_once 'src/MD3Tabs.php';
+require_once 'src/MD3Tooltip.php';
+require_once 'src/MD3Snackbar.php';
+require_once 'src/MD3BottomSheet.php';
+require_once 'src/MD3DateTimePicker.php';
 
 $component = $input['component'];
 $values = $input['values'] ?? [];
@@ -310,10 +321,21 @@ function generateCard($values) {
     $content = $values['content'] ?? 'This is the card content area.';
     $icon = !empty($values['icon']) ? $values['icon'] : null;
 
-    if ($icon) {
-        return MD3Card::withIcon($icon, $title, $content, $type);
+    if ($title && $title !== '') {
+        $fullContent = '<h3>' . htmlspecialchars($title) . '</h3><p>' . htmlspecialchars($content) . '</p>';
     } else {
-        return MD3Card::simple($title, $content, $type);
+        $fullContent = htmlspecialchars($content);
+    }
+
+    switch ($type) {
+        case 'surface':
+            return MD3Card::surface($fullContent);
+        case 'filled':
+            return MD3Card::filled($fullContent);
+        case 'outlined':
+            return MD3Card::outlined($fullContent);
+        default:
+            return MD3Card::elevated($fullContent);
     }
 }
 
@@ -326,21 +348,25 @@ function generateCardPHP($values) {
     $code = "<?php\n";
     $code .= "require_once 'src/MD3Card.php';\n\n";
 
-    if ($icon) {
-        $params = [
-            "'" . addslashes($icon) . "'",
-            "'" . addslashes($title) . "'",
-            "'" . addslashes($content) . "'",
-            "'" . addslashes($type) . "'"
-        ];
-        $code .= "echo MD3Card::withIcon(" . implode(', ', $params) . ");";
+    if ($title && $title !== '') {
+        $code .= "\$content = '<h3>" . addslashes($title) . "</h3><p>" . addslashes($content) . "</p>';\n";
     } else {
-        $params = [
-            "'" . addslashes($title) . "'",
-            "'" . addslashes($content) . "'",
-            "'" . addslashes($type) . "'"
-        ];
-        $code .= "echo MD3Card::simple(" . implode(', ', $params) . ");";
+        $code .= "\$content = '" . addslashes($content) . "';\n";
+    }
+
+    switch ($type) {
+        case 'surface':
+            $code .= "echo MD3Card::surface(\$content);";
+            break;
+        case 'filled':
+            $code .= "echo MD3Card::filled(\$content);";
+            break;
+        case 'outlined':
+            $code .= "echo MD3Card::outlined(\$content);";
+            break;
+        default:
+            $code .= "echo MD3Card::elevated(\$content);";
+            break;
     }
 
     return $code;
@@ -395,7 +421,7 @@ function generateSwitch($values) {
     $label = $values['label'] ?? 'Enable notifications';
     $checked = $values['checked'] ?? false;
 
-    return MD3Switch::withLabel('demo_switch', $label, '1', $checked);
+    return MD3Switch::withLabel('demo_switch', $label, ['checked' => $checked, 'value' => '1']);
 }
 
 function generateSwitchPHP($values) {
@@ -404,7 +430,7 @@ function generateSwitchPHP($values) {
 
     $code = "<?php\n";
     $code .= "require_once 'src/MD3Switch.php';\n\n";
-    $code .= "echo MD3Switch::withLabel('demo_switch', '" . addslashes($label) . "', '1', " . ($checked ? 'true' : 'false') . ");";
+    $code .= "echo MD3Switch::withLabel('demo_switch', '" . addslashes($label) . "', ['checked' => " . ($checked ? 'true' : 'false') . ", 'value' => '1']);";
 
     return $code;
 }
@@ -413,7 +439,7 @@ function generateCheckbox($values) {
     $label = $values['label'] ?? 'I agree to the terms';
     $checked = $values['checked'] ?? false;
 
-    return MD3Checkbox::withLabel('demo_checkbox', $label, '1', $checked);
+    return MD3Checkbox::withLabel('demo_checkbox', $label, ['checked' => $checked, 'value' => '1']);
 }
 
 function generateCheckboxPHP($values) {
@@ -422,7 +448,7 @@ function generateCheckboxPHP($values) {
 
     $code = "<?php\n";
     $code .= "require_once 'src/MD3Checkbox.php';\n\n";
-    $code .= "echo MD3Checkbox::withLabel('demo_checkbox', '" . addslashes($label) . "', '1', " . ($checked ? 'true' : 'false') . ");";
+    $code .= "echo MD3Checkbox::withLabel('demo_checkbox', '" . addslashes($label) . "', ['checked' => " . ($checked ? 'true' : 'false') . ", 'value' => '1']);";
 
     return $code;
 }
@@ -564,10 +590,10 @@ function generateChip($values) {
         if ($line) {
             switch ($type) {
                 case 'filter':
-                    $chips[] = MD3Chip::filter($line, 'chip_' . $i, 'demo_chips[]', $i === 0);
+                    $chips[] = MD3Chip::filter($line, ['selected' => $i === 0]);
                     break;
                 case 'input':
-                    $chips[] = MD3Chip::input($line, 'chip_' . $i, 'demo_chips[]');
+                    $chips[] = MD3Chip::input($line);
                     break;
                 default:
                     $chips[] = MD3Chip::assist($line);
@@ -575,7 +601,7 @@ function generateChip($values) {
         }
     }
 
-    return MD3Chip::set($chips, $type);
+    return MD3Chip::set($chips);
 }
 
 function generateChipPHP($values) {
@@ -594,10 +620,10 @@ function generateChipPHP($values) {
             switch ($type) {
                 case 'filter':
                     $checked = $i === 0 ? 'true' : 'false';
-                    $code .= "\$chips[] = MD3Chip::filter('" . addslashes($line) . "', 'chip_{$i}', 'demo_chips[]', {$checked});\n";
+                    $code .= "\$chips[] = MD3Chip::filter('" . addslashes($line) . "', ['selected' => {$checked}]);\n";
                     break;
                 case 'input':
-                    $code .= "\$chips[] = MD3Chip::input('" . addslashes($line) . "', 'chip_{$i}', 'demo_chips[]');\n";
+                    $code .= "\$chips[] = MD3Chip::input('" . addslashes($line) . "');\n";
                     break;
                 default:
                     $code .= "\$chips[] = MD3Chip::assist('" . addslashes($line) . "');\n";
@@ -605,7 +631,7 @@ function generateChipPHP($values) {
         }
     }
 
-    $code .= "\necho MD3Chip::set(\$chips, '{$type}');";
+    $code .= "\necho MD3Chip::set(\$chips);";
 
     return $code;
 }

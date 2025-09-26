@@ -1,0 +1,4031 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Design 3 PHP Library - Interactive Playground</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light dark;
+  --md-sys-color-primary: #6750A4;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #EADDFF;
+  --md-sys-color-on-primary-container: #21005D;
+  --md-sys-color-secondary: #625B71;
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #E8DEF8;
+  --md-sys-color-on-secondary-container: #1D192B;
+  --md-sys-color-tertiary: #7D5260;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-surface: #FEF7FF;
+  --md-sys-color-on-surface: #1D1B20;
+  --md-sys-color-surface-variant: #E7E0EC;
+  --md-sys-color-on-surface-variant: #49454F;
+  --md-sys-color-background: #FEF7FF;
+  --md-sys-color-on-background: #1D1B20;
+  --md-sys-color-surface-container-lowest: #FFFFFF;
+  --md-sys-color-surface-container: #F3EDF7;
+  --md-sys-color-surface-container-high: #ECE6F0;
+  --md-sys-color-outline: #79747E;
+  --md-sys-color-outline-variant: #CAC4D0;
+  --md-sys-color-error: #BA1A1A;
+  --md-sys-color-on-error: #FFFFFF;
+}
+[data-theme="dark"] {
+  --md-sys-color-primary: #D0BCFF;
+  --md-sys-color-on-primary: #371E73;
+  --md-sys-color-primary-container: #4F378B;
+  --md-sys-color-on-primary-container: #EADDFF;
+  --md-sys-color-secondary: #CCC2DC;
+  --md-sys-color-on-secondary: #332D41;
+  --md-sys-color-secondary-container: #4A4458;
+  --md-sys-color-on-secondary-container: #E8DEF8;
+  --md-sys-color-tertiary: #EFB8C8;
+  --md-sys-color-on-tertiary: #492532;
+  --md-sys-color-surface: #141218;
+  --md-sys-color-on-surface: #E6E0E9;
+  --md-sys-color-surface-variant: #49454F;
+  --md-sys-color-on-surface-variant: #CAC4D0;
+  --md-sys-color-background: #141218;
+  --md-sys-color-on-background: #E6E0E9;
+  --md-sys-color-surface-container-lowest: #0F0D13;
+  --md-sys-color-surface-container: #211F26;
+  --md-sys-color-surface-container-high: #2B2930;
+  --md-sys-color-outline: #938F99;
+  --md-sys-color-outline-variant: #49454F;
+  --md-sys-color-error: #FFB4AB;
+  --md-sys-color-on-error: #690005;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --md-sys-color-primary: #D0BCFF;
+    --md-sys-color-on-primary: #371E73;
+    --md-sys-color-primary-container: #4F378B;
+    --md-sys-color-on-primary-container: #EADDFF;
+    --md-sys-color-secondary: #CCC2DC;
+    --md-sys-color-on-secondary: #332D41;
+    --md-sys-color-secondary-container: #4A4458;
+    --md-sys-color-on-secondary-container: #E8DEF8;
+    --md-sys-color-tertiary: #EFB8C8;
+    --md-sys-color-on-tertiary: #492532;
+    --md-sys-color-surface: #141218;
+    --md-sys-color-on-surface: #E6E0E9;
+    --md-sys-color-surface-variant: #49454F;
+    --md-sys-color-on-surface-variant: #CAC4D0;
+    --md-sys-color-background: #141218;
+    --md-sys-color-on-background: #E6E0E9;
+    --md-sys-color-surface-container-lowest: #0F0D13;
+    --md-sys-color-surface-container: #211F26;
+    --md-sys-color-surface-container-high: #2B2930;
+    --md-sys-color-outline: #938F99;
+    --md-sys-color-outline-variant: #49454F;
+    --md-sys-color-error: #FFB4AB;
+    --md-sys-color-on-error: #690005;
+  }
+}
+body {
+  font-family: "Roboto", system-ui, sans-serif;
+  margin: 0;
+  padding: 16px;
+  background-color: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+md-filled-button, md-outlined-button, md-text-button, md-elevated-button, md-filled-tonal-button,
+md-icon-button, md-filled-icon-button, md-filled-tonal-icon-button, md-outlined-icon-button,
+md-fab, md-filled-text-field, md-outlined-text-field, md-elevated-card, md-filled-card, md-outlined-card,
+md-list, md-list-item, md-divider, md-chip-set, md-assist-chip, md-filter-chip, md-input-chip, md-suggestion-chip,
+md-tooltip, md-switch, md-checkbox, md-radio, md-filled-select, md-outlined-select {
+  display: block;
+}
+md-filled-button, md-outlined-button, md-text-button, md-elevated-button, md-filled-tonal-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+md-filled-button {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+md-filled-button:hover {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+md-outlined-button {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline);
+}
+md-outlined-button:hover {
+  background-color: rgba(103, 80, 164, 0.08);
+}
+md-text-button {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+  padding: 0 12px;
+}
+md-text-button:hover {
+  background-color: rgba(103, 80, 164, 0.08);
+}
+md-elevated-button {
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-primary);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+md-elevated-button:hover {
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+}
+md-filled-tonal-button {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+md-filled-tonal-button:hover {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+md-icon-button, md-filled-icon-button, md-filled-tonal-icon-button, md-outlined-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+md-icon-button {
+  background-color: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+}
+md-icon-button:hover {
+  background-color: rgba(73, 69, 79, 0.08);
+}
+md-filled-icon-button {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+md-filled-tonal-icon-button {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+md-outlined-icon-button {
+  background-color: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  border: 1px solid var(--md-sys-color-outline);
+}
+md-fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+md-fab:hover {
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 12px 6px rgba(0, 0, 0, 0.15);
+}
+md-filled-text-field, md-outlined-text-field {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  min-width: 200px;
+}
+md-filled-text-field input, md-filled-text-field textarea,
+md-outlined-text-field input, md-outlined-text-field textarea {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 16px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--md-sys-color-on-surface);
+}
+md-filled-text-field {
+  background-color: var(--md-sys-color-surface-container-high);
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid var(--md-sys-color-on-surface-variant);
+}
+md-filled-text-field:focus-within {
+  border-bottom: 2px solid var(--md-sys-color-primary);
+}
+md-outlined-text-field {
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 4px;
+}
+md-outlined-text-field:focus-within {
+  border: 2px solid var(--md-sys-color-primary);
+}
+md-elevated-card, md-filled-card, md-outlined-card {
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+}
+md-elevated-card {
+  background: var(--md-sys-color-surface-container-lowest);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+md-outlined-card {
+  background: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+md-filled-card {
+  background: var(--md-sys-color-surface-container);
+}
+md-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--md-sys-color-surface-container-high);
+  border-radius: 28px;
+  padding: 24px;
+  min-width: 280px;
+  max-width: 560px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: none;
+}
+md-dialog[open] {
+  display: block;
+}
+md-list {
+  background: var(--md-sys-color-surface);
+  border-radius: 8px;
+  padding: 8px 0;
+}
+md-list-item {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+md-list-item:hover {
+  background-color: var(--md-sys-color-surface-container);
+}
+md-divider {
+  height: 1px;
+  background-color: var(--md-sys-color-outline-variant);
+  margin: 8px 16px;
+}
+md-chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+md-assist-chip, md-filter-chip, md-input-chip, md-suggestion-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+md-assist-chip {
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline);
+}
+md-filter-chip {
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline);
+}
+md-filter-chip[selected] {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+md-input-chip {
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+}
+.switch-container, .checkbox-container, .radio-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+.switch-container label, .checkbox-container label, .radio-container label {
+  font-size: 14px;
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+}
+input[type="checkbox"].md-switch {
+  appearance: none;
+  width: 52px;
+  height: 32px;
+  background-color: var(--md-sys-color-surface-container-high);
+  border-radius: 16px;
+  border: 2px solid var(--md-sys-color-outline);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+input[type="checkbox"].md-switch:checked {
+  background-color: var(--md-sys-color-primary);
+  border-color: var(--md-sys-color-primary);
+}
+input[type="checkbox"].md-switch::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--md-sys-color-outline);
+  top: 4px;
+  left: 4px;
+  transition: all 0.2s ease;
+}
+input[type="checkbox"].md-switch:checked::before {
+  background-color: var(--md-sys-color-on-primary);
+  transform: translateX(20px);
+}
+input[type="checkbox"].md-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--md-sys-color-outline);
+  border-radius: 2px;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+input[type="checkbox"].md-checkbox:checked {
+  background-color: var(--md-sys-color-primary);
+  border-color: var(--md-sys-color-primary);
+}
+input[type="checkbox"].md-checkbox:checked::before {
+  content: "✓";
+  position: absolute;
+  color: var(--md-sys-color-on-primary);
+  font-size: 12px;
+  font-weight: bold;
+  top: -1px;
+  left: 2px;
+}
+input[type="radio"].md-radio {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--md-sys-color-outline);
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+input[type="radio"].md-radio:checked {
+  border-color: var(--md-sys-color-primary);
+}
+input[type="radio"].md-radio:checked::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--md-sys-color-primary);
+  top: 2px;
+  left: 2px;
+}
+md-filled-select, md-outlined-select {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-width: 200px;
+}
+md-filled-select select, md-outlined-select select {
+  width: 100%;
+  font-family: inherit;
+  font-size: 16px;
+  padding: 16px;
+  border: none;
+  background: transparent;
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+}
+md-filled-select {
+  background-color: var(--md-sys-color-surface-container-high);
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid var(--md-sys-color-on-surface-variant);
+}
+md-outlined-select {
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 4px;
+}
+md-filled-select label, md-outlined-select label {
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  font-size: 12px;
+  color: var(--md-sys-color-primary);
+  background: var(--md-sys-color-surface);
+  padding: 0 4px;
+  pointer-events: none;
+}
+md-tooltip {
+  position: absolute;
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: none;
+  white-space: nowrap;
+}
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--md-sys-color-surface);
+  z-index: 1000;
+}
+.search-header {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+</style>
+<script>
+class MDDialog extends HTMLElement {
+  constructor() { super(); }
+  show() { this.setAttribute("open", ""); }
+  close() { this.removeAttribute("open"); }
+}
+customElements.define("md-dialog", MDDialog);
+</script><style>
+            .theme-selector {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px;
+                background: var(--md-sys-color-surface-container);
+                border-radius: 8px;
+                margin: 16px 0;
+            }
+
+            .theme-selector label {
+                font-weight: 500;
+                color: var(--md-sys-color-on-surface);
+            }
+
+            .theme-selector select {
+                padding: 8px 12px;
+                border: 1px solid var(--md-sys-color-outline);
+                border-radius: 4px;
+                background: var(--md-sys-color-surface);
+                color: var(--md-sys-color-on-surface);
+                font-family: inherit;
+                min-width: 180px;
+            }
+
+            .theme-mode-controls {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 16px;
+                background: var(--md-sys-color-surface-container);
+                border-radius: 12px;
+                margin: 16px 0;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .theme-selector-wrapper {
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .mode-toggle-wrapper {
+                display: flex;
+                align-items: center;
+            }
+
+            .md3-mode-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 48px;
+                height: 48px;
+                border: none;
+                border-radius: 24px;
+                background: var(--md-sys-color-primary);
+                color: var(--md-sys-color-on-primary);
+                cursor: pointer;
+                transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+                box-shadow: var(--md-sys-elevation-1);
+                font-size: 24px;
+            }
+
+            .md3-mode-toggle:hover {
+                background: var(--md-sys-color-primary);
+                box-shadow: var(--md-sys-elevation-2);
+                transform: scale(1.05);
+            }
+
+            .md3-mode-toggle:active {
+                transform: scale(0.95);
+                box-shadow: var(--md-sys-elevation-1);
+            }
+
+            .md3-mode-toggle .material-symbols-outlined {
+                font-size: 20px;
+                transition: transform 0.2s;
+            }
+
+            @media (max-width: 480px) {
+                .theme-mode-controls {
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 12px;
+                }
+
+                .theme-selector-wrapper {
+                    min-width: auto;
+                }
+
+                .mode-toggle-wrapper {
+                    justify-content: center;
+                }
+            }
+
+            .theme-toggle-chips {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 16px;
+                background: var(--md-sys-color-surface-container-lowest);
+                border-radius: 12px;
+                margin: 16px 0;
+            }
+
+            .theme-toggle-chips .md-filter-chip {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 8px 16px;
+                border: 1px solid var(--md-sys-color-outline);
+                border-radius: 20px;
+                background: var(--md-sys-color-surface);
+                color: var(--md-sys-color-on-surface);
+                cursor: pointer;
+                transition: all 0.2s ease;
+                text-decoration: none;
+            }
+
+            .theme-toggle-chips .md-filter-chip:hover {
+                background: var(--md-sys-color-surface-container-high);
+                border-color: var(--md-sys-color-outline-variant);
+            }
+
+            .theme-toggle-chips .md-filter-chip.selected {
+                background: var(--md-sys-color-primary-container);
+                color: var(--md-sys-color-on-primary-container);
+                border-color: var(--md-sys-color-primary);
+            }
+
+            .theme-toggle-chips .chip-icon {
+                font-size: 18px;
+            }
+        </style><style>
+            .md3-version-info {
+                background: var(--md-sys-color-surface-container);
+                border: 1px solid var(--md-sys-color-outline-variant);
+                border-radius: 12px;
+                padding: 16px;
+                margin: 16px 0;
+            }
+
+            .version-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 12px;
+            }
+
+            .version-header h3 {
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                color: var(--md-sys-color-on-surface);
+            }
+
+            .version-badge {
+                background: var(--md-sys-color-primary);
+                color: var(--md-sys-color-on-primary);
+                padding: 4px 12px;
+                border-radius: 16px;
+                font-weight: 500;
+                font-size: 14px;
+            }
+
+            .version-details {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+
+            .detail-item {
+                font-size: 14px;
+                color: var(--md-sys-color-on-surface-variant);
+            }
+
+            .version-changelog {
+                border-top: 1px solid var(--md-sys-color-outline-variant);
+                padding-top: 16px;
+            }
+
+            .version-changelog h4 {
+                margin: 0 0 12px 0;
+                color: var(--md-sys-color-primary);
+            }
+
+            .changelog-section {
+                margin-bottom: 16px;
+            }
+
+            .changelog-section h5 {
+                margin: 0 0 8px 0;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--md-sys-color-on-surface);
+            }
+
+            .changelog-section ul {
+                margin: 0;
+                padding-left: 20px;
+                font-size: 14px;
+                color: var(--md-sys-color-on-surface-variant);
+            }
+
+            .changelog-section li {
+                margin-bottom: 4px;
+            }
+        </style>    <style>
+        
+        /* Material Design 3 Navigation Bar */
+        .md3-navigation-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: var(--md-sys-color-surface);
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+            display: flex;
+            align-items: stretch;
+            justify-content: space-around;
+            padding: 0;
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .md3-navigation-bar--floating {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            height: 64px;
+            border-radius: 16px;
+            border: none;
+            background: var(--md-sys-color-surface-container);
+            box-shadow: var(--md-sys-elevation-3);
+        }
+
+        .md3-navigation-bar--icons-only {
+            height: 48px;
+        }
+
+        .md3-navigation-bar__item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            height: 100%;
+            padding: 8px 4px 4px;
+            text-decoration: none;
+            color: var(--md-sys-color-on-surface-variant);
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            cursor: pointer;
+            user-select: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .md3-navigation-bar__item:hover {
+            background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 8%, transparent);
+        }
+
+        .md3-navigation-bar__item:focus-visible {
+            background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
+            outline: 2px solid var(--md-sys-color-primary);
+            outline-offset: 2px;
+        }
+
+        .md3-navigation-bar__item--active {
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .md3-navigation-bar__item--active .md3-navigation-bar__indicator {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        .md3-navigation-bar__item--disabled {
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.38;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .md3-navigation-bar__icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            margin-bottom: 2px;
+            font-size: 24px;
+            line-height: 1;
+            z-index: 1;
+        }
+
+        .md3-navigation-bar__label {
+            position: relative;
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 12px;
+            letter-spacing: 0.5px;
+            text-align: center;
+            min-height: 12px;
+            max-width: 64px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            z-index: 1;
+        }
+
+        .md3-navigation-bar--icons-only .md3-navigation-bar__label {
+            display: none;
+        }
+
+        .md3-navigation-bar--icons-only .md3-navigation-bar__icon {
+            margin-bottom: 0;
+        }
+
+        .md3-navigation-bar__indicator {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 32px;
+            height: 3px;
+            background: var(--md-sys-color-on-surface);
+            border-radius: 2px 2px 0 0;
+            opacity: 0;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            z-index: 1;
+        }
+
+        .md3-navigation-bar__badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            min-width: 16px;
+            height: 16px;
+            padding: 0 4px;
+            background: var(--md-sys-color-error);
+            color: var(--md-sys-color-on-error);
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 16px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .md3-navigation-bar {
+                padding: 0 4px;
+            }
+
+            .md3-navigation-bar__item {
+                min-width: 48px;
+                padding: 4px 8px 8px;
+            }
+
+            .md3-navigation-bar__label {
+                font-size: 11px;
+            }
+        }
+
+        /* Dark theme adjustments */
+        @media (prefers-color-scheme: dark) {
+            .md3-navigation-bar--floating {
+                box-shadow: var(--md-sys-elevation-3);
+            }
+        }
+
+        /* Tablet and desktop adaptations */
+        @media (min-width: 840px) {
+            .md3-navigation-bar {
+                position: static;
+                width: 80px;
+                height: auto;
+                flex-direction: column;
+                border-top: none;
+                border-right: 1px solid var(--md-sys-color-outline-variant);
+                padding: 24px 0;
+            }
+
+            .md3-navigation-bar--floating {
+                position: static;
+                width: 80px;
+                border-radius: 0;
+                box-shadow: none;
+                background: var(--md-sys-color-surface);
+            }
+
+            .md3-navigation-bar__item {
+                width: 56px;
+                height: 56px;
+                margin: 4px 0;
+            }
+        }
+        
+/* Material Design 3 Navigation Drawer */
+.md3-navigation-drawer {
+    position: fixed;
+    top: 0;
+    left: -360px;
+    width: 360px;
+    height: 100vh;
+    background: var(--md-sys-color-surface);
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+    display: flex;
+    flex-direction: column;
+    z-index: 1200;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+.md3-navigation-drawer--standard {
+    position: relative;
+    left: 0;
+    box-shadow: none;
+}
+
+.md3-navigation-drawer--open {
+    left: 0;
+}
+
+.md3-navigation-drawer__header {
+    padding: 28px 28px 16px;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.md3-navigation-drawer__title {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: 4px;
+}
+
+.md3-navigation-drawer__subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.md3-navigation-drawer__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 0;
+}
+
+.md3-navigation-drawer__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 56px;
+    padding: 16px 28px 16px 16px;
+    margin: 0 12px;
+    border-radius: 28px;
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface-variant);
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.md3-navigation-drawer__item:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+}
+
+.md3-navigation-drawer__item:focus-visible {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+.md3-navigation-drawer__item--active {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.md3-navigation-drawer__item--active:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 8%, var(--md-sys-color-secondary-container));
+}
+
+.md3-navigation-drawer__item--disabled {
+    opacity: 0.38;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.md3-navigation-drawer__icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.md3-navigation-drawer__text {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+}
+
+.md3-navigation-drawer__badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: var(--md-sys-color-error);
+    color: var(--md-sys-color-on-error);
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.md3-navigation-drawer__divider {
+    height: 1px;
+    background: var(--md-sys-color-outline-variant);
+    margin: 8px 28px;
+}
+
+.md3-navigation-drawer__subheader {
+    padding: 16px 28px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.md3-navigation-drawer__indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--md-sys-color-primary);
+    border-radius: 0 2px 2px 0;
+    opacity: 0;
+    transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.md3-navigation-drawer__item--active .md3-navigation-drawer__indicator {
+    opacity: 1;
+}
+
+/* Modal Overlay */
+.md3-navigation-drawer__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.32);
+    z-index: 1100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.md3-navigation-drawer__overlay--visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Responsive Behavior */
+@media (max-width: 768px) {
+    .md3-navigation-drawer {
+        width: 320px;
+    }
+
+    .md3-navigation-drawer--standard {
+        position: fixed;
+        left: -320px;
+    }
+
+    .md3-navigation-drawer--standard.md3-navigation-drawer--open {
+        left: 0;
+    }
+}
+
+/* Dark Theme Support */
+[data-theme="dark"] .md3-navigation-drawer {
+    border-right-color: var(--md-sys-color-outline-variant);
+}
+
+[data-theme="dark"] .md3-navigation-drawer__overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Material Design 3 Navigation Rail */
+.md3-navigation-rail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 100vh;
+    background: var(--md-sys-color-surface);
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+    z-index: 1000;
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+.md3-navigation-rail--compact {
+    width: 72px;
+}
+
+.md3-navigation-rail__header {
+    padding: 8px 0 16px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.md3-navigation-rail__fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    box-shadow: var(--md-sys-elevation-3);
+}
+
+.md3-navigation-rail__fab:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-primary-container) 8%, var(--md-sys-color-primary-container));
+    box-shadow: var(--md-sys-elevation-4);
+}
+
+.md3-navigation-rail__fab:active {
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+.md3-navigation-rail__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 0;
+}
+
+.md3-navigation-rail__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    min-height: 72px;
+    padding: 12px 8px;
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface-variant);
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.md3-navigation-rail__item:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 8%, transparent);
+}
+
+.md3-navigation-rail__item:focus-visible {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+.md3-navigation-rail__item--active {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.md3-navigation-rail__item--active:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 8%, var(--md-sys-color-secondary-container));
+}
+
+.md3-navigation-rail__item--disabled {
+    opacity: 0.38;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.md3-navigation-rail__icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 4px;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.md3-navigation-rail__label {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    max-width: 64px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.md3-navigation-rail--compact .md3-navigation-rail__item {
+    width: 64px;
+    min-height: 56px;
+    padding: 12px 4px;
+}
+
+.md3-navigation-rail--compact .md3-navigation-rail__label {
+    display: none;
+}
+
+.md3-navigation-rail--compact .md3-navigation-rail__icon {
+    margin-bottom: 0;
+}
+
+.md3-navigation-rail__badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: var(--md-sys-color-error);
+    color: var(--md-sys-color-on-error);
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.md3-navigation-rail__indicator {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 32px;
+    background: var(--md-sys-color-primary);
+    border-radius: 0 2px 2px 0;
+    opacity: 0;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.md3-navigation-rail__item--active .md3-navigation-rail__indicator {
+    opacity: 1;
+    transform: translateY(-50%) scaleY(1);
+}
+
+/* Responsive Behavior */
+@media (max-width: 1024px) {
+    .md3-navigation-rail {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1200px) {
+    .md3-navigation-rail {
+        width: 72px;
+    }
+
+    .md3-navigation-rail__item {
+        width: 64px;
+        min-height: 64px;
+    }
+
+    .md3-navigation-rail__label {
+        font-size: 11px;
+    }
+}
+
+/* Dark Theme Support */
+[data-theme="dark"] .md3-navigation-rail {
+    border-right-color: var(--md-sys-color-outline-variant);
+}
+
+/* Body padding when rail is active */
+@media (min-width: 1024px) {
+    body.has-navigation-rail {
+        padding-left: 80px;
+    }
+
+    body.has-navigation-rail.navigation-rail-compact {
+        padding-left: 72px;
+    }
+}
+
+        /* Material Design 3 Menu */
+        .md3-menu-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .md3-menu {
+            position: absolute;
+            min-width: 112px;
+            max-width: 280px;
+            background: var(--md-sys-color-surface-container);
+            border-radius: 4px;
+            box-shadow: var(--md-sys-elevation-2);
+            padding: 8px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8);
+            transform-origin: top left;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            z-index: 1000;
+            outline: none;
+        }
+
+        .md3-menu--visible {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .md3-menu--bottom--start {
+            top: 100%;
+            left: 0;
+        }
+
+        .md3-menu--bottom--end {
+            top: 100%;
+            right: 0;
+        }
+
+        .md3-menu--top--start {
+            bottom: 100%;
+            left: 0;
+            transform-origin: bottom left;
+        }
+
+        .md3-menu--top--end {
+            bottom: 100%;
+            right: 0;
+            transform-origin: bottom right;
+        }
+
+        .md3-menu--context {
+            position: fixed;
+            z-index: 9999;
+        }
+
+        .md3-menu__header {
+            padding: 8px 12px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .md3-menu__divider {
+            margin: 8px 0;
+            border: none;
+            height: 1px;
+            background: var(--md-sys-color-outline-variant);
+        }
+
+        .md3-menu__item-container {
+            position: relative;
+        }
+
+        .md3-menu__item {
+            display: flex;
+            align-items: center;
+            min-height: 48px;
+            padding: 12px;
+            color: var(--md-sys-color-on-surface);
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            position: relative;
+            outline: none;
+        }
+
+        .md3-menu__item:hover {
+            background: var(--md-sys-color-on-surface);
+            background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+        }
+
+        .md3-menu__item:focus-visible {
+            background: var(--md-sys-color-on-surface);
+            background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+            outline: 2px solid var(--md-sys-color-primary);
+            outline-offset: -2px;
+        }
+
+        .md3-menu__item--disabled {
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.38;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .md3-menu__item--destructive {
+            color: var(--md-sys-color-error);
+        }
+
+        .md3-menu__item--destructive:hover {
+            background: var(--md-sys-color-error);
+            background: color-mix(in srgb, var(--md-sys-color-error) 8%, transparent);
+        }
+
+        .md3-menu__item--selected {
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .md3-menu__item-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .md3-menu__item-text {
+            flex: 1;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .md3-menu__item-arrow,
+        .md3-menu__item-check {
+            width: 24px;
+            height: 24px;
+            margin-left: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .md3-menu__item-check {
+            color: var(--md-sys-color-primary);
+        }
+
+        /* Submenu styling */
+        .md3-menu__item--has-submenu:hover + .md3-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .md3-menu__item-container .md3-menu {
+            left: 100%;
+            top: 0;
+            transform-origin: top left;
+        }
+
+        /* Animation delays for staggered appearance */
+        .md3-menu__item:nth-child(1) { animation-delay: 0ms; }
+        .md3-menu__item:nth-child(2) { animation-delay: 25ms; }
+        .md3-menu__item:nth-child(3) { animation-delay: 50ms; }
+        .md3-menu__item:nth-child(4) { animation-delay: 75ms; }
+        .md3-menu__item:nth-child(5) { animation-delay: 100ms; }
+
+        /* Responsive behavior */
+        @media (max-width: 480px) {
+            .md3-menu {
+                min-width: 280px;
+                max-width: calc(100vw - 32px);
+            }
+
+            .md3-menu--context {
+                position: fixed;
+                left: 16px !important;
+                right: 16px;
+                width: auto;
+                max-width: none;
+            }
+        }
+
+        /* Dark theme adjustments */
+        @media (prefers-color-scheme: dark) {
+            .md3-menu {
+                box-shadow: var(--md-sys-elevation-2);
+            }
+        }
+        
+        /* Material Design 3 Dialog */
+        .md3-dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.32);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .md3-dialog-overlay[aria-hidden="false"] {
+            opacity: 1;
+        }
+
+        .md3-dialog {
+            background: var(--md-sys-color-surface-container-high);
+            border-radius: 28px;
+            box-shadow: var(--md-sys-elevation-3);
+            min-width: 280px;
+            max-width: 560px;
+            max-height: calc(100vh - 48px);
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.8);
+            transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+            outline: none;
+        }
+
+        .md3-dialog-overlay[aria-hidden="false"] .md3-dialog {
+            transform: scale(1);
+        }
+
+        .md3-dialog--fullscreen {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            max-height: none;
+            border-radius: 0;
+            transform: translateY(100%);
+        }
+
+        .md3-dialog-overlay[aria-hidden="false"] .md3-dialog--fullscreen {
+            transform: translateY(0);
+        }
+
+        .md3-dialog__header {
+            padding: 24px 24px 0;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .md3-dialog--fullscreen .md3-dialog__header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .md3-dialog__close {
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--md-sys-color-on-surface);
+            transition: background-color 0.2s;
+        }
+
+        .md3-dialog__close:hover {
+            background: var(--md-sys-color-on-surface);
+            background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+        }
+
+        .md3-dialog__title {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 32px;
+            color: var(--md-sys-color-on-surface);
+            margin: 0;
+            flex: 1;
+        }
+
+        .md3-dialog__content {
+            padding: 16px 24px;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 14px;
+            line-height: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .md3-dialog__actions {
+            padding: 16px 24px 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .md3-dialog--fullscreen .md3-dialog__actions {
+            padding: 16px 24px;
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .md3-dialog__form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Button styles for dialog actions */
+        .md3-dialog .md3-button {
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 20px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 48px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .md3-button--text {
+            background: transparent;
+            color: var(--md-sys-color-primary);
+        }
+
+        .md3-button--text:hover {
+            background: var(--md-sys-color-primary);
+            background: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+        }
+
+        .md3-button--filled {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        .md3-button--filled:hover {
+            background: color-mix(in srgb, var(--md-sys-color-primary) 92%, var(--md-sys-color-on-primary) 8%);
+        }
+
+        .md3-button--disabled {
+            background: var(--md-sys-color-on-surface);
+            background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.38;
+            cursor: not-allowed;
+        }
+
+        /* Responsive behavior */
+        @media (max-width: 480px) {
+            .md3-dialog {
+                margin: 16px;
+                min-width: calc(100vw - 32px);
+                max-width: calc(100vw - 32px);
+            }
+
+            .md3-dialog__actions {
+                flex-direction: column;
+            }
+        }
+        
+        /* Material Design 3 Floating Action Button */
+        .md3-fab {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            font-family: inherit;
+            font-weight: 500;
+            text-decoration: none;
+            outline: none;
+            overflow: hidden;
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            box-shadow: var(--md-sys-elevation-3);
+        }
+
+        /* Small FAB */
+        .md3-fab--small {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+        }
+
+        .md3-fab--small .material-symbols-outlined {
+            font-size: 24px;
+        }
+
+        /* Standard FAB */
+        .md3-fab--standard {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+        }
+
+        .md3-fab--standard .material-symbols-outlined {
+            font-size: 24px;
+        }
+
+        /* Large FAB */
+        .md3-fab--large {
+            width: 96px;
+            height: 96px;
+            border-radius: 28px;
+        }
+
+        .md3-fab--large .material-symbols-outlined {
+            font-size: 36px;
+        }
+
+        /* Extended FAB */
+        .md3-fab--extended {
+            height: 56px;
+            padding: 0 16px;
+            border-radius: 16px;
+            gap: 8px;
+        }
+
+        .md3-fab--extended .material-symbols-outlined {
+            font-size: 24px;
+        }
+
+        .md3-fab__label {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            white-space: nowrap;
+        }
+
+        /* Hover States */
+        .md3-fab:hover {
+            box-shadow: var(--md-sys-elevation-4);
+        }
+
+        .md3-fab:not(.md3-fab--disabled):hover {
+            background: color-mix(in srgb, var(--md-sys-color-primary-container) 92%, var(--md-sys-color-on-primary-container) 8%);
+        }
+
+        /* Active State */
+        .md3-fab:active {
+            box-shadow: var(--md-sys-elevation-3);
+        }
+
+        /* Focus State */
+        .md3-fab:focus-visible {
+            outline: 2px solid var(--md-sys-color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Disabled State */
+        .md3-fab--disabled {
+            background: var(--md-sys-color-on-surface);
+            background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+            color: var(--md-sys-color-on-surface);
+            color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+            box-shadow: none;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Ripple Effect */
+        .md3-fab::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--md-sys-color-on-primary-container);
+            border-radius: inherit;
+            opacity: 0;
+            transform: scale(0);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .md3-fab:active::before {
+            opacity: 0.12;
+            transform: scale(1);
+        }
+
+        /* Positioning utilities */
+        .md3-fab--fixed {
+            position: fixed;
+            z-index: 1000;
+        }
+
+        .md3-fab--bottom-right {
+            bottom: 16px;
+            right: 16px;
+        }
+
+        .md3-fab--bottom-left {
+            bottom: 16px;
+            left: 16px;
+        }
+
+        .md3-fab--bottom-center {
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @media (max-width: 480px) {
+            .md3-fab--bottom-right {
+                bottom: 12px;
+                right: 12px;
+            }
+
+            .md3-fab--bottom-left {
+                bottom: 12px;
+                left: 12px;
+            }
+        }
+        
+/* Icon Button Base Styles */
+.md3-icon-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    overflow: hidden;
+    user-select: none;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.md3-icon-button:focus {
+    outline: none;
+}
+
+.md3-icon-button:focus-visible {
+    box-shadow: 0 0 0 2px var(--md-sys-color-primary);
+}
+
+.md3-icon-button__icon {
+    position: relative;
+    z-index: 1;
+    font-size: 24px;
+    line-height: 1;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Toggle Icon Button */
+.md3-icon-button--toggle .md3-icon-button__icon--selected {
+    position: absolute;
+    opacity: 0;
+}
+
+.md3-icon-button--toggle.md3-icon-button--selected .md3-icon-button__icon {
+    opacity: 0;
+}
+
+.md3-icon-button--toggle.md3-icon-button--selected .md3-icon-button__icon--selected {
+    opacity: 1;
+}
+
+/* Standard Icon Button */
+.md3-icon-button--standard {
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.md3-icon-button--standard:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 8%, transparent);
+}
+
+.md3-icon-button--standard:focus {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
+}
+
+.md3-icon-button--standard:active {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
+}
+
+.md3-icon-button--standard.md3-icon-button--selected {
+    color: var(--md-sys-color-primary);
+}
+
+.md3-icon-button--standard.md3-icon-button--selected:hover {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+}
+
+/* Filled Icon Button */
+.md3-icon-button--filled {
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+.md3-icon-button--filled:hover {
+    background: var(--md-sys-color-primary);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+.md3-icon-button--filled:focus {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+.md3-icon-button--filled:active {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+.md3-icon-button--filled.md3-icon-button--selected {
+    background: var(--md-sys-color-primary);
+}
+
+/* Outlined Icon Button */
+.md3-icon-button--outlined {
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    border: 1px solid var(--md-sys-color-outline);
+}
+
+.md3-icon-button--outlined:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 8%, transparent);
+}
+
+.md3-icon-button--outlined:focus {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
+}
+
+.md3-icon-button--outlined:active {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
+}
+
+.md3-icon-button--outlined.md3-icon-button--selected {
+    background: var(--md-sys-color-inverse-surface);
+    color: var(--md-sys-color-inverse-on-surface);
+    border-color: transparent;
+}
+
+/* Tonal Icon Button */
+.md3-icon-button--tonal {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.md3-icon-button--tonal:hover {
+    background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 8%, var(--md-sys-color-secondary-container));
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+.md3-icon-button--tonal:focus {
+    background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 12%, var(--md-sys-color-secondary-container));
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+.md3-icon-button--tonal:active {
+    background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 12%, var(--md-sys-color-secondary-container));
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+.md3-icon-button--tonal.md3-icon-button--selected {
+    background: var(--md-sys-color-secondary-container);
+}
+
+/* Disabled State */
+.md3-icon-button--disabled {
+    pointer-events: none;
+    opacity: 0.38;
+}
+
+.md3-icon-button--filled.md3-icon-button--disabled {
+    background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
+
+.md3-icon-button--outlined.md3-icon-button--disabled {
+    border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+
+/* Ripple Effect */
+.md3-icon-button__ripple {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.md3-icon-button__ripple::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.12;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.md3-icon-button:active .md3-icon-button__ripple::before {
+    width: 48px;
+    height: 48px;
+}
+
+/* Dark Theme Support */
+[data-theme="dark"] .md3-icon-button--standard {
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+[data-theme="dark"] .md3-icon-button--outlined {
+    border-color: var(--md-sys-color-outline);
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Roboto', system-ui, sans-serif;
+            background: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            overflow-x: hidden;
+        }
+
+        /* Layout */
+        .playground-container {
+            display: grid;
+            grid-template-areas:
+                "header header"
+                "sidebar content";
+            grid-template-columns: 240px 1fr;
+            grid-template-rows: 64px 1fr;
+            min-height: 100vh;
+        }
+
+        .playground-header {
+            grid-area: header;
+            background: var(--md-sys-color-surface);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            padding: 12px 24px;
+        }
+
+        .header-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .header-main h1 {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--md-sys-color-primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Mode Toggle */
+        .mode-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 20px;
+            color: var(--md-sys-color-on-surface);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 8px;
+        }
+
+        .mode-toggle:hover {
+            background: var(--md-sys-color-surface-container-high);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        /* Compact Theme Selector */
+        .theme-selector-compact {
+            position: relative;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--md-sys-color-surface-container);
+            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            min-width: 120px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--md-sys-color-surface-container-high);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .theme-current {
+            flex: 1;
+            text-align: left;
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--md-sys-color-surface-container);
+            border-radius: 8px;
+            box-shadow: var(--md-sys-elevation-2);
+            padding: 8px 0;
+            min-width: 200px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .theme-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--md-sys-color-on-surface);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .theme-option:hover {
+            background: var(--md-sys-color-surface-container-high);
+        }
+
+        .theme-option.active {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .theme-icon {
+            width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-name {
+            flex: 1;
+        }
+
+        .theme-check {
+            width: 20px;
+            color: var(--md-sys-color-primary);
+        }
+
+        .back-link {
+            text-decoration: none;
+        }
+
+        .playground-sidebar {
+            grid-area: sidebar;
+            background: var(--md-sys-color-surface);
+            border-right: 1px solid var(--md-sys-color-outline-variant);
+            overflow-y: auto;
+            padding: 12px;
+        }
+
+        .playground-content {
+            grid-area: content;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 0;
+            min-height: calc(100vh - 64px);
+        }
+
+        .component-preview {
+            padding: 24px;
+            background: var(--md-sys-color-background);
+            overflow-y: auto;
+        }
+
+        .component-controls {
+            background: var(--md-sys-color-surface-container-lowest);
+            border-left: 1px solid var(--md-sys-color-outline-variant);
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        /* Navigation */
+        .nav-section {
+            margin-bottom: 16px;
+        }
+
+        .nav-section h3 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 6px;
+            padding: 0 12px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 10px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--md-sys-color-on-surface);
+            font-size: 13px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background: var(--md-sys-color-surface-container-high);
+        }
+
+        .nav-item.active {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            font-weight: 500;
+        }
+
+        /* Preview Area */
+        .preview-area {
+            background: var(--md-sys-color-surface);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Code Display */
+        .code-section {
+            background: var(--md-sys-color-surface-container);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            overflow-x: auto;
+        }
+
+        .code-section h4 {
+            margin-bottom: 12px;
+            color: var(--md-sys-color-on-surface);
+            font-family: inherit;
+        }
+
+        .code-section pre {
+            background: var(--md-sys-color-surface-variant);
+            padding: 12px;
+            border-radius: 4px;
+            color: var(--md-sys-color-on-surface-variant);
+            white-space: pre-wrap;
+            position: relative;
+        }
+
+        /* Controls */
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group h4 {
+            font-size: 15px;
+            margin-bottom: 10px;
+            color: var(--md-sys-color-on-surface);
+        }
+
+        /* Enhanced input styling */
+        .control-group label {
+            display: block;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .control-group select,
+        .control-group input[type="text"],
+        .control-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 8px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-family: inherit;
+            font-size: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+
+        .control-group select:focus,
+        .control-group input[type="text"]:focus,
+        .control-group textarea:focus {
+            outline: none;
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px rgba(66, 165, 245, 0.12);
+        }
+
+        .control-group select:hover,
+        .control-group input[type="text"]:hover,
+        .control-group textarea:hover {
+            border-color: var(--md-sys-color-outline-variant);
+        }
+
+        /* Enhanced select styling */
+        .control-group select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        /* Enhanced checkbox styling */
+        .control-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--md-sys-color-primary);
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        /* Special styling for checkbox containers */
+        .control-group:has(input[type="checkbox"]) {
+            padding: 12px 16px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 12px;
+            background: var(--md-sys-color-surface);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .control-group:has(input[type="checkbox"]):hover {
+            background: var(--md-sys-color-surface-container-high);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .control-group:has(input[type="checkbox"]) label {
+            margin: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .control-item {
+            margin-bottom: 16px;
+        }
+
+        .control-item label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .playground-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr auto;
+            }
+
+            .component-controls {
+                border-left: none;
+                border-top: 1px solid var(--md-sys-color-outline-variant);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .playground-container {
+                grid-template-areas:
+                    "header"
+                    "content";
+                grid-template-columns: 1fr;
+            }
+
+            .playground-sidebar {
+                display: none;
+            }
+        }
+
+        /* Custom styling for form elements */
+        .control-item select,
+        .control-item input[type="text"],
+        .control-item input[type="number"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 4px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-size: 14px;
+        }
+
+        .theme-selector-playground {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .theme-chip {
+            padding: 6px 12px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 16px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-chip.active {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="playground-container">
+        <!-- Header -->
+        <header class="playground-header">
+            <div class="header-main">
+                <h1>
+                    <span class="material-symbols-outlined">play_arrow</span> MD3 Playground
+                </h1>
+                <div class="header-actions">
+                    <!-- Light/Dark Mode Toggle -->
+                    <button class="mode-toggle" onclick="toggleMode()" id="mode-toggle">
+                        <span class="material-symbols-outlined">light_mode</span>                    </button>
+
+                    <div class="theme-selector-compact">
+                        <button class="theme-toggle" onclick="toggleThemeSelector()">
+                            <span class="material-symbols-outlined">palette</span>                            <span class="theme-current">Standard Purple</span>
+                            <span class="material-symbols-outlined">expand_more</span>                        </button>
+                        <div class="theme-dropdown" id="theme-dropdown">
+                            <a href="playground.php?theme=default&component=button" class="theme-option active"><span class="theme-icon"><span class="material-symbols-outlined">palette</span></span><span class="theme-name">Standard Purple</span><span class="theme-check"><span class="material-symbols-outlined">check</span></span></a><a href="playground.php?theme=ocean&component=button" class="theme-option"><span class="theme-icon"><span class="material-symbols-outlined">water</span></span><span class="theme-name">Ocean Blue</span></a><a href="playground.php?theme=forest&component=button" class="theme-option"><span class="theme-icon"><span class="material-symbols-outlined">park</span></span><span class="theme-name">Forest Green</span></a><a href="playground.php?theme=sunset&component=button" class="theme-option"><span class="theme-icon"><span class="material-symbols-outlined">wb_twilight</span></span><span class="theme-name">Sunset Orange</span></a><a href="playground.php?theme=minimal&component=button" class="theme-option"><span class="theme-icon"><span class="material-symbols-outlined">contrast</span></span><span class="theme-name">Minimal Gray</span></a>                        </div>
+                    </div>
+                    <a href="index.php" class="back-link">
+                        <md-text-button>← Demo</md-text-button>                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <nav class="playground-sidebar">
+
+            <div class="nav-section">
+                <h3>Basic Components</h3>
+                <a href="?component=button&theme=default" class="nav-item active">
+                    <span class="material-symbols-outlined">smart_button</span> Button
+                </a>
+                <a href="?component=iconbutton&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">radio_button_unchecked</span> Icon Button
+                </a>
+                <a href="?component=textfield&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">text_fields</span> TextField
+                </a>
+                <a href="?component=card&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">web_stories</span> Card
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <h3>Navigation</h3>
+                <a href="?component=navigation&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">bottom_navigation</span> Navigation Bar
+                </a>
+                <a href="?component=navigationdrawer&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">menu_open</span> Navigation Drawer
+                </a>
+                <a href="?component=navigationrail&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">dock_to_left</span> Navigation Rail
+                </a>
+                <a href="?component=menu&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">more_vert</span> Menu
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <h3>Overlays</h3>
+                <a href="?component=dialog&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">open_in_new</span> Dialog
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <h3>Form Controls</h3>
+                <a href="?component=select&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">arrow_drop_down</span> Select
+                </a>
+                <a href="?component=switch&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">toggle_on</span> Switch
+                </a>
+                <a href="?component=checkbox&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">check_box</span> Checkbox
+                </a>
+                <a href="?component=radio&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">radio_button_checked</span> Radio
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <h3>Collections</h3>
+                <a href="?component=list&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">list</span> List
+                </a>
+                <a href="?component=chip&theme=default" class="nav-item ">
+                    <span class="material-symbols-outlined">label</span> Chip
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <h3>Information</h3>
+                <div style="padding: 12px 16px; font-size: 12px; color: var(--md-sys-color-on-surface-variant);">
+                    <div><strong>Version:</strong> 0.2.7</div>
+                    <div><strong>Komponenten:</strong> 14</div>
+                    <div><strong>Theme:</strong> Default</div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="playground-content">
+            <div class="component-preview">
+                <div id="preview-area" class="preview-area">
+                    <!-- Component will be rendered here -->
+                </div>
+
+                <div class="code-section">
+                    <h4><span class="material-symbols-outlined">code</span> PHP Code</h4>
+                    <pre id="php-code">
+                        <button class="copy-button" onclick="copyCode('php', this)">Copy</button>
+                        <code id="php-code-content">// PHP code will appear here</code>
+                    </pre>
+                </div>
+
+                <div class="code-section">
+                    <h4><span class="material-symbols-outlined">html</span> Generated HTML</h4>
+                    <pre id="html-code">
+                        <button class="copy-button" onclick="copyCode('html', this)">Copy</button>
+                        <code id="html-code-content"><!-- HTML output will appear here --></code>
+                    </pre>
+                </div>
+            </div>
+
+            <div class="component-controls">
+                <h3 style="margin-bottom: 20px; color: var(--md-sys-color-primary);">
+                    <span class="material-symbols-outlined">tune</span> Component Controls
+                </h3>
+
+                <div id="component-controls">
+                    <!-- Controls will be dynamically generated -->
+                </div>
+
+                <div class="md3-version-info"><div class="version-header"><h3><span class="material-symbols-outlined">info</span> Material Design 3 PHP Library</h3><div class="version-badge">v0.2.7</div></div><div class="version-details"><div class="detail-item"><strong>Build:</strong> 2025-09-26</div><div class="detail-item"><strong>PHP:</strong> 8.2.4</div><div class="detail-item"><strong>Komponenten:</strong> 14</div><div class="detail-item"><strong>Offline:</strong> ✅</div></div></div>            </div>
+        </main>
+    </div>
+
+    <script>
+// List Interaction Management
+document.addEventListener("DOMContentLoaded", function() {
+                // Handle selectable list interactions
+                const selectableLists = document.querySelectorAll(".md3-list-selectable");
+
+                selectableLists.forEach(list => {
+                    const items = list.querySelectorAll("input[type=radio], input[type=checkbox]");
+
+                    items.forEach(item => {
+                        item.addEventListener("change", function() {
+                            // Trigger custom event for form integration
+                            const changeEvent = new CustomEvent("md3-list-change", {
+                                detail: {
+                                    name: this.name,
+                                    value: this.value,
+                                    checked: this.checked,
+                                    type: this.type
+                                }
+                            });
+
+                            list.dispatchEvent(changeEvent);
+                        });
+                    });
+                });
+
+                // Handle clickable list items
+                const clickableItems = document.querySelectorAll(".md3-list-item-clickable");
+
+                clickableItems.forEach(item => {
+                    item.addEventListener("click", function(e) {
+                        // Add ripple effect
+                        const ripple = document.createElement("div");
+                        ripple.className = "md3-ripple-effect";
+                        ripple.style.position = "absolute";
+                        ripple.style.borderRadius = "50%";
+                        ripple.style.background = "rgba(var(--md-sys-color-on-surface-rgb), 0.12)";
+                        ripple.style.transform = "scale(0)";
+                        ripple.style.animation = "md3-ripple 0.6s linear";
+                        ripple.style.pointerEvents = "none";
+
+                        const rect = this.getBoundingClientRect();
+                        const size = Math.max(rect.width, rect.height);
+                        const x = e.clientX - rect.left - size / 2;
+                        const y = e.clientY - rect.top - size / 2;
+
+                        ripple.style.width = ripple.style.height = size + "px";
+                        ripple.style.left = x + "px";
+                        ripple.style.top = y + "px";
+
+                        this.style.position = "relative";
+                        this.style.overflow = "hidden";
+                        this.appendChild(ripple);
+
+                        setTimeout(() => ripple.remove(), 600);
+                    });
+                });
+            });
+
+            // CSS Animation for ripple effect
+            if (!document.querySelector("#md3-list-animations")) {
+                const style = document.createElement("style");
+                style.id = "md3-list-animations";
+                style.textContent = `
+                    @keyframes md3-ripple {
+                        to {
+                            transform: scale(4);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+});
+</script>
+    
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle navigation bar interactions
+            const navBars = document.querySelectorAll('.md3-navigation-bar');
+
+            navBars.forEach(navBar => {
+                const items = navBar.querySelectorAll('.md3-navigation-bar__item');
+
+                items.forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        if (this.classList.contains('md3-navigation-bar__item--disabled')) {
+                            e.preventDefault();
+                            return;
+                        }
+
+                        // Remove active state from siblings
+                        items.forEach(sibling => {
+                            sibling.classList.remove('md3-navigation-bar__item--active');
+                            sibling.setAttribute('aria-selected', 'false');
+                        });
+
+                        // Add active state to clicked item
+                        this.classList.add('md3-navigation-bar__item--active');
+                        this.setAttribute('aria-selected', 'true');
+
+                        // Emit custom event
+                        const event = new CustomEvent('md3-navigation-change', {
+                            detail: {
+                                item: this,
+                                href: this.href,
+                                label: this.querySelector('.md3-navigation-bar__label')?.textContent || ''
+                            }
+                        });
+                        navBar.dispatchEvent(event);
+                    });
+
+                    // Ripple effect on touch/click
+                    item.addEventListener('pointerdown', function(e) {
+                        if (this.classList.contains('md3-navigation-bar__item--disabled')) {
+                            return;
+                        }
+
+                        const rect = this.getBoundingClientRect();
+                        const size = Math.max(rect.width, rect.height);
+                        const x = e.clientX - rect.left - size / 2;
+                        const y = e.clientY - rect.top - size / 2;
+
+                        const ripple = document.createElement('span');
+                        ripple.className = 'md3-ripple';
+                        ripple.style.cssText =
+                            'position: absolute;' +
+                            'border-radius: 50%;' +
+                            'background: currentColor;' +
+                            'opacity: 0.1;' +
+                            'pointer-events: none;' +
+                            'transform: scale(0);' +
+                            'animation: md3-ripple-animation 0.6s ease-out;' +
+                            'width: ' + size + 'px;' +
+                            'height: ' + size + 'px;' +
+                            'left: ' + x + 'px;' +
+                            'top: ' + y + 'px;';
+
+                        this.style.position = 'relative';
+                        this.style.overflow = 'hidden';
+                        this.appendChild(ripple);
+
+                        setTimeout(() => {
+                            if (ripple.parentNode) {
+                                ripple.parentNode.removeChild(ripple);
+                            }
+                        }, 600);
+                    });
+                });
+            });
+        });
+
+        // Add ripple animation CSS
+        if (!document.querySelector('#md3-ripple-styles')) {
+            const style = document.createElement('style');
+            style.id = 'md3-ripple-styles';
+            style.textContent =
+                '@keyframes md3-ripple-animation {' +
+                    'to {' +
+                        'transform: scale(2);' +
+                        'opacity: 0;' +
+                    '}' +
+                '}';
+            document.head.appendChild(style);
+        }
+        </script>
+            
+        <script>
+        // Global function to initialize menus (for dynamic content)
+        window.initializeMenus = function() {
+            // Handle dropdown menus
+            const menuContainers = document.querySelectorAll('.md3-menu-container');
+
+            // Handle context menus
+            const contextMenus = document.querySelectorAll('.md3-menu--context[data-context-target]');
+
+            menuContainers.forEach(container => {
+                const trigger = container.querySelector('[aria-haspopup="true"]');
+                const menu = container.querySelector('.md3-menu');
+
+                if (trigger && menu) {
+                    trigger.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        const isOpen = menu.classList.contains('md3-menu--visible');
+
+                        // Close all other menus
+                        document.querySelectorAll('.md3-menu--visible').forEach(openMenu => {
+                            openMenu.classList.remove('md3-menu--visible');
+                            const openTrigger = openMenu.parentNode.querySelector('[aria-haspopup="true"]');
+                            if (openTrigger) {
+                                openTrigger.setAttribute('aria-expanded', 'false');
+                            }
+                        });
+
+                        if (!isOpen) {
+                            menu.classList.add('md3-menu--visible');
+                            trigger.setAttribute('aria-expanded', 'true');
+                            menu.focus();
+
+                            // Position adjustment for viewport
+                            const rect = menu.getBoundingClientRect();
+                            const viewportWidth = window.innerWidth;
+                            const viewportHeight = window.innerHeight;
+
+                            if (rect.right > viewportWidth) {
+                                menu.style.left = 'auto';
+                                menu.style.right = '0';
+                            }
+
+                            if (rect.bottom > viewportHeight) {
+                                menu.style.top = 'auto';
+                                menu.style.bottom = '100%';
+                            }
+                        }
+                    });
+
+                    // Handle keyboard navigation
+                    menu.addEventListener('keydown', function(e) {
+                        const items = Array.from(menu.querySelectorAll('.md3-menu__item:not(.md3-menu__item--disabled)'));
+                        const currentIndex = items.indexOf(document.activeElement);
+
+                        switch (e.key) {
+                            case 'ArrowDown':
+                                e.preventDefault();
+                                const nextIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
+                                items[nextIndex].focus();
+                                break;
+
+                            case 'ArrowUp':
+                                e.preventDefault();
+                                const prevIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+                                items[prevIndex].focus();
+                                break;
+
+                            case 'Escape':
+                                menu.classList.remove('md3-menu--visible');
+                                trigger.setAttribute('aria-expanded', 'false');
+                                trigger.focus();
+                                break;
+
+                            case 'Enter':
+                            case ' ':
+                                if (document.activeElement.tagName === 'A') {
+                                    // Let default behavior handle links
+                                } else {
+                                    e.preventDefault();
+                                    document.activeElement.click();
+                                }
+                                break;
+                        }
+                    });
+
+                    // Handle menu item clicks
+                    menu.addEventListener('click', function(e) {
+                        const item = e.target.closest('.md3-menu__item');
+                        if (item && !item.classList.contains('md3-menu__item--disabled')) {
+                            // Emit custom event
+                            const event = new CustomEvent('md3-menu-select', {
+                                detail: {
+                                    item: item,
+                                    text: item.querySelector('.md3-menu__item-text')?.textContent || '',
+                                    menu: menu
+                                }
+                            });
+                            container.dispatchEvent(event);
+
+                            // Close menu after selection (unless it's a submenu parent)
+                            if (!item.classList.contains('md3-menu__item--has-submenu')) {
+                                menu.classList.remove('md3-menu--visible');
+                                trigger.setAttribute('aria-expanded', 'false');
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Handle context menus
+            contextMenus.forEach(menu => {
+                const target = menu.getAttribute('data-context-target');
+                const targetElement = document.querySelector(target);
+
+                if (targetElement) {
+                    // Remove existing event listeners first
+                    targetElement.removeEventListener('contextmenu', window.contextMenuHandler);
+
+                    // Create new handler
+                    window.contextMenuHandler = function(e) {
+                        if (e.target.closest(target)) {
+                            e.preventDefault();
+
+                            // Close other menus
+                            document.querySelectorAll('.md3-menu--visible').forEach(openMenu => {
+                                openMenu.classList.remove('md3-menu--visible');
+                            });
+
+                            // Position and show context menu
+                            menu.style.position = 'fixed';
+                            menu.style.left = e.clientX + 'px';
+                            menu.style.top = e.clientY + 'px';
+                            menu.classList.add('md3-menu--visible');
+
+                            // Adjust position if menu goes off screen
+                            setTimeout(() => {
+                                const rect = menu.getBoundingClientRect();
+                                if (rect.right > window.innerWidth) {
+                                    menu.style.left = (e.clientX - rect.width) + 'px';
+                                }
+                                if (rect.bottom > window.innerHeight) {
+                                    menu.style.top = (e.clientY - rect.height) + 'px';
+                                }
+                            }, 10);
+                        }
+                    };
+
+                    targetElement.addEventListener('contextmenu', window.contextMenuHandler);
+                }
+            });
+
+            // Close menus when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.md3-menu-container')) {
+                    document.querySelectorAll('.md3-menu--visible').forEach(menu => {
+                        menu.classList.remove('md3-menu--visible');
+                        const trigger = menu.parentNode.querySelector('[aria-haspopup="true"]');
+                        if (trigger) {
+                            trigger.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                }
+            });
+
+            // Close menus on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.md3-menu--visible').forEach(menu => {
+                        menu.classList.remove('md3-menu--visible');
+                        const trigger = menu.parentNode.querySelector('[aria-haspopup="true"]');
+                        if (trigger) {
+                            trigger.setAttribute('aria-expanded', 'false');
+                            trigger.focus();
+                        }
+                    });
+                }
+            });
+        };
+
+        // Initialize menus on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            window.initializeMenus();
+        });
+        </script>
+            
+        <script>
+        window.MD3Dialog = {
+            open: function(id) {
+                const overlay = document.getElementById(id + '-overlay');
+                if (overlay) {
+                    overlay.style.display = 'flex';
+                    setTimeout(() => {
+                        overlay.setAttribute('aria-hidden', 'false');
+                        const dialog = document.getElementById(id);
+                        if (dialog) {
+                            dialog.focus();
+                        }
+                    }, 10);
+
+                    // Emit open event
+                    const event = new CustomEvent('md3-dialog-open', {
+                        detail: { id: id }
+                    });
+                    document.dispatchEvent(event);
+                }
+            },
+
+            close: function(id) {
+                const overlay = document.getElementById(id + '-overlay');
+                if (overlay) {
+                    overlay.setAttribute('aria-hidden', 'true');
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 200);
+
+                    // Emit close event
+                    const event = new CustomEvent('md3-dialog-close', {
+                        detail: { id: id }
+                    });
+                    document.dispatchEvent(event);
+                }
+            },
+
+            toggle: function(id) {
+                const overlay = document.getElementById(id + '-overlay');
+                if (overlay && overlay.style.display === 'none') {
+                    this.open(id);
+                } else {
+                    this.close(id);
+                }
+            },
+
+            submitForm: function(id) {
+                const form = document.getElementById(id + '-form');
+                if (form) {
+                    // Emit form submit event
+                    const event = new CustomEvent('md3-dialog-form-submit', {
+                        detail: {
+                            id: id,
+                            form: form,
+                            data: new FormData(form)
+                        }
+                    });
+                    document.dispatchEvent(event);
+
+                    // Close dialog after submit (can be prevented by event listener)
+                    if (!event.defaultPrevented) {
+                        this.close(id);
+                    }
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle ESC key to close dialogs
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const openDialog = document.querySelector('.md3-dialog-overlay[aria-hidden="false"]');
+                    if (openDialog) {
+                        const id = openDialog.id.replace('-overlay', '');
+                        MD3Dialog.close(id);
+                    }
+                }
+            });
+
+            // Handle backdrop clicks
+            document.querySelectorAll('.md3-dialog-overlay').forEach(overlay => {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) {
+                        const id = overlay.id.replace('-overlay', '');
+                        MD3Dialog.close(id);
+                    }
+                });
+            });
+
+            // Focus management for accessibility
+            document.addEventListener('md3-dialog-open', function(e) {
+                // Store currently focused element
+                const activeElement = document.activeElement;
+                if (activeElement) {
+                    activeElement.setAttribute('data-previous-focus', 'true');
+                }
+            });
+
+            document.addEventListener('md3-dialog-close', function(e) {
+                // Restore focus to previously focused element
+                const previousFocus = document.querySelector('[data-previous-focus="true"]');
+                if (previousFocus) {
+                    previousFocus.focus();
+                    previousFocus.removeAttribute('data-previous-focus');
+                }
+            });
+        });
+        </script>
+            
+        <script>
+        // FAB Ripple Effect Enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            const fabs = document.querySelectorAll('.md3-fab');
+
+            fabs.forEach(fab => {
+                fab.addEventListener('mousedown', function(e) {
+                    if (!this.classList.contains('md3-fab--disabled')) {
+                        // Enhanced ripple effect can be added here
+                        // Current CSS handles basic ripple with ::before pseudo-element
+                    }
+                });
+            });
+        });
+        </script>
+            <script>
+            // Theme management
+            function changeTheme(themeName) {
+                // Store theme preference
+                localStorage.setItem("md3-theme", themeName);
+
+                // Apply theme immediately by reloading with theme parameter
+                const url = new URL(window.location);
+                url.searchParams.set("theme", themeName);
+                window.location.href = url.toString();
+            }
+
+            // Note: toggleMode and initializeColorScheme are now handled by MD3Header::getScript()
+
+            // Make functions globally available immediately
+            window.changeTheme = changeTheme;
+            // Note: toggleMode is now defined in MD3Header::getScript()
+
+            // Load saved theme on page load
+            document.addEventListener("DOMContentLoaded", function() {
+                // Note: Color scheme initialization is handled by MD3Header::getScript()
+
+                const savedTheme = localStorage.getItem("md3-theme") || "default";
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlTheme = urlParams.get("theme");
+
+                if (urlTheme && urlTheme !== savedTheme) {
+                    localStorage.setItem("md3-theme", urlTheme);
+                } else if (!urlTheme && savedTheme !== "default") {
+                    changeTheme(savedTheme);
+                }
+
+                // Update theme selector if present
+                const themeSelect = document.getElementById("theme-select");
+                if (themeSelect) {
+                    themeSelect.value = urlTheme || savedTheme;
+                }
+
+                // Update chip selector if present
+                const activeTheme = urlTheme || savedTheme;
+                document.querySelectorAll(".theme-toggle-chips .md-filter-chip").forEach(chip => {
+                    if (chip.getAttribute("data-theme") === activeTheme) {
+                        chip.classList.add("selected");
+                    } else {
+                        chip.classList.remove("selected");
+                    }
+                });
+            });
+        </script>
+    <script>
+        // Component configurations
+        const componentConfigs = {
+            button: {
+                name: 'Button',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Button Type',
+                        options: {
+                            'filled': 'Filled',
+                            'outlined': 'Outlined',
+                            'text': 'Text',
+                            'elevated': 'Elevated',
+                            'tonal': 'Tonal'
+                        },
+                        default: 'filled'
+                    },
+                    text: {
+                        type: 'text',
+                        label: 'Button Text',
+                        default: 'Click me'
+                    },
+                    icon: {
+                        type: 'text',
+                        label: 'Icon (optional)',
+                        default: '',
+                        placeholder: 'e.g. favorite, add, delete'
+                    },
+                    disabled: {
+                        type: 'checkbox',
+                        label: 'Disabled',
+                        default: false
+                    }
+                }
+            },
+            textfield: {
+                name: 'TextField',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Field Type',
+                        options: {
+                            'filled': 'Filled',
+                            'outlined': 'Outlined'
+                        },
+                        default: 'filled'
+                    },
+                    label: {
+                        type: 'text',
+                        label: 'Label Text',
+                        default: 'Enter text'
+                    },
+                    placeholder: {
+                        type: 'text',
+                        label: 'Placeholder',
+                        default: ''
+                    },
+                    leadingIcon: {
+                        type: 'text',
+                        label: 'Leading Icon',
+                        default: '',
+                        placeholder: 'e.g. person, search'
+                    },
+                    trailingIcon: {
+                        type: 'text',
+                        label: 'Trailing Icon',
+                        default: '',
+                        placeholder: 'e.g. visibility, clear'
+                    }
+                }
+            },
+            card: {
+                name: 'Card',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Card Type',
+                        options: {
+                            'elevated': 'Elevated',
+                            'filled': 'Filled',
+                            'outlined': 'Outlined'
+                        },
+                        default: 'elevated'
+                    },
+                    title: {
+                        type: 'text',
+                        label: 'Title',
+                        default: 'Card Title'
+                    },
+                    content: {
+                        type: 'textarea',
+                        label: 'Content',
+                        default: 'This is the card content area where you can add descriptive text.'
+                    },
+                    icon: {
+                        type: 'text',
+                        label: 'Icon (optional)',
+                        default: '',
+                        placeholder: 'e.g. info, warning'
+                    }
+                }
+            },
+            select: {
+                name: 'Select',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Select Type',
+                        options: {
+                            'filled': 'Filled',
+                            'outlined': 'Outlined'
+                        },
+                        default: 'filled'
+                    },
+                    label: {
+                        type: 'text',
+                        label: 'Label',
+                        default: 'Choose option'
+                    },
+                    options: {
+                        type: 'textarea',
+                        label: 'Options (one per line)',
+                        default: 'Option 1\nOption 2\nOption 3'
+                    }
+                }
+            },
+            switch: {
+                name: 'Switch',
+                controls: {
+                    label: {
+                        type: 'text',
+                        label: 'Label Text',
+                        default: 'Enable notifications'
+                    },
+                    checked: {
+                        type: 'checkbox',
+                        label: 'Initially Checked',
+                        default: false
+                    }
+                }
+            },
+            checkbox: {
+                name: 'Checkbox',
+                controls: {
+                    label: {
+                        type: 'text',
+                        label: 'Label Text',
+                        default: 'I agree to the terms'
+                    },
+                    checked: {
+                        type: 'checkbox',
+                        label: 'Initially Checked',
+                        default: false
+                    }
+                }
+            },
+            radio: {
+                name: 'Radio',
+                controls: {
+                    options: {
+                        type: 'textarea',
+                        label: 'Options (one per line)',
+                        default: 'Option A\nOption B\nOption C'
+                    },
+                    selected: {
+                        type: 'number',
+                        label: 'Selected Option (0-based)',
+                        default: 0
+                    }
+                }
+            },
+            list: {
+                name: 'Lists',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'List Type',
+                        options: {
+                            'simple': 'Simple List',
+                            'twoLine': 'Two Line',
+                            'withAvatars': 'With Avatars'
+                        },
+                        default: 'simple'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Items (one per line)',
+                        default: 'Inbox\nStarred\nSent mail\nDrafts'
+                    }
+                }
+            },
+            chip: {
+                name: 'Chip',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Chip Type',
+                        options: {
+                            'assist': 'Assist Chip',
+                            'filter': 'Filter Chip',
+                            'input': 'Input Chip'
+                        },
+                        default: 'assist'
+                    },
+                    labels: {
+                        type: 'textarea',
+                        label: 'Chip Labels (one per line)',
+                        default: 'Design\nDevelopment\nTesting'
+                    }
+                }
+            },
+            navigation: {
+                name: 'Navigation Bar',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Navigation Type',
+                        options: {
+                            'fixed': 'Fixed Bottom',
+                            'floating': 'Floating',
+                            'icons-only': 'Icons Only'
+                        },
+                        default: 'fixed'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Items (format: icon|label|href)',
+                        default: 'home|Home|/\nsearch|Search|/search\nfavorite|Favorites|/favorites\nnotifications|Alerts|/alerts'
+                    },
+                    activeIndex: {
+                        type: 'number',
+                        label: 'Active Item (0-based)',
+                        default: 0
+                    }
+                }
+            },
+            navigationdrawer: {
+                name: 'Navigation Drawer',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Drawer Type',
+                        options: {
+                            'modal': 'Modal (with overlay)',
+                            'standard': 'Standard (always visible)'
+                        },
+                        default: 'modal'
+                    },
+                    title: {
+                        type: 'text',
+                        label: 'Title',
+                        default: 'Navigation'
+                    },
+                    subtitle: {
+                        type: 'text',
+                        label: 'Subtitle',
+                        default: 'Main navigation menu'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Items (format: icon|text|href)',
+                        default: 'home|Home|/\ninbox|Inbox|/inbox\nfavorites|Favorites|/favorites\n---\nsettings|Settings|/settings'
+                    },
+                    open: {
+                        type: 'checkbox',
+                        label: 'Initially Open',
+                        default: true
+                    }
+                }
+            },
+            navigationrail: {
+                name: 'Navigation Rail',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Rail Type',
+                        options: {
+                            'standard': 'Standard',
+                            'with-header': 'With Header/FAB',
+                            'compact': 'Compact (icons only)'
+                        },
+                        default: 'standard'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Items (format: icon|label|href)',
+                        default: 'home|Home|/\ninbox|Inbox|/inbox\nfavorites|Favorites|/favorites\nsettings|Settings|/settings'
+                    },
+                    fab_icon: {
+                        type: 'text',
+                        label: 'FAB Icon (for with-header)',
+                        default: 'add'
+                    }
+                }
+            },
+            menu: {
+                name: 'Menu',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Menu Type',
+                        options: {
+                            'dropdown': 'Dropdown Menu',
+                            'context': 'Context Menu'
+                        },
+                        default: 'dropdown'
+                    },
+                    trigger: {
+                        type: 'text',
+                        label: 'Trigger Text',
+                        default: 'More Options'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Menu Items (format: text|icon|action)',
+                        default: 'Settings|settings|settings\nProfile|person|profile\n---\nLogout|logout|logout'
+                    },
+                    position: {
+                        type: 'select',
+                        label: 'Position',
+                        options: {
+                            'bottom-start': 'Bottom Start',
+                            'bottom-end': 'Bottom End',
+                            'top-start': 'Top Start',
+                            'top-end': 'Top End'
+                        },
+                        default: 'bottom-start'
+                    }
+                }
+            },
+            iconbutton: {
+                name: 'Icon Button',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Type',
+                        options: {
+                            'standard': 'Standard',
+                            'filled': 'Filled',
+                            'outlined': 'Outlined',
+                            'tonal': 'Tonal'
+                        },
+                        default: 'standard'
+                    },
+                    icon: {
+                        type: 'text',
+                        label: 'Icon',
+                        default: 'star'
+                    },
+                    toggle: {
+                        type: 'checkbox',
+                        label: 'Toggle Button',
+                        default: false
+                    },
+                    selected_icon: {
+                        type: 'text',
+                        label: 'Selected Icon (Toggle only)',
+                        default: 'star'
+                    },
+                    selected: {
+                        type: 'checkbox',
+                        label: 'Selected',
+                        default: false
+                    },
+                    disabled: {
+                        type: 'checkbox',
+                        label: 'Disabled',
+                        default: false
+                    },
+                    aria_label: {
+                        type: 'text',
+                        label: 'ARIA Label',
+                        default: 'Icon Button'
+                    }
+                }
+            },
+            fab: {
+                name: 'FAB',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'FAB Type',
+                        options: {
+                            'standard': 'Standard',
+                            'small': 'Small',
+                            'large': 'Large',
+                            'extended': 'Extended'
+                        },
+                        default: 'standard'
+                    },
+                    icon: {
+                        type: 'text',
+                        label: 'Icon',
+                        default: 'add'
+                    },
+                    text: {
+                        type: 'text',
+                        label: 'Text (Extended only)',
+                        default: 'Create'
+                    },
+                    disabled: {
+                        type: 'checkbox',
+                        label: 'Disabled',
+                        default: false
+                    }
+                }
+            },
+            dialog: {
+                name: 'Dialog',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Dialog Type',
+                        options: {
+                            'basic': 'Basic Dialog',
+                            'alert': 'Alert Dialog',
+                            'confirm': 'Confirmation',
+                            'fullscreen': 'Fullscreen',
+                            'form': 'Form Dialog'
+                        },
+                        default: 'basic'
+                    },
+                    title: {
+                        type: 'text',
+                        label: 'Title',
+                        default: 'Dialog Title'
+                    },
+                    content: {
+                        type: 'textarea',
+                        label: 'Content',
+                        default: 'This is the dialog content. You can add any text or HTML here.'
+                    },
+                    confirmText: {
+                        type: 'text',
+                        label: 'Confirm Button',
+                        default: 'OK'
+                    },
+                    cancelText: {
+                        type: 'text',
+                        label: 'Cancel Button (if applicable)',
+                        default: 'Cancel'
+                    }
+                }
+            }
+        };
+
+        // Current state
+        let currentComponent = 'button';
+        let currentValues = {};
+
+        // Initialize playground
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComponent(currentComponent);
+        });
+
+        function loadComponent(componentName) {
+            currentComponent = componentName;
+            const config = componentConfigs[componentName];
+
+            if (!config) {
+                console.error('Component not found:', componentName);
+                return;
+            }
+
+            // Generate controls
+            generateControls(config.controls);
+
+            // Initial render
+            updatePreview();
+        }
+
+        function generateControls(controls) {
+            const container = document.getElementById('component-controls');
+            container.innerHTML = '';
+
+            Object.keys(controls).forEach(key => {
+                const control = controls[key];
+                currentValues[key] = control.default;
+
+                const controlGroup = document.createElement('div');
+                controlGroup.className = 'control-group';
+
+                const label = document.createElement('label');
+                label.textContent = control.label;
+                controlGroup.appendChild(label);
+
+                let input;
+
+                switch (control.type) {
+                    case 'select':
+                        input = document.createElement('select');
+                        Object.keys(control.options).forEach(optionKey => {
+                            const option = document.createElement('option');
+                            option.value = optionKey;
+                            option.textContent = control.options[optionKey];
+                            if (optionKey === control.default) option.selected = true;
+                            input.appendChild(option);
+                        });
+                        break;
+
+                    case 'textarea':
+                        input = document.createElement('textarea');
+                        input.value = control.default;
+                        input.rows = 4;
+                        break;
+
+                    case 'checkbox':
+                        input = document.createElement('input');
+                        input.type = 'checkbox';
+                        input.checked = control.default;
+                        break;
+
+                    case 'number':
+                        input = document.createElement('input');
+                        input.type = 'number';
+                        input.value = control.default;
+                        input.min = 0;
+                        break;
+
+                    default:
+                        input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = control.default;
+                        if (control.placeholder) {
+                            input.placeholder = control.placeholder;
+                        }
+                }
+
+                input.addEventListener('change', function() {
+                    currentValues[key] = input.type === 'checkbox' ? input.checked : input.value;
+                    updatePreview();
+                });
+
+                controlGroup.appendChild(input);
+                container.appendChild(controlGroup);
+            });
+        }
+
+        function updatePreview() {
+            // Generate component based on current values
+            const data = {
+                component: currentComponent,
+                values: currentValues
+            };
+
+            // Make AJAX request to generate component
+            fetch('playground-api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('preview-area').innerHTML = data.html;
+                document.getElementById('php-code-content').textContent = data.php;
+                document.getElementById('html-code-content').textContent = data.html;
+
+                // Re-initialize interactive components after loading
+                if (window.initializeMenus) window.initializeMenus();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('preview-area').innerHTML = '<div style="color: var(--md-sys-color-error);">Error generating component</div>';
+            });
+        }
+
+        function copyCode(type, button) {
+            const codeElement = document.getElementById(type + '-code-content');
+            const text = codeElement.textContent;
+
+            navigator.clipboard.writeText(text).then(function() {
+                // Show success feedback
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = 'var(--md-sys-color-primary)';
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'var(--md-sys-color-primary)';
+                }, 2000);
+            });
+        }
+
+        // Load component from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const componentParam = urlParams.get('component');
+        if (componentParam && componentConfigs[componentParam]) {
+            currentComponent = componentParam;
+        }
+
+        // Light/Dark Mode Toggle
+        function toggleMode() {
+            const button = document.getElementById('mode-toggle');
+            const currentMode = document.documentElement.getAttribute('data-theme') || 'light';
+            const newMode = currentMode === 'light' ? 'dark' : 'light';
+
+            console.log('Toggling from', currentMode, 'to', newMode);
+
+            // Update data attribute for CSS
+            document.documentElement.setAttribute('data-theme', newMode);
+
+            // Save preference
+            localStorage.setItem('md3-color-scheme', newMode);
+
+            // Update button icon - show opposite of current mode
+            const icon = newMode === 'dark' ? 'light_mode' : 'dark_mode';
+            button.innerHTML = '<span class="material-symbols-outlined">' + icon + '</span>';
+
+            // Add a class to body to ensure CSS recalculation
+            document.body.classList.toggle('theme-switching');
+
+            console.log('Applied theme:', document.documentElement.getAttribute('data-theme'));
+
+            // Debug: Test if CSS variables are changing
+            setTimeout(() => {
+                const computedStyle = getComputedStyle(document.documentElement);
+                const bgColor = computedStyle.getPropertyValue('--md-sys-color-background').trim();
+                const primaryColor = computedStyle.getPropertyValue('--md-sys-color-primary').trim();
+                console.log('Background color:', bgColor);
+                console.log('Primary color:', primaryColor);
+            }, 100);
+        }
+
+        // Initialize mode from localStorage or system preference
+        function initializeColorScheme() {
+            const savedMode = localStorage.getItem('md3-color-scheme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initialMode = savedMode || (systemPrefersDark ? 'dark' : 'light');
+
+            console.log('Initializing color scheme:', initialMode);
+
+            document.documentElement.setAttribute('data-theme', initialMode);
+
+            const modeButton = document.getElementById('mode-toggle');
+            if (modeButton) {
+                // Show opposite icon of current mode
+                const icon = initialMode === 'dark' ? 'light_mode' : 'dark_mode';
+                modeButton.innerHTML = '<span class="material-symbols-outlined">' + icon + '</span>';
+                console.log('Set initial icon to:', icon);
+            }
+
+            console.log('HTML data-theme attribute:', document.documentElement.getAttribute('data-theme'));
+        }
+
+        // Initialize on page load
+        initializeColorScheme();
+
+        
+// Icon Button Toggle Functionality
+document.addEventListener("DOMContentLoaded", function() {
+    initializeIconButtons();
+});
+
+function initializeIconButtons() {
+    const toggleButtons = document.querySelectorAll(".md3-icon-button--toggle");
+
+    toggleButtons.forEach(button => {
+        button.addEventListener("click", function(e) {
+            if (this.hasAttribute("disabled")) return;
+
+            const isSelected = this.classList.contains("md3-icon-button--selected");
+            this.classList.toggle("md3-icon-button--selected", !isSelected);
+
+            // Update ARIA state
+            this.setAttribute("aria-pressed", (!isSelected).toString());
+
+            // Dispatch custom event
+            const event = new CustomEvent("md3-icon-button-toggle", {
+                detail: {
+                    selected: !isSelected,
+                    button: this
+                }
+            });
+            this.dispatchEvent(event);
+        });
+
+        // Initialize ARIA state
+        const isSelected = button.classList.contains("md3-icon-button--selected");
+        button.setAttribute("aria-pressed", isSelected.toString());
+    });
+}
+
+// Make function globally available for AJAX content
+window.initializeIconButtons = initializeIconButtons;
+        
+// Navigation Drawer Management
+function openNavigationDrawer(drawerId) {
+    const drawer = document.getElementById(drawerId);
+    const overlay = document.querySelector(".md3-navigation-drawer__overlay");
+
+    if (drawer) {
+        drawer.classList.add("md3-navigation-drawer--open");
+        if (overlay) {
+            overlay.classList.add("md3-navigation-drawer__overlay--visible");
+        }
+
+        // Dispatch open event
+        const event = new CustomEvent("md3-navigation-drawer-open", {
+            detail: { drawer: drawer, drawerId: drawerId }
+        });
+        drawer.dispatchEvent(event);
+    }
+}
+
+function closeNavigationDrawer(drawerId) {
+    const drawer = document.getElementById(drawerId);
+    const overlay = document.querySelector(".md3-navigation-drawer__overlay");
+
+    if (drawer) {
+        drawer.classList.remove("md3-navigation-drawer--open");
+        if (overlay) {
+            overlay.classList.remove("md3-navigation-drawer__overlay--visible");
+        }
+
+        // Dispatch close event
+        const event = new CustomEvent("md3-navigation-drawer-close", {
+            detail: { drawer: drawer, drawerId: drawerId }
+        });
+        drawer.dispatchEvent(event);
+    }
+}
+
+function toggleNavigationDrawer(drawerId) {
+    const drawer = document.getElementById(drawerId);
+    if (drawer) {
+        const isOpen = drawer.classList.contains("md3-navigation-drawer--open");
+        if (isOpen) {
+            closeNavigationDrawer(drawerId);
+        } else {
+            openNavigationDrawer(drawerId);
+        }
+    }
+}
+
+// Initialize Navigation Drawer
+document.addEventListener("DOMContentLoaded", function() {
+    // Close drawer on escape key
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+            const openDrawers = document.querySelectorAll(".md3-navigation-drawer--open");
+            openDrawers.forEach(drawer => {
+                closeNavigationDrawer(drawer.id);
+            });
+        }
+    });
+
+    // Handle responsive behavior
+    function handleResize() {
+        const standardDrawers = document.querySelectorAll(".md3-navigation-drawer--standard");
+        standardDrawers.forEach(drawer => {
+            if (window.innerWidth <= 768) {
+                drawer.classList.remove("md3-navigation-drawer--open");
+            }
+        });
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
+});
+
+// Make functions globally available
+window.openNavigationDrawer = openNavigationDrawer;
+window.closeNavigationDrawer = closeNavigationDrawer;
+window.toggleNavigationDrawer = toggleNavigationDrawer;
+        
+// Navigation Rail Management
+document.addEventListener("DOMContentLoaded", function() {
+    const navigationRail = document.querySelector(".md3-navigation-rail");
+
+    if (navigationRail) {
+        // Add body class for layout adjustment
+        document.body.classList.add("has-navigation-rail");
+
+        if (navigationRail.classList.contains("md3-navigation-rail--compact")) {
+            document.body.classList.add("navigation-rail-compact");
+        }
+
+        // Handle responsive behavior
+        function handleResize() {
+            if (window.innerWidth < 1024) {
+                document.body.classList.remove("has-navigation-rail", "navigation-rail-compact");
+            } else {
+                document.body.classList.add("has-navigation-rail");
+                if (navigationRail.classList.contains("md3-navigation-rail--compact")) {
+                    document.body.classList.add("navigation-rail-compact");
+                }
+            }
+        }
+
+        window.addEventListener("resize", handleResize);
+        handleResize(); // Initial check
+    }
+
+    // Navigation item click handling
+    const railItems = document.querySelectorAll(".md3-navigation-rail__item");
+    railItems.forEach(item => {
+        item.addEventListener("click", function(e) {
+            if (this.hasAttribute("aria-disabled")) {
+                e.preventDefault();
+                return;
+            }
+
+            // Remove active from other items
+            railItems.forEach(otherItem => {
+                otherItem.classList.remove("md3-navigation-rail__item--active");
+                otherItem.removeAttribute("aria-current");
+            });
+
+            // Add active to clicked item
+            this.classList.add("md3-navigation-rail__item--active");
+            this.setAttribute("aria-current", "page");
+
+            // Dispatch custom event
+            const event = new CustomEvent("md3-navigation-rail-select", {
+                detail: {
+                    item: this,
+                    href: this.getAttribute("href")
+                }
+            });
+            this.dispatchEvent(event);
+        });
+    });
+});
+
+        // Theme selector functionality
+        function toggleThemeSelector() {
+            const dropdown = document.getElementById('theme-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const selector = document.querySelector('.theme-selector-compact');
+            const dropdown = document.getElementById('theme-dropdown');
+
+            if (!selector.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

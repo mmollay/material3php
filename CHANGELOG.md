@@ -7,6 +7,30 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.8] - 2025-09-26
+
+### 🐛 Fehlerbehebung
+- **JavaScript Template String Fix:** Reparatur der fehlerhaften Template-String-Syntax in MD3Snackbar.php:848
+  - Gemischte Quote-Escaping verursachte Parse-Error im Playground API
+  - Korrekte Template-String-Syntax für onclick-Attribute implementiert
+- **Playground API 500 Error:** API-Endpoint funktioniert wieder einwandfrei
+  - Alle Komponenten-Generatoren vollständig funktional
+  - Error-Reporting temporär aktiviert für Debugging
+
+### 🔧 Technische Verbesserungen
+- Playground API Error-Handling verbessert
+- Debug-Modus für Entwicklung verfügbar (auskommentiert)
+
+## [0.2.7] - 2025-09-26
+
+### 🚀 Neue Komponenten - Komplexe Interactive Components
+- **🏷️ Chip Component:** Moderne Tag/Label-Elemente
+  - Assist Chips: Hilfe-Aktionen und Shortcuts
+  - Filter Chips: Selektierbare Filteroptionen mit States
+  - Input Chips: Eingabe-Tags mit Dismiss-Funktionalität
+  - Suggestion Chips: Smart Vorschläge für User Input
+  - Chip Sets: Organisierte Gruppen mit flexiblem Layout
+
 ## [0.2.6] - 2025-09-26
 
 ### 🚀 Neue Komponenten - Navigation System Komplett
