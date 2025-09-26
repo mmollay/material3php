@@ -15,9 +15,10 @@ class MD3
      *
      * @param bool $includeRipple Whether to include ripple effects (default: true)
      * @param bool $includeIcons Whether to include Material Icons (default: true)
+     * @param string $theme Theme name (default, ocean, forest, sunset, minimal)
      * @return string HTML for resource includes
      */
-    public static function init(bool $includeRipple = true, bool $includeIcons = true): string
+    public static function init(bool $includeRipple = true, bool $includeIcons = true, string $theme = 'default'): string
     {
         if (self::$initialized) {
             return '';
@@ -35,48 +36,23 @@ class MD3
         // Vollständiges Material Design 3 CSS
         $html[] = '<style>';
 
+        // Get theme colors
+        $themeColors = self::getThemeColors($theme);
+
         // Material Design 3 Tokens
         $html[] = ':root {';
         $html[] = '  color-scheme: light dark;';
-        $html[] = '  --md-sys-color-primary: #6750A4;';
-        $html[] = '  --md-sys-color-on-primary: #FFFFFF;';
-        $html[] = '  --md-sys-color-primary-container: #EADDFF;';
-        $html[] = '  --md-sys-color-on-primary-container: #21005D;';
-        $html[] = '  --md-sys-color-secondary: #625B71;';
-        $html[] = '  --md-sys-color-on-secondary: #FFFFFF;';
-        $html[] = '  --md-sys-color-secondary-container: #E8DEF8;';
-        $html[] = '  --md-sys-color-on-secondary-container: #1D192B;';
-        $html[] = '  --md-sys-color-tertiary: #7D5260;';
-        $html[] = '  --md-sys-color-on-tertiary: #FFFFFF;';
-        $html[] = '  --md-sys-color-surface: #FEF7FF;';
-        $html[] = '  --md-sys-color-on-surface: #1D1B20;';
-        $html[] = '  --md-sys-color-surface-variant: #E7E0EC;';
-        $html[] = '  --md-sys-color-on-surface-variant: #49454F;';
-        $html[] = '  --md-sys-color-background: #FEF7FF;';
-        $html[] = '  --md-sys-color-on-background: #1D1B20;';
-        $html[] = '  --md-sys-color-surface-container-lowest: #FFFFFF;';
-        $html[] = '  --md-sys-color-surface-container: #F3EDF7;';
-        $html[] = '  --md-sys-color-surface-container-high: #ECE6F0;';
-        $html[] = '  --md-sys-color-outline: #79747E;';
-        $html[] = '  --md-sys-color-outline-variant: #CAC4D0;';
-        $html[] = '  --md-sys-color-error: #BA1A1A;';
-        $html[] = '  --md-sys-color-on-error: #FFFFFF;';
+        foreach ($themeColors['light'] as $token => $color) {
+            $html[] = "  --md-sys-color-{$token}: {$color};";
+        }
         $html[] = '}';
 
         // Dark theme
-        $html[] = '@media (prefers-color-scheme: dark) {';
-        $html[] = '  :root {';
-        $html[] = '    --md-sys-color-primary: #D0BCFF;';
-        $html[] = '    --md-sys-color-on-primary: #371E73;';
-        $html[] = '    --md-sys-color-primary-container: #4F378B;';
-        $html[] = '    --md-sys-color-on-primary-container: #EADDFF;';
-        $html[] = '    --md-sys-color-surface: #141218;';
-        $html[] = '    --md-sys-color-on-surface: #E6E0E9;';
-        $html[] = '    --md-sys-color-background: #141218;';
-        $html[] = '    --md-sys-color-on-background: #E6E0E9;';
-        $html[] = '    --md-sys-color-surface-container-lowest: #0F0D13;';
-        $html[] = '    --md-sys-color-surface-container: #211F26;';
-        $html[] = '    --md-sys-color-surface-container-high: #2B2930;';
+        $html[] = '[data-theme="dark"], @media (prefers-color-scheme: dark) {';
+        $html[] = '  :root:not([data-theme="light"]) {';
+        foreach ($themeColors['dark'] as $token => $color) {
+            $html[] = "    --md-sys-color-{$token}: {$color};";
+        }
         $html[] = '  }';
         $html[] = '}';
 
@@ -614,5 +590,18 @@ class MD3
             }
         }
         return $attrs ? ' ' . implode(' ', $attrs) : '';
+    }
+
+    /**
+     * Get theme colors for a specific theme
+     * Delegates to MD3Theme class
+     *
+     * @param string $theme Theme name
+     * @return array Theme colors for light and dark modes
+     */
+    public static function getThemeColors(string $theme = 'default'): array
+    {
+        require_once 'MD3Theme.php';
+        return MD3Theme::getThemeColors($theme);
     }
 }

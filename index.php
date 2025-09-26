@@ -11,8 +11,13 @@
     require_once 'src/MD3Card.php';
     require_once 'src/MD3Breadcrumb.php';
     require_once 'src/MD3Dialog.php';
+    require_once 'src/MD3Theme.php';
 
-    echo MD3::init();
+    // Get theme from URL parameter or default
+    $currentTheme = $_GET['theme'] ?? 'default';
+
+    echo MD3::init(true, true, $currentTheme);
+    echo MD3Theme::getThemeCSS();
     ?>
     <style>
         body {
@@ -92,14 +97,21 @@
         </p>
     </header>
 
+    <!-- Theme Selection -->
+    <div class="demo-section">
+        <h2><?php echo MD3::icon('palette'); ?> Theme-Auswahl</h2>
+        <?php echo MD3Theme::toggleChips($currentTheme); ?>
+    </div>
+
     <!-- Demo Navigation -->
     <div class="demo-navigation">
         <h3><?php echo MD3::icon('explore'); ?> Weitere Demo-Seiten erkunden</h3>
         <div class="nav-buttons">
             <?php
-            echo '<a href="index.php" style="text-decoration: none;">' . MD3Button::filled('🏠 Basis Demo') . '</a>';
-            echo '<a href="demo-extended.php" style="text-decoration: none;">' . MD3Button::outlined('🚀 Erweiterte Demo') . '</a>';
-            echo '<a href="demo-functional.php" style="text-decoration: none;">' . MD3Button::elevated('⚡ Funktionale Demo') . '</a>';
+            $themeParam = $currentTheme !== 'default' ? '?theme=' . $currentTheme : '';
+            echo '<a href="index.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::filled('🏠 Basis Demo') . '</a>';
+            echo '<a href="demo-extended.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::outlined('🚀 Erweiterte Demo') . '</a>';
+            echo '<a href="demo-functional.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::elevated('⚡ Funktionale Demo') . '</a>';
             echo '<a href="test.html" style="text-decoration: none;">' . MD3Button::text('🧪 Test Seite') . '</a>';
             ?>
         </div>
@@ -299,6 +311,8 @@
         <a href="https://github.com/material-components/material-web" style="color: var(--md-sys-color-primary);">Material Web Components</a>
         </p>
     </footer>
+
+    <?php echo MD3Theme::getThemeScript(); ?>
 
     <script>
         // Dialog functionality

@@ -18,8 +18,13 @@
     require_once 'src/MD3Radio.php';
     require_once 'src/MD3Select.php';
     require_once 'src/MD3Dialog.php';
+    require_once 'src/MD3Theme.php';
 
-    echo MD3::init();
+    // Get theme from URL parameter or default
+    $currentTheme = $_GET['theme'] ?? 'default';
+
+    echo MD3::init(true, true, $currentTheme);
+    echo MD3Theme::getThemeCSS();
     ?>
     <style>
         body {
@@ -102,14 +107,21 @@
         </p>
     </header>
 
+    <!-- Theme Selection -->
+    <div class="demo-section">
+        <h2><?php echo MD3::icon('palette'); ?> Theme-Auswahl</h2>
+        <?php echo MD3Theme::toggleChips($currentTheme); ?>
+    </div>
+
     <!-- Demo Navigation -->
     <div class="demo-navigation">
         <h3><?php echo MD3::icon('explore'); ?> Demo-Seiten Navigation</h3>
         <div class="nav-buttons">
             <?php
-            echo '<a href="index.php" style="text-decoration: none;">' . MD3Button::outlined('🏠 Basis Demo') . '</a>';
-            echo '<a href="demo-extended.php" style="text-decoration: none;">' . MD3Button::outlined('🚀 Erweiterte Demo') . '</a>';
-            echo '<a href="demo-functional.php" style="text-decoration: none;">' . MD3Button::filled('⚡ Funktionale Demo') . '</a>';
+            $themeParam = $currentTheme !== 'default' ? '?theme=' . $currentTheme : '';
+            echo '<a href="index.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::outlined('🏠 Basis Demo') . '</a>';
+            echo '<a href="demo-extended.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::outlined('🚀 Erweiterte Demo') . '</a>';
+            echo '<a href="demo-functional.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::filled('⚡ Funktionale Demo') . '</a>';
             echo '<a href="test.html" style="text-decoration: none;">' . MD3Button::text('🧪 Test Seite') . '</a>';
             ?>
         </div>
@@ -118,7 +130,7 @@
         </p>
     </div>
 
-    <form method="POST" action="demo-functional.php">
+    <form method="POST" action="demo-functional.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>">
 
         <!-- Form Controls Demo -->
         <div class="demo-section">
@@ -341,6 +353,7 @@
     echo MD3Chip::getChipScript();
     echo MD3Tooltip::getTooltipScript();
     echo MD3Select::getSelectScript();
+    echo MD3Theme::getThemeScript();
     ?>
 
     <script>
