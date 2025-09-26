@@ -329,11 +329,11 @@
                 <h3>Assist Chips</h3>
                 <?php
                 $assistChips = [
-                    ['label' => 'Wetter', 'icon' => 'cloud'],
-                    ['label' => 'Verkehr', 'icon' => 'traffic'],
-                    ['label' => 'Restaurant', 'icon' => 'restaurant']
+                    MD3Chip::assist('Wetter', ['icon' => 'cloud']),
+                    MD3Chip::assist('Verkehr', ['icon' => 'traffic']),
+                    MD3Chip::assist('Restaurant', ['icon' => 'restaurant'])
                 ];
-                echo MD3Chip::assistSet($assistChips);
+                echo MD3Chip::set($assistChips, ['variant' => 'assist']);
                 ?>
             </div>
 
@@ -352,7 +352,10 @@
             <div class="component-demo">
                 <h3>Input Chips</h3>
                 <?php
-                echo MD3Chip::inputField('tags', 'Tag hinzufügen...', ['PHP', 'Material Design', 'Web']);
+                echo MD3Chip::inputField('tags', [
+                    'placeholder' => 'Tag hinzufügen...',
+                    'chips' => ['PHP', 'Material Design', 'Web']
+                ]);
                 ?>
             </div>
         </div>
@@ -367,9 +370,9 @@
                 <h3>Switches</h3>
                 <div class="demo-form-controls">
                     <?php
-                    echo MD3Switch::withLabel('notifications', 'Benachrichtigungen aktivieren', '1', true);
-                    echo MD3Switch::withLabel('dark_mode', 'Dunkles Design', '1', false);
-                    echo MD3Switch::withLabel('auto_sync', 'Automatische Synchronisation', '1', false);
+                    echo MD3Switch::withLabel('notifications', 'Benachrichtigungen aktivieren', ['value' => '1', 'checked' => true]);
+                    echo MD3Switch::withLabel('dark_mode', 'Dunkles Design', ['value' => '1', 'checked' => false]);
+                    echo MD3Switch::withLabel('auto_sync', 'Automatische Synchronisation', ['value' => '1', 'checked' => false]);
                     ?>
                 </div>
             </div>
@@ -378,9 +381,9 @@
                 <h3>Checkboxes</h3>
                 <div class="demo-form-controls">
                     <?php
-                    echo MD3Checkbox::withLabel('terms', 'AGBs akzeptieren', '1', false);
-                    echo MD3Checkbox::withLabel('newsletter', 'Newsletter abonnieren', '1', true);
-                    echo MD3Checkbox::withLabel('marketing', 'Marketing E-Mails erhalten', '1', false);
+                    echo MD3Checkbox::withLabel('terms', 'AGBs akzeptieren', ['value' => '1', 'checked' => false]);
+                    echo MD3Checkbox::withLabel('newsletter', 'Newsletter abonnieren', ['value' => '1', 'checked' => true]);
+                    echo MD3Checkbox::withLabel('marketing', 'Marketing E-Mails erhalten', ['value' => '1', 'checked' => false]);
                     ?>
                 </div>
             </div>
@@ -471,7 +474,7 @@
                     echo '</div>';
 
                     echo '<div style="margin: 16px 0;">';
-                    echo MD3Switch::withLabel('subscribe', 'Newsletter abonnieren', '1', true);
+                    echo MD3Switch::withLabel('subscribe', 'Newsletter abonnieren', ['value' => '1', 'checked' => true]);
                     echo '</div>';
 
                     echo '<div style="margin: 16px 0;">';

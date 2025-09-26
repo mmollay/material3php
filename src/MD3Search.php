@@ -87,8 +87,10 @@ class MD3Search
             foreach ($filters as $filter) {
                 $filterChips .= MD3Chip::filter(
                     $filter['label'] ?? $filter['value'],
-                    $filter['value'],
-                    $name . '_filters[]'
+                    [
+                        'value' => $filter['value'],
+                        'name' => $name . '_filters[]'
+                    ]
                 );
             }
             $filterChips .= '</div>';

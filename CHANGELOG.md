@@ -7,6 +7,29 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.11] - 2025-09-26
+
+### 🐛 Demo-Extended.php Komplett-Reparatur
+- **Kritisches API-Interface-Problem behoben:** demo-extended.php lädt jetzt vollständig ohne Fehler
+- **MD3Search::withFilters() TypeError:** Falsche Parameter-Reihenfolge für MD3Chip::filter() korrigiert
+- **MD3Chip API-Konsistenz:** Mehrere fehlende/falsche Methoden-Aufrufe repariert:
+  - `assistSet()` → `set()` mit korrekten Parametern
+  - `inputField()` Parameter-Struktur korrigiert
+- **MD3Switch/MD3Checkbox API-Fixes:** Falsche Parameter-Übergabe in `withLabel()` Methoden behoben
+- **Template-String-Fortsetzung:** Weitere CSS-Ripple-Animation-Syntax in MD3Chip, MD3Switch, MD3Checkbox, MD3Tabs repariert
+- **Vollständige HTML-Ausgabe:** Fehlende `</html>` Tag-Problematik behoben
+
+### 📋 Behobene Komponenten-API-Probleme
+- **MD3Search:** Parameter-Mapping für Chip-Filter-Integration
+- **MD3Chip:** Konsistente set() vs. spezifische Set-Methoden-Verwendung
+- **MD3Switch/MD3Checkbox:** Einheitliche options-Array-Parameter-Struktur
+- **Ripple-Animationen:** Template-Literal ${variable}-Syntax in allen betroffenen Komponenten
+
+### 🎯 Qualitätsverbesserungen
+- demo-extended.php funktioniert jetzt als vollständige Showcase-Seite
+- Alle interaktiven Komponenten vollständig lauffähig
+- Konsistente API-Verwendung zwischen Komponenten
+
 ## [0.2.10] - 2025-09-26
 
 ### 🐛 Großes Syntax-Fix - JavaScript Template Literals
