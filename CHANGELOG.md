@@ -7,6 +7,58 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.3] - 2025-09-26
+
+### 🚀 Neue Komponenten
+- **🎯 FAB (Floating Action Button):** Vollständige MD3-konforme Implementierung
+  - Standard, Small, Large und Extended FAB Varianten
+  - Hover-States, Ripple-Effekte und Accessibility Support
+  - Flexible Positionierung (fixed, bottom-right, bottom-left, center)
+  - Integration in Playground mit vollständigen Controls
+
+- **🎖️ Badge-System:** Notification Badge-Komponente implementiert
+  - Small (Dot) und Large (Text/Number) Badge-Typen
+  - Verschiedene Farben (Error, Primary, Secondary, Surface)
+  - Attachment-System für Icons, Navigation und beliebige Elemente
+  - JavaScript Management-System mit Auto-Formatting (99+ für große Zahlen)
+  - Positionierungs-Optionen (top-right, top-left, bottom-right, bottom-left)
+
+### 🌙 Dark/Light Mode System
+- **🔧 Dark Mode Toggle repariert:** Vollständig funktionaler Light/Dark Mode Wechsel
+  - CSS-Selektoren vereinfacht: Direkte `[data-theme="dark"]` Regeln
+  - JavaScript-Konflikte beseitigt: Einheitliches Toggle-System
+  - System-Präferenz Integration: Respektiert `prefers-color-scheme`
+  - Sanfte Transitions: 0.3s ease Übergänge zwischen Modi
+  - LocalStorage Persistierung: Einstellungen werden gespeichert
+  - Debug-Logging: Console-Ausgaben für Problemdiagnose
+
+### 📋 Roadmap & Organisation
+- **🗺️ ROADMAP.md erstellt:** Vollständige MD3 Komponenten-Analyse
+  - 13/33 Komponenten implementiert (39% Fortschritt)
+  - Prioritäts-basierte Implementierungsphasen
+  - Material Design konforme Kategorisierung
+  - Detaillierte Feature-Matrix und Zielplanung
+
+### 🔧 Technische Verbesserungen
+- **CSS-Architektur:** Vereinfachte Dark Mode Selektoren ohne komplexe `:not()` Regeln
+- **JavaScript-Stabilität:** Eliminierung von Event-Listener Konflikten
+- **Component-Integration:** FAB und Badge vollständig in playground-api.php integriert
+- **Debug-Tools:** Enhanced Console-Logging für Theme-System Debugging
+
+### 📊 Aktuelle Komponenten-Übersicht
+**Actions:** Button ✅, FAB ✅ | **Communication:** Badge ✅
+**Containment:** Card ✅, Dialog ✅ | **Navigation:** Navigation Bar ✅, Menu ✅
+**Selection:** Checkbox ✅, Radio ✅, Switch ✅, Select ✅ | **Text Inputs:** TextField ✅
+**Display:** Lists ✅, Chip ✅
+
+### 🎯 Nächste Prioritäten (Phase 1)
+- Icon Button (Actions vervollständigen)
+- Progress Indicator (Communication erweitern)
+- Tabs (Navigation erweitern)
+- Search Component (Text Inputs erweitern)
+
+---
+
 ## [0.2.2] - 2025-09-26
 
 ### 🚀 Neue Features

@@ -17,6 +17,8 @@
         require_once 'src/MD3NavigationBar.php';
         require_once 'src/MD3Menu.php';
         require_once 'src/MD3Dialog.php';
+        require_once 'src/MD3FloatingActionButton.php';
+        require_once 'src/MD3IconButton.php';
         require_once 'src/MD3Theme.php';
 
         // Get theme from URL parameter or default
@@ -37,6 +39,8 @@
         echo MD3NavigationBar::getCSS();
         echo MD3Menu::getCSS();
         echo MD3Dialog::getCSS();
+        echo MD3FloatingActionButton::getCSS();
+        echo MD3IconButton::getCSS();
         ?>
         * {
             margin: 0;
@@ -555,6 +559,9 @@
                 <a href="?component=button&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? 'button') === 'button' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('smart_button'); ?> Button
                 </a>
+                <a href="?component=iconbutton&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'iconbutton' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('radio_button_unchecked'); ?> Icon Button
+                </a>
                 <a href="?component=textfield&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'textfield' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('text_fields'); ?> TextField
                 </a>
@@ -658,6 +665,7 @@
     <?php echo MD3NavigationBar::getScript(); ?>
     <?php echo MD3Menu::getScript(); ?>
     <?php echo MD3Dialog::getScript(); ?>
+    <?php echo MD3FloatingActionButton::getScript(); ?>
     <?php echo MD3Theme::getThemeScript(); ?>
 
     <script>
@@ -932,6 +940,83 @@
                     }
                 }
             },
+            iconbutton: {
+                name: 'Icon Button',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Type',
+                        options: {
+                            'standard': 'Standard',
+                            'filled': 'Filled',
+                            'outlined': 'Outlined',
+                            'tonal': 'Tonal'
+                        },
+                        default: 'standard'
+                    },
+                    icon: {
+                        type: 'text',
+                        label: 'Icon',
+                        default: 'star'
+                    },
+                    toggle: {
+                        type: 'checkbox',
+                        label: 'Toggle Button',
+                        default: false
+                    },
+                    selected_icon: {
+                        type: 'text',
+                        label: 'Selected Icon (Toggle only)',
+                        default: 'star'
+                    },
+                    selected: {
+                        type: 'checkbox',
+                        label: 'Selected',
+                        default: false
+                    },
+                    disabled: {
+                        type: 'checkbox',
+                        label: 'Disabled',
+                        default: false
+                    },
+                    aria_label: {
+                        type: 'text',
+                        label: 'ARIA Label',
+                        default: 'Icon Button'
+                    }
+                }
+            },
+            fab: {
+                name: 'FAB',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'FAB Type',
+                        options: {
+                            'standard': 'Standard',
+                            'small': 'Small',
+                            'large': 'Large',
+                            'extended': 'Extended'
+                        },
+                        default: 'standard'
+                    },
+                    icon: {
+                        type: 'text',
+                        label: 'Icon',
+                        default: 'add'
+                    },
+                    text: {
+                        type: 'text',
+                        label: 'Text (Extended only)',
+                        default: 'Create'
+                    },
+                    disabled: {
+                        type: 'checkbox',
+                        label: 'Disabled',
+                        default: false
+                    }
+                }
+            },
             dialog: {
                 name: 'Dialog',
                 controls: {
@@ -1120,10 +1205,11 @@
 
         // Light/Dark Mode Toggle
         function toggleMode() {
-            const body = document.body;
             const button = document.getElementById('mode-toggle');
-            const currentMode = localStorage.getItem('md3-color-scheme') || 'light';
+            const currentMode = document.documentElement.getAttribute('data-theme') || 'light';
             const newMode = currentMode === 'light' ? 'dark' : 'light';
+
+            console.log('Toggling from', currentMode, 'to', newMode);
 
             // Update data attribute for CSS
             document.documentElement.setAttribute('data-theme', newMode);
@@ -1131,19 +1217,50 @@
             // Save preference
             localStorage.setItem('md3-color-scheme', newMode);
 
-            // Update button icon
-            const icon = newMode === 'light' ? 'light_mode' : 'dark_mode';
+            // Update button icon - show opposite of current mode
+            const icon = newMode === 'dark' ? 'light_mode' : 'dark_mode';
             button.innerHTML = '<span class="material-symbols-outlined">' + icon + '</span>';
+
+            // Add a class to body to ensure CSS recalculation
+            document.body.classList.toggle('theme-switching');
+
+            console.log('Applied theme:', document.documentElement.getAttribute('data-theme'));
+
+            // Debug: Test if CSS variables are changing
+            setTimeout(() => {
+                const computedStyle = getComputedStyle(document.documentElement);
+                const bgColor = computedStyle.getPropertyValue('--md-sys-color-background').trim();
+                const primaryColor = computedStyle.getPropertyValue('--md-sys-color-primary').trim();
+                console.log('Background color:', bgColor);
+                console.log('Primary color:', primaryColor);
+            }, 100);
         }
 
-        // Initialize mode from localStorage
-        const savedMode = localStorage.getItem('md3-color-scheme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedMode);
-        const modeButton = document.getElementById('mode-toggle');
-        if (modeButton) {
-            const icon = savedMode === 'light' ? 'light_mode' : 'dark_mode';
-            modeButton.innerHTML = '<span class="material-symbols-outlined">' + icon + '</span>';
+        // Initialize mode from localStorage or system preference
+        function initializeColorScheme() {
+            const savedMode = localStorage.getItem('md3-color-scheme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initialMode = savedMode || (systemPrefersDark ? 'dark' : 'light');
+
+            console.log('Initializing color scheme:', initialMode);
+
+            document.documentElement.setAttribute('data-theme', initialMode);
+
+            const modeButton = document.getElementById('mode-toggle');
+            if (modeButton) {
+                // Show opposite icon of current mode
+                const icon = initialMode === 'dark' ? 'light_mode' : 'dark_mode';
+                modeButton.innerHTML = '<span class="material-symbols-outlined">' + icon + '</span>';
+                console.log('Set initial icon to:', icon);
+            }
+
+            console.log('HTML data-theme attribute:', document.documentElement.getAttribute('data-theme'));
         }
+
+        // Initialize on page load
+        initializeColorScheme();
+
+        <?php echo MD3IconButton::getJS(); ?>
 
         // Theme selector functionality
         function toggleThemeSelector() {

@@ -39,6 +39,8 @@ require_once 'src/MD3List.php';
 require_once 'src/MD3NavigationBar.php';
 require_once 'src/MD3Menu.php';
 require_once 'src/MD3Dialog.php';
+require_once 'src/MD3FloatingActionButton.php';
+require_once 'src/MD3IconButton.php';
 require_once 'src/MD3Switch.php';
 require_once 'src/MD3Checkbox.php';
 require_once 'src/MD3Radio.php';
@@ -122,6 +124,16 @@ function generateComponent($component, $values) {
         case 'dialog':
             $html = generateDialog($values);
             $php = generateDialogPHP($values);
+            break;
+
+        case 'fab':
+            $html = generateFAB($values);
+            $php = generateFABPHP($values);
+            break;
+
+        case 'iconbutton':
+            $html = generateIconButton($values);
+            $php = generateIconButtonPHP($values);
             break;
 
         default:
@@ -805,6 +817,137 @@ function generateDialogPHP($values) {
     $code .= "\n\$trigger = \"<button class='md3-button md3-button--filled' onclick='MD3Dialog.open('{\$id}')'>Open {\$title}</button>\";\n";
     $code .= "echo \$trigger . \$dialog;";
 
+    return $code;
+}
+
+function generateFAB($values) {
+    $type = $values['type'] ?? 'standard';
+    $icon = $values['icon'] ?? 'add';
+    $text = $values['text'] ?? '';
+    $disabled = $values['disabled'] ?? false;
+
+    $options = [
+        'disabled' => $disabled,
+        'onclick' => 'alert("FAB clicked!")'
+    ];
+
+    switch ($type) {
+        case 'small':
+            return MD3FloatingActionButton::small($icon, $options);
+        case 'large':
+            return MD3FloatingActionButton::large($icon, $options);
+        case 'extended':
+            $fabText = $text ?: 'Create';
+            return MD3FloatingActionButton::extended($icon, $fabText, $options);
+        default:
+            return MD3FloatingActionButton::standard($icon, $options);
+    }
+}
+
+function generateFABPHP($values) {
+    $type = $values['type'] ?? 'standard';
+    $icon = addslashes($values['icon'] ?? 'add');
+    $text = addslashes($values['text'] ?? '');
+    $disabled = $values['disabled'] ?? false ? 'true' : 'false';
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3FloatingActionButton.php';\n\n";
+    $code .= "\$options = [\n";
+    $code .= "    'disabled' => {$disabled},\n";
+    $code .= "    'onclick' => 'alert(\"FAB clicked!\")'\n";
+    $code .= "];\n\n";
+
+    switch ($type) {
+        case 'small':
+            $code .= "echo MD3FloatingActionButton::small('{$icon}', \$options);";
+            break;
+        case 'large':
+            $code .= "echo MD3FloatingActionButton::large('{$icon}', \$options);";
+            break;
+        case 'extended':
+            $fabText = $text ?: 'Create';
+            $code .= "echo MD3FloatingActionButton::extended('{$icon}', '{$fabText}', \$options);";
+            break;
+        default:
+            $code .= "echo MD3FloatingActionButton::standard('{$icon}', \$options);";
+            break;
+    }
+
+    return $code;
+}
+
+function generateIconButton($values) {
+    $type = $values['type'] ?? 'standard';
+    $icon = $values['icon'] ?? 'star';
+    $selectedIcon = $values['selected_icon'] ?? $icon;
+    $disabled = $values['disabled'] ?? false;
+    $selected = $values['selected'] ?? false;
+    $toggle = $values['toggle'] ?? false;
+    $ariaLabel = $values['aria_label'] ?? ucfirst(str_replace('_', ' ', $icon));
+
+    $options = [
+        'disabled' => $disabled,
+        'selected' => $selected,
+        'aria_label' => $ariaLabel,
+        'onclick' => 'console.log("Icon button clicked");'
+    ];
+
+    if ($toggle) {
+        $options['selected_icon'] = $selectedIcon;
+        return MD3IconButton::toggle($icon, $selectedIcon, $options);
+    }
+
+    switch ($type) {
+        case 'filled':
+            return MD3IconButton::filled($icon, $options);
+        case 'outlined':
+            return MD3IconButton::outlined($icon, $options);
+        case 'tonal':
+            return MD3IconButton::tonal($icon, $options);
+        default:
+            return MD3IconButton::standard($icon, $options);
+    }
+}
+
+function generateIconButtonPHP($values) {
+    $type = $values['type'] ?? 'standard';
+    $icon = addslashes($values['icon'] ?? 'star');
+    $selectedIcon = addslashes($values['selected_icon'] ?? $icon);
+    $disabled = $values['disabled'] ?? false ? 'true' : 'false';
+    $selected = $values['selected'] ?? false ? 'true' : 'false';
+    $toggle = $values['toggle'] ?? false ? 'true' : 'false';
+    $ariaLabel = addslashes($values['aria_label'] ?? ucfirst(str_replace('_', ' ', $icon)));
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3IconButton.php';\n\n";
+    $code .= "\$options = [\n";
+    $code .= "    'disabled' => {$disabled},\n";
+    $code .= "    'selected' => {$selected},\n";
+    $code .= "    'aria_label' => '{$ariaLabel}',\n";
+    $code .= "    'onclick' => 'console.log(\"Icon button clicked\");'\n";
+    $code .= "];\n\n";
+
+    if ($values['toggle'] ?? false) {
+        $code .= "\$options['selected_icon'] = '{$selectedIcon}';\n";
+        $code .= "echo MD3IconButton::toggle('{$icon}', '{$selectedIcon}', \$options);";
+    } else {
+        switch ($type) {
+            case 'filled':
+                $code .= "echo MD3IconButton::filled('{$icon}', \$options);";
+                break;
+            case 'outlined':
+                $code .= "echo MD3IconButton::outlined('{$icon}', \$options);";
+                break;
+            case 'tonal':
+                $code .= "echo MD3IconButton::tonal('{$icon}', \$options);";
+                break;
+            default:
+                $code .= "echo MD3IconButton::standard('{$icon}', \$options);";
+                break;
+        }
+    }
+
+    $code .= "\n?>";
     return $code;
 }
 ?>

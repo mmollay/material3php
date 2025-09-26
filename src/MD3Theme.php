@@ -398,22 +398,41 @@ class MD3Theme
                 });
             });
 
-            // Dark mode toggle
-            function toggleDarkMode() {
-                const html = document.documentElement;
-                const isDark = html.getAttribute("data-theme") === "dark";
-                html.setAttribute("data-theme", isDark ? "light" : "dark");
-                localStorage.setItem("md3-color-scheme", isDark ? "light" : "dark");
-            }
-
-            // Load saved color scheme
-            document.addEventListener("DOMContentLoaded", function() {
-                const savedScheme = localStorage.getItem("md3-color-scheme");
-                if (savedScheme) {
-                    document.documentElement.setAttribute("data-theme", savedScheme);
-                }
-            });
+            // Note: Dark/Light mode toggle is handled by playground.php
         </script>';
+    }
+
+    /**
+     * Generate CSS variables for light and dark modes
+     *
+     * @param string $theme Theme name
+     * @return string CSS with both light and dark mode variables
+     */
+    public static function generateThemeModeCSS(string $theme = 'default'): string
+    {
+        $themeColors = self::getThemeColors($theme);
+
+        if (!isset($themeColors['light']) || !isset($themeColors['dark'])) {
+            return '/* Theme not found */';
+        }
+
+        $css = ":root, [data-theme=\"light\"] {\n  color-scheme: light;\n";
+
+        // Light mode colors
+        foreach ($themeColors['light'] as $token => $color) {
+            $css .= "  --md-sys-color-{$token}: {$color};\n";
+        }
+
+        $css .= "}\n\n[data-theme=\"dark\"], @media (prefers-color-scheme: dark) {\n  :root:not([data-theme=\"light\"]) {\n";
+
+        // Dark mode colors
+        foreach ($themeColors['dark'] as $token => $color) {
+            $css .= "    --md-sys-color-{$token}: {$color};\n";
+        }
+
+        $css .= "  }\n}";
+
+        return $css;
     }
 
     /**

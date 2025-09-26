@@ -48,8 +48,15 @@ class MD3
         $html[] = '}';
 
         // Dark theme
-        $html[] = '[data-theme="dark"], @media (prefers-color-scheme: dark) {';
-        $html[] = '  :root:not([data-theme="light"]) {';
+        $html[] = '[data-theme="dark"] {';
+        foreach ($themeColors['dark'] as $token => $color) {
+            $html[] = "  --md-sys-color-{$token}: {$color};";
+        }
+        $html[] = '}';
+
+        // System dark mode preference (when no explicit theme is set)
+        $html[] = '@media (prefers-color-scheme: dark) {';
+        $html[] = '  :root:not([data-theme]) {';
         foreach ($themeColors['dark'] as $token => $color) {
             $html[] = "    --md-sys-color-{$token}: {$color};";
         }
@@ -63,6 +70,7 @@ class MD3
         $html[] = '  padding: 16px;';
         $html[] = '  background-color: var(--md-sys-color-background);';
         $html[] = '  color: var(--md-sys-color-on-background);';
+        $html[] = '  transition: background-color 0.3s ease, color 0.3s ease;';
         $html[] = '}';
 
         // Custom Element Reset (wichtig!)
