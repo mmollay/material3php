@@ -452,6 +452,10 @@ class MD3Theme
                 console.log("HTML data-theme attribute:", document.documentElement.getAttribute("data-theme"));
             }
 
+            // Make functions globally available immediately
+            window.changeTheme = changeTheme;
+            window.toggleMode = toggleMode;
+
             // Load saved theme on page load
             document.addEventListener("DOMContentLoaded", function() {
                 // Initialize color scheme first
@@ -483,10 +487,6 @@ class MD3Theme
                     }
                 });
             });
-
-            // Make functions globally available
-            window.changeTheme = changeTheme;
-            window.toggleMode = toggleMode;
         </script>';
     }
 
