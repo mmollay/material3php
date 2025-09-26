@@ -454,7 +454,7 @@ class MD3Theme
 
             // Make functions globally available immediately
             window.changeTheme = changeTheme;
-            window.toggleMode = toggleMode;
+            // Note: toggleMode is now defined in MD3Header::getScript()
 
             // Load saved theme on page load
             document.addEventListener("DOMContentLoaded", function() {
