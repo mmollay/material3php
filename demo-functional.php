@@ -22,6 +22,32 @@
     echo MD3::init();
     ?>
     <style>
+        body {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .demo-navigation {
+            margin: 16px 0;
+            padding: 16px;
+            background: var(--md-sys-color-primary-container);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .demo-navigation h3 {
+            margin: 0 0 12px 0;
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
         .demo-section {
             margin: 24px 0;
             padding: 16px;
@@ -75,6 +101,22 @@
             Vollständig funktionsfähige Komponenten mit korrekten Form-Elementen
         </p>
     </header>
+
+    <!-- Demo Navigation -->
+    <div class="demo-navigation">
+        <h3><?php echo MD3::icon('explore'); ?> Demo-Seiten Navigation</h3>
+        <div class="nav-buttons">
+            <?php
+            echo MD3Button::outlined('🏠 Basis Demo', 'index.php');
+            echo MD3Button::outlined('🚀 Erweiterte Demo', 'demo-extended.php');
+            echo MD3Button::filled('⚡ Funktionale Demo', 'demo-functional.php');
+            echo MD3Button::text('🧪 Test Seite', 'test.html');
+            ?>
+        </div>
+        <p style="margin: 12px 0 0 0; font-size: 14px; color: var(--md-sys-color-on-primary-container);">
+            <strong>Aktuelle Seite:</strong> Funktionale Demo - Vollständige Form-Integration mit POST-Testing
+        </p>
+    </div>
 
     <form method="POST" action="demo-functional.php">
 
