@@ -328,6 +328,7 @@ function generateSelect($values) {
     $optionsText = $values['options'] ?? 'Option 1\nOption 2\nOption 3';
 
     $options = [];
+    $optionsText = str_replace('\\n', "\n", $optionsText);
     $lines = explode("\n", trim($optionsText));
     foreach ($lines as $i => $line) {
         $line = trim($line);
@@ -350,6 +351,7 @@ function generateSelectPHP($values) {
     $code .= "require_once 'src/MD3Select.php';\n\n";
     $code .= "\$options = [\n";
 
+    $optionsText = str_replace('\\n', "\n", $optionsText);
     $lines = explode("\n", trim($optionsText));
     foreach ($lines as $i => $line) {
         $line = trim($line);
@@ -406,6 +408,7 @@ function generateRadio($values) {
     $selected = intval($values['selected'] ?? 0);
 
     $options = [];
+    $optionsText = str_replace('\\n', "\n", $optionsText);
     $lines = explode("\n", trim($optionsText));
     foreach ($lines as $i => $line) {
         $line = trim($line);
@@ -430,6 +433,7 @@ function generateRadioPHP($values) {
     $code .= "require_once 'src/MD3Radio.php';\n\n";
     $code .= "\$options = [\n";
 
+    $optionsText = str_replace('\\n', "\n", $optionsText);
     $lines = explode("\n", trim($optionsText));
     foreach ($lines as $i => $line) {
         $line = trim($line);
@@ -450,6 +454,7 @@ function generateList($values) {
     $itemsText = $values['items'] ?? 'Inbox\nStarred\nSent mail\nDrafts';
 
     $items = [];
+    $itemsText = str_replace('\\n', "\n", $itemsText);
     $lines = explode("\n", trim($itemsText));
     foreach ($lines as $line) {
         $line = trim($line);
@@ -487,6 +492,7 @@ function generateListPHP($values) {
     $code .= "require_once 'src/MD3List.php';\n\n";
     $code .= "\$items = [\n";
 
+    $itemsText = str_replace('\\n', "\n", $itemsText);
     $lines = explode("\n", trim($itemsText));
     foreach ($lines as $line) {
         $line = trim($line);
@@ -526,6 +532,7 @@ function generateChip($values) {
     $labelsText = $values['labels'] ?? 'Design\nDevelopment\nTesting';
 
     $chips = [];
+    $labelsText = str_replace('\\n', "\n", $labelsText);
     $lines = explode("\n", trim($labelsText));
 
     foreach ($lines as $i => $line) {
@@ -555,6 +562,7 @@ function generateChipPHP($values) {
     $code .= "require_once 'src/MD3Chip.php';\n\n";
     $code .= "\$chips = [];\n";
 
+    $labelsText = str_replace('\\n', "\n", $labelsText);
     $lines = explode("\n", trim($labelsText));
     foreach ($lines as $i => $line) {
         $line = trim($line);
@@ -583,8 +591,9 @@ function generateNavigation($values) {
     $itemsText = $values['items'] ?? 'home|Home|/\nsearch|Search|/search\nfavorite|Favorites|/favorites';
     $activeIndex = (int)($values['activeIndex'] ?? 0);
 
-    // Parse items
+    // Parse items (handle both \n and \\n)
     $items = [];
+    $itemsText = str_replace('\\n', "\n", $itemsText);
     $lines = explode("\n", trim($itemsText));
     foreach ($lines as $i => $line) {
         $line = trim($line);
@@ -618,6 +627,8 @@ function generateNavigationPHP($values) {
     $code .= "require_once 'src/MD3NavigationBar.php';\n\n";
     $code .= "\$items = [\n";
 
+    // Handle both \n and \\n
+    $itemsText = str_replace('\\n', "\n", $itemsText);
     $lines = explode("\n", trim($itemsText));
     foreach ($lines as $i => $line) {
         $line = trim($line);
@@ -652,8 +663,9 @@ function generateMenu($values) {
     $itemsText = $values['items'] ?? 'Settings|settings|settings\nProfile|person|profile\n---\nLogout|logout|logout';
     $position = $values['position'] ?? 'bottom-start';
 
-    // Parse items
+    // Parse items (handle both \n and \\n)
     $items = [];
+    $itemsText = str_replace('\\n', "\n", $itemsText);
     $lines = explode("\n", trim($itemsText));
     foreach ($lines as $line) {
         $line = trim($line);
@@ -688,6 +700,8 @@ function generateMenuPHP($values) {
     $code .= "require_once 'src/MD3Menu.php';\n\n";
     $code .= "\$items = [\n";
 
+    // Handle both \n and \\n
+    $itemsText = str_replace('\\n', "\n", $itemsText);
     $lines = explode("\n", trim($itemsText));
     foreach ($lines as $line) {
         $line = trim($line);

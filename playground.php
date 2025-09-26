@@ -92,6 +92,27 @@
             gap: 16px;
         }
 
+        /* Mode Toggle */
+        .mode-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 20px;
+            color: var(--md-sys-color-on-surface);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 8px;
+        }
+
+        .mode-toggle:hover {
+            background: var(--md-sys-color-surface-container-high);
+            border-color: var(--md-sys-color-primary);
+        }
+
         /* Compact Theme Selector */
         .theme-selector-compact {
             position: relative;
@@ -480,6 +501,11 @@
                     <?php echo MD3::icon('play_arrow'); ?> MD3 Playground
                 </h1>
                 <div class="header-actions">
+                    <!-- Light/Dark Mode Toggle -->
+                    <button class="mode-toggle" onclick="toggleMode()" id="mode-toggle">
+                        <?php echo MD3::icon('light_mode'); ?>
+                    </button>
+
                     <div class="theme-selector-compact">
                         <button class="theme-toggle" onclick="toggleThemeSelector()">
                             <?php echo MD3::icon('palette'); ?>
@@ -807,7 +833,7 @@
                 }
             },
             list: {
-                name: 'List',
+                name: 'Lists',
                 controls: {
                     type: {
                         type: 'select',
@@ -1057,6 +1083,9 @@
                 document.getElementById('preview-area').innerHTML = data.html;
                 document.getElementById('php-code-content').textContent = data.php;
                 document.getElementById('html-code-content').textContent = data.html;
+
+                // Re-initialize interactive components after loading
+                if (window.initializeMenus) window.initializeMenus();
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -1087,6 +1116,33 @@
         const componentParam = urlParams.get('component');
         if (componentParam && componentConfigs[componentParam]) {
             currentComponent = componentParam;
+        }
+
+        // Light/Dark Mode Toggle
+        function toggleMode() {
+            const body = document.body;
+            const button = document.getElementById('mode-toggle');
+            const currentMode = localStorage.getItem('md3-color-scheme') || 'light';
+            const newMode = currentMode === 'light' ? 'dark' : 'light';
+
+            // Update data attribute for CSS
+            document.documentElement.setAttribute('data-theme', newMode);
+
+            // Save preference
+            localStorage.setItem('md3-color-scheme', newMode);
+
+            // Update button icon
+            const icon = newMode === 'light' ? 'light_mode' : 'dark_mode';
+            button.innerHTML = '<span class="material-symbols-outlined">' + icon + '</span>';
+        }
+
+        // Initialize mode from localStorage
+        const savedMode = localStorage.getItem('md3-color-scheme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedMode);
+        const modeButton = document.getElementById('mode-toggle');
+        if (modeButton) {
+            const icon = savedMode === 'light' ? 'light_mode' : 'dark_mode';
+            modeButton.innerHTML = '<span class="material-symbols-outlined">' + icon + '</span>';
         }
 
         // Theme selector functionality

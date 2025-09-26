@@ -7,6 +7,44 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.2] - 2025-09-26
+
+### 🚀 Neue Features
+- **🌙 Light/Dark Mode Toggle:** Vollständiger Theme-Wechsler implementiert
+  - Toggle-Button in Header-Leiste mit dynamischen Icons (light_mode/dark_mode)
+  - LocalStorage-Persistierung der Benutzer-Einstellung
+  - CSS data-theme Attribut für nahtlose Theme-Umschaltung
+  - Automatische Icon-Updates basierend auf gewähltem Modus
+
+### 🔧 Menu-System Verbesserungen
+- **📋 Context Menu Funktionalität:** Vollständig funktionale Rechtsklick-Menüs
+  - Event-Handler Integration in globale `initializeMenus()` Funktion
+  - Intelligent Positioning mit Viewport-Anpassung
+  - `data-context-target` Attribut-System für flexible Zielsteuerung
+  - Automatisches Schließen bei Außenklicks
+
+- **🎯 Menu JavaScript Fix:** Dynamische Menü-Initialisierung repariert
+  - Global verfügbare `initializeMenus()` Funktion für AJAX-Content
+  - Event-Handler für Dropdown und Context Menus nach Component-Updates
+  - Keyboard Navigation (Arrow Keys, Enter, Escape) vollständig unterstützt
+  - Viewport-aware Menü-Positionierung implementiert
+
+### 🎨 UI/UX Verbesserungen
+- **📝 Multiline Input Fix:** Alle Komponenten-Parser repariert
+  - Select, Radio, List, Chip, Navigation, Menu: `\\n` Parsing behoben
+  - Konsistente Behandlung von Escape-Sequenzen in JavaScript und PHP
+  - Korrekte Generierung multiline-basierter Komponenten
+
+- **📋 Naming Update:** "List" zu "Lists" umbenannt (Material Design konform)
+
+### 🔧 Technische Details
+- **Event System:** Verbesserte Event-Delegation für dynamische Inhalte
+- **Memory Management:** Proper Event-Listener Cleanup und Re-Initialization
+- **Cross-Browser Support:** LocalStorage mit Fallback-Mechanismen
+- **Performance:** Optimierte Menu-Initialisierung ohne UI-Blocking
+
+---
+
 ## [0.2.1] - 2025-09-26
 
 ### 🐛 Bug Fixes

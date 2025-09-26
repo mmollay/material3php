@@ -61,38 +61,18 @@ class MD3Menu
     public static function context(array $items, array $options = []): string
     {
         $id = $options['id'] ?? 'md3-context-menu-' . uniqid();
-        $target = $options['target'] ?? 'body';
+        $target = $options['target'] ?? '.preview-area';
 
         $menuHtml = self::buildMenu($items, $id, 'context', ['context' => true]);
 
-        $script = sprintf(
-            '<script>
-            document.addEventListener("contextmenu", function(e) {
-                const target = e.target.closest("%s");
-                if (target) {
-                    e.preventDefault();
-                    const menu = document.getElementById("%s");
-                    if (menu) {
-                        menu.style.left = e.pageX + "px";
-                        menu.style.top = e.pageY + "px";
-                        menu.classList.add("md3-menu--visible");
-
-                        // Close on click outside
-                        setTimeout(() => {
-                            document.addEventListener("click", function closeMenu() {
-                                menu.classList.remove("md3-menu--visible");
-                                document.removeEventListener("click", closeMenu);
-                            });
-                        }, 10);
-                    }
-                }
-            });
-            </script>',
-            $target,
-            $id
+        // Add data attributes for context menu initialization
+        $menuHtml = str_replace(
+            'role="menu"',
+            'role="menu" data-context-target="' . htmlspecialchars($target) . '"',
+            $menuHtml
         );
 
-        return $menuHtml . $script;
+        return $menuHtml;
     }
 
     /**
@@ -442,9 +422,13 @@ class MD3Menu
     {
         return "
         <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        // Global function to initialize menus (for dynamic content)
+        window.initializeMenus = function() {
             // Handle dropdown menus
             const menuContainers = document.querySelectorAll('.md3-menu-container');
+
+            // Handle context menus
+            const contextMenus = document.querySelectorAll('.md3-menu--context[data-context-target]');
 
             menuContainers.forEach(container => {
                 const trigger = container.querySelector('[aria-haspopup=\"true\"]');
@@ -548,6 +532,48 @@ class MD3Menu
                 }
             });
 
+            // Handle context menus
+            contextMenus.forEach(menu => {
+                const target = menu.getAttribute('data-context-target');
+                const targetElement = document.querySelector(target);
+
+                if (targetElement) {
+                    // Remove existing event listeners first
+                    targetElement.removeEventListener('contextmenu', window.contextMenuHandler);
+
+                    // Create new handler
+                    window.contextMenuHandler = function(e) {
+                        if (e.target.closest(target)) {
+                            e.preventDefault();
+
+                            // Close other menus
+                            document.querySelectorAll('.md3-menu--visible').forEach(openMenu => {
+                                openMenu.classList.remove('md3-menu--visible');
+                            });
+
+                            // Position and show context menu
+                            menu.style.position = 'fixed';
+                            menu.style.left = e.clientX + 'px';
+                            menu.style.top = e.clientY + 'px';
+                            menu.classList.add('md3-menu--visible');
+
+                            // Adjust position if menu goes off screen
+                            setTimeout(() => {
+                                const rect = menu.getBoundingClientRect();
+                                if (rect.right > window.innerWidth) {
+                                    menu.style.left = (e.clientX - rect.width) + 'px';
+                                }
+                                if (rect.bottom > window.innerHeight) {
+                                    menu.style.top = (e.clientY - rect.height) + 'px';
+                                }
+                            }, 10);
+                        }
+                    };
+
+                    targetElement.addEventListener('contextmenu', window.contextMenuHandler);
+                }
+            });
+
             // Close menus when clicking outside
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.md3-menu-container')) {
@@ -574,6 +600,11 @@ class MD3Menu
                     });
                 }
             });
+        };
+
+        // Initialize menus on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            window.initializeMenus();
         });
         </script>
         ";
