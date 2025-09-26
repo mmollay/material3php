@@ -512,7 +512,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!input) return;
 
         // Uncheck other radios with the same name
-        const otherRadios = document.querySelectorAll(`input[name="' + input.name + '"]`);
+        const otherRadios = document.querySelectorAll(`input[name="${input.name}"]`);
         otherRadios.forEach(radio => {
             if (radio !== input) {
                 radio.checked = false;
@@ -565,7 +565,7 @@ document.addEventListener("DOMContentLoaded", function() {
             e.key === "ArrowUp" || e.key === "ArrowLeft") {
             e.preventDefault();
 
-            const allRadios = Array.from(document.querySelectorAll(`input[name="' + input.name + '"]`));
+            const allRadios = Array.from(document.querySelectorAll(`input[name="${input.name}"]`));
             const currentIndex = allRadios.indexOf(input);
             let nextIndex;
 
@@ -639,7 +639,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Utility functions
 window.setRadioValue = function(name, value) {
-    const radios = document.querySelectorAll(`input[name="' + name + '"]`);
+    const radios = document.querySelectorAll(`input[name="${name}"]`);
     radios.forEach(radio => {
         const radioElement = radio.closest(".md3-radio-container").querySelector(".md3-radio");
         if (radio.value === value) {
@@ -658,7 +658,7 @@ window.setRadioValue = function(name, value) {
     });
 
     // Dispatch change event
-    const selectedRadio = document.querySelector(`input[name="' + name + '"][value="' + value + '"]`);
+    const selectedRadio = document.querySelector(`input[name="${name}"][value="${value}"]`);
     if (selectedRadio) {
         const event = new Event("change", { bubbles: true });
         selectedRadio.dispatchEvent(event);
@@ -666,7 +666,7 @@ window.setRadioValue = function(name, value) {
 };
 
 window.getRadioValue = function(name) {
-    const selectedRadio = document.querySelector(`input[name="' + name + '"]:checked`);
+    const selectedRadio = document.querySelector(`input[name="${name}"]:checked`);
     return selectedRadio ? selectedRadio.value : null;
 };
 ';

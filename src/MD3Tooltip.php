@@ -663,7 +663,7 @@ document.addEventListener("DOMContentLoaded", function() {
             position = "top";
         }
 
-        tooltip.classList.add(`md3-tooltip--' + position + '`);
+        tooltip.classList.add(`md3-tooltip--${position}`);
     }
 
     // Hide all tooltips when scrolling or resizing

@@ -727,7 +727,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 if (isDragging) {
                     const translateX = currentX - startX;
-                    snackbar.style.transform = `translateX(' + translateX + 'px)`;
+                    snackbar.style.transform = `translateX(${translateX}px)`;
                     snackbar.style.opacity = Math.max(0.3, 1 - Math.abs(translateX) / 200);
                 }
             }, { passive: false });
@@ -738,7 +738,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (Math.abs(diffX) > 100) {
                         // Swipe threshold reached - dismiss
-                        snackbar.style.transform = `translateX(' + diffX > 0 ? 100 : -100 + '%)`;
+                        snackbar.style.transform = `translateX(${diffX > 0 ? 100 : -100}%)`;
                         snackbar.style.opacity = "0";
                         this.dismiss(snackbar);
                     } else {
@@ -819,7 +819,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const snackbar = document.createElement("div");
         snackbar.id = id;
-        snackbar.className = `md3-snackbar md3-snackbar--' + type + '`;
+        snackbar.className = `md3-snackbar md3-snackbar--${type}`;
         snackbar.setAttribute("role", type === "error" ? "alert" : "status");
         snackbar.setAttribute("aria-live", type === "error" ? "assertive" : "polite");
         snackbar.dataset.duration = duration;
@@ -834,11 +834,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (icon) {
             html += `<div class="md3-snackbar__icon">`;
-            html += `<span class="material-symbols-outlined">' + icon + '</span>`;
+            html += `<span class="material-symbols-outlined">${icon}</span>`;
             html += `</div>`;
         }
 
-        html += `<div class="md3-snackbar__message">' + message + '</div>`;
+        html += `<div class="md3-snackbar__message">${message}</div>`;
         html += `</div>`;
 
         if (action || dismissible) {

@@ -508,7 +508,7 @@ class MD3BottomSheetManager {
 
         if (deltaY > 0) { // Only allow downward swipes
             const container = this.activeSheet.querySelector(".md3-bottom-sheet-container");
-            container.style.transform = `translateY(' + deltaY + 'px)`;
+            container.style.transform = `translateY(${deltaY}px)`;
         }
     }
 

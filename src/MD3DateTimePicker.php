@@ -858,7 +858,7 @@ class MD3DateTimePickerManager {
     }
 
     adjustTime(timePicker, type, direction) {
-        const valueElement = timePicker.querySelector(`[data-time="' + type + '"]`);
+        const valueElement = timePicker.querySelector(`[data-time="${type}"]`);
         let currentValue = parseInt(valueElement.textContent);
 
         if (type === "hour") {
@@ -896,7 +896,7 @@ class MD3DateTimePickerManager {
                 break;
             case "time":
                 if (popup.selectedTime) {
-                    const timeStr = `' + popup.selectedTime.hour + ':' + popup.selectedTime.minute + '`;
+                    const timeStr = `${popup.selectedTime.hour}:${popup.selectedTime.minute}`;
                     input.value = timeStr;
                     input.nextElementSibling.value = timeStr;
                 }

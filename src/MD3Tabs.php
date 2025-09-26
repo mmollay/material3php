@@ -717,8 +717,8 @@ document.addEventListener("DOMContentLoaded", function() {
     function activateTab(container, tabId) {
         const tabs = container.querySelectorAll(".md3-tabs__tab");
         const panels = container.querySelectorAll(".md3-tabs__panel");
-        const targetTab = container.querySelector(`[data-tab-id="' + tabId + '"]`);
-        const targetPanel = container.querySelector(`#' + container.id + '-panel-' + tabId + '`);
+        const targetTab = container.querySelector(`[data-tab-id="${tabId}"]`);
+        const targetPanel = container.querySelector(`#${container.id}-panel-${tabId}`);
 
         if (!targetTab) return;
 
@@ -812,7 +812,7 @@ window.activateTab = function(containerId, tabId) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const targetTab = container.querySelector(`[data-tab-id="' + tabId + '"]`);
+    const targetTab = container.querySelector(`[data-tab-id="${tabId}"]`);
     if (targetTab && !targetTab.classList.contains("md3-tabs__tab--disabled")) {
         targetTab.click();
     }
@@ -830,7 +830,7 @@ window.disableTab = function(containerId, tabId, disabled = true) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const tab = container.querySelector(`[data-tab-id="' + tabId + '"]`);
+    const tab = container.querySelector(`[data-tab-id="${tabId}"]`);
     if (!tab) return;
 
     tab.classList.toggle("md3-tabs__tab--disabled", disabled);
