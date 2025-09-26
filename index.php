@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Material Design 3 PHP Library - Demo</title>
+    <title>Material Design 3 PHP Library</title>
     <?php
     require_once 'src/MD3.php';
     require_once 'src/MD3Button.php';
     require_once 'src/MD3TextField.php';
     require_once 'src/MD3Card.php';
-    require_once 'src/MD3List.php';
-    require_once 'src/MD3Breadcrumb.php';
-    require_once 'src/MD3Dialog.php';
     require_once 'src/MD3Theme.php';
 
     // Get theme from URL parameter or default
@@ -19,308 +16,377 @@
 
     echo MD3::init(true, true, $currentTheme);
     echo MD3Theme::getThemeCSS();
-    echo MD3List::getListCSS();
     echo MD3::getVersionCSS();
     ?>
     <style>
         body {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 16px;
+            padding: 0 20px;
+            font-size: 14px;
         }
 
-        .demo-navigation {
-            margin: 16px 0;
+        .header {
+            padding: 32px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            position: relative;
+        }
+
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--md-sys-color-primary);
+        }
+
+        .header .subtitle {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .version-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 12px;
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 0;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--md-sys-color-on-surface-variant);
+            padding: 8px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .mode-toggle:hover {
+            background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .stat-card {
             padding: 16px;
             background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
             border-radius: 12px;
             text-align: center;
         }
 
-        .demo-navigation h3 {
-            margin: 0 0 12px 0;
-            color: var(--md-sys-color-on-primary-container);
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 500;
+            margin: 0;
         }
 
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
+        .stat-label {
+            font-size: 12px;
+            margin: 4px 0 0 0;
+            opacity: 0.8;
+        }
+
+        .quick-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .nav-card {
+            padding: 20px;
+            background: var(--md-sys-color-surface-container-low);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .nav-card:hover {
+            background: var(--md-sys-color-surface-container);
+            transform: translateY(-2px);
+            box-shadow: var(--md-sys-elevation-2);
+        }
+
+        .nav-card .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .nav-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            color: var(--md-sys-color-primary);
+        }
+
+        .nav-card p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--md-sys-color-on-surface-variant);
+            line-height: 1.4;
         }
 
         .demo-section {
-            margin: 24px 0;
-            padding: 16px;
-            border-radius: 12px;
+            margin: 32px 0;
+            padding: 24px;
             background: var(--md-sys-color-surface-container-lowest);
+            border-radius: 16px;
         }
+
         .demo-section h2 {
-            margin-top: 0;
+            margin: 0 0 16px 0;
+            font-size: 1.3rem;
             color: var(--md-sys-color-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .demo-grid {
+
+        .component-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 16px;
-            margin: 16px 0;
+            margin-top: 16px;
         }
+
         .component-demo {
             padding: 16px;
             background: var(--md-sys-color-surface);
-            border-radius: 8px;
+            border-radius: 12px;
             border: 1px solid var(--md-sys-color-outline-variant);
         }
+
         .component-demo h3 {
             margin: 0 0 12px 0;
-            font-size: 1rem;
+            font-size: 14px;
+            font-weight: 500;
             color: var(--md-sys-color-on-surface);
         }
-        .demo-buttons {
+
+        .demo-items {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin: 8px 0;
+            align-items: center;
         }
-        .demo-fields {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin: 8px 0;
+
+        .footer {
+            text-align: center;
+            padding: 24px 0;
+            color: var(--md-sys-color-on-surface-variant);
+            border-top: 1px solid var(--md-sys-color-outline-variant);
+            margin-top: 32px;
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
+
+    <script>
+        // Define functions immediately to avoid reference errors
+        function toggleMode() {
+            const currentMode = document.documentElement.getAttribute('data-theme') || 'light';
+            const newMode = currentMode === 'light' ? 'dark' : 'light';
+
+            console.log('Toggling from', currentMode, 'to', newMode);
+
+            // Update data attribute for CSS
+            document.documentElement.setAttribute('data-theme', newMode);
+
+            // Save preference
+            localStorage.setItem('md3-color-scheme', newMode);
+
+            // Update button icon - show opposite of current mode
+            const button = document.getElementById('mode-toggle');
+            if (button) {
+                const icon = newMode === 'dark' ? 'light_mode' : 'dark_mode';
+                button.querySelector('.material-symbols-outlined').textContent = icon;
+            }
+
+            console.log('Applied theme:', document.documentElement.getAttribute('data-theme'));
+        }
+
+        function changeTheme(themeName) {
+            const currentUrl = new URL(window.location);
+
+            // Update URL parameter
+            if (themeName === 'default') {
+                currentUrl.searchParams.delete('theme');
+            } else {
+                currentUrl.searchParams.set('theme', themeName);
+            }
+
+            // Navigate to new URL
+            window.location.href = currentUrl.toString();
+        }
+
+        // Make functions globally available
+        window.toggleMode = toggleMode;
+        window.changeTheme = changeTheme;
+    </script>
 </head>
 <body>
-    <header style="padding: 24px 0; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
-        <h1 style="margin: 0; text-align: center; color: var(--md-sys-color-primary);">
-            Material Design 3 PHP Library
-        </h1>
-        <p style="text-align: center; margin: 8px 0 0 0; color: var(--md-sys-color-on-surface-variant);">
-            Demonstriert die verschiedenen Material Web Components
-        </p>
+    <header class="header">
+        <button class="mode-toggle" onclick="toggleMode()" id="mode-toggle">
+            <span class="material-symbols-outlined">dark_mode</span>
+        </button>
+        <h1>Material Design 3 PHP Library</h1>
+        <p class="subtitle">Pure PHP Implementation • 17 Components • MD3 Compliant</p>
+        <span class="version-badge">v<?php echo file_get_contents('VERSION'); ?></span>
     </header>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">17</div>
+            <div class="stat-label">Komponenten</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">52%</div>
+            <div class="stat-label">MD3 Vollständig</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">6</div>
+            <div class="stat-label">Kategorien</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Themes</div>
+        </div>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+        <a href="playground.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
+            <span class="material-symbols-outlined icon">science</span>
+            <h3>Interactive Playground</h3>
+            <p>Live component editor mit allen Konfigurationsoptionen</p>
+        </a>
+        <a href="demo-extended.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
+            <span class="material-symbols-outlined icon">dashboard</span>
+            <h3>Component Gallery</h3>
+            <p>Alle implementierten Komponenten in einer Übersicht</p>
+        </a>
+        <a href="demo-functional.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
+            <span class="material-symbols-outlined icon">integration_instructions</span>
+            <h3>Form Integration</h3>
+            <p>Funktionale Demos mit echten Form-Elementen</p>
+        </a>
+    </div>
 
     <!-- Theme Selection -->
     <div class="demo-section">
-        <h2><?php echo MD3::icon('palette'); ?> Theme-Auswahl</h2>
+        <h2><span class="material-symbols-outlined">palette</span> Theme Selection</h2>
         <?php echo MD3Theme::toggleChips($currentTheme); ?>
     </div>
 
-    <!-- Demo Navigation -->
-    <div class="demo-navigation">
-        <h3><?php echo MD3::icon('explore'); ?> Weitere Demo-Seiten erkunden</h3>
-        <div class="nav-buttons">
-            <?php
-            $themeParam = $currentTheme !== 'default' ? '?theme=' . $currentTheme : '';
-            echo '<a href="index.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::filled('🏠 Basis Demo') . '</a>';
-            echo '<a href="demo-extended.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::outlined('🚀 Erweiterte Demo') . '</a>';
-            echo '<a href="demo-functional.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::elevated('⚡ Funktionale Demo') . '</a>';
-            echo '<a href="playground.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::tonal('🎮 Interactive Playground') . '</a>';
-            echo '<a href="test.html" style="text-decoration: none;">' . MD3Button::text('🧪 Test Seite') . '</a>';
-            ?>
-        </div>
-        <p style="margin: 12px 0 0 0; font-size: 14px; color: var(--md-sys-color-on-primary-container);">
-            <strong>Basis:</strong> Grundkomponenten |
-            <strong>Erweitert:</strong> Alle Komponenten |
-            <strong>Funktional:</strong> Form-Integration |
-            <strong>Playground:</strong> Interaktive Komponenten-Demo
-        </p>
-    </div>
-
-    <!-- Breadcrumb Demo -->
+    <!-- Component Showcase -->
     <div class="demo-section">
-        <h2><?php echo MD3::icon('navigation'); ?> Breadcrumb Navigation</h2>
+        <h2><span class="material-symbols-outlined">widgets</span> Component Examples</h2>
 
-        <?php
-        echo MD3Breadcrumb::fromArray([
-            ['label' => 'Start', 'href' => '/'],
-            ['label' => 'Produkte', 'href' => '/products'],
-            ['label' => 'Smartphones', 'href' => '/products/smartphones'],
-            ['label' => 'iPhone 15']
-        ]);
-        ?>
-    </div>
-
-    <!-- Button Demo -->
-    <div class="demo-section">
-        <h2><?php echo MD3::icon('smart_button'); ?> Buttons</h2>
-
-        <div class="component-demo">
-            <h3>Standard Buttons</h3>
-            <div class="demo-buttons">
-                <?php
-                echo MD3Button::filled('Filled Button');
-                echo MD3Button::outlined('Outlined Button');
-                echo MD3Button::text('Text Button');
-                echo MD3Button::elevated('Elevated Button');
-                echo MD3Button::tonal('Tonal Button');
-                ?>
-            </div>
-        </div>
-
-        <div class="component-demo">
-            <h3>Icon Buttons</h3>
-            <div class="demo-buttons">
-                <?php
-                echo MD3Button::icon('favorite');
-                echo MD3Button::iconFilled('favorite');
-                echo MD3Button::iconTonal('favorite');
-                echo MD3Button::iconOutlined('favorite');
-                ?>
-            </div>
-        </div>
-
-        <div class="component-demo">
-            <h3>FAB</h3>
-            <div class="demo-buttons">
-                <?php
-                echo MD3Button::fab('add');
-                echo MD3Button::fab('edit', 'Bearbeiten');
-                ?>
-            </div>
-        </div>
-    </div>
-
-    <!-- TextField Demo -->
-    <div class="demo-section">
-        <h2><?php echo MD3::icon('text_fields'); ?> Text Fields</h2>
-
-        <div class="demo-grid">
+        <div class="component-grid">
             <div class="component-demo">
-                <h3>Filled Fields</h3>
-                <div class="demo-fields">
+                <h3>Buttons</h3>
+                <div class="demo-items">
                     <?php
-                    echo MD3TextField::filled('name', 'Name');
-                    echo MD3TextField::email('email', 'E-Mail');
-                    echo MD3TextField::password('password', 'Passwort');
-                    echo MD3TextField::textarea('message', 'Nachricht');
+                    echo MD3Button::filled('Filled');
+                    echo MD3Button::outlined('Outlined');
+                    echo MD3Button::tonal('Tonal');
                     ?>
                 </div>
             </div>
 
             <div class="component-demo">
-                <h3>Outlined Fields</h3>
-                <div class="demo-fields">
-                    <?php
-                    echo MD3TextField::outlined('name_outlined', 'Name');
-                    echo MD3TextField::emailOutlined('email_outlined', 'E-Mail');
-                    echo MD3TextField::passwordOutlined('password_outlined', 'Passwort');
-                    echo MD3TextField::textareaOutlined('message_outlined', 'Nachricht');
-                    ?>
+                <h3>Text Fields</h3>
+                <div class="demo-items">
+                    <?php echo MD3TextField::filled('demo', 'Demo Field', '', ['style' => 'max-width: 200px']); ?>
+                </div>
+            </div>
+
+            <div class="component-demo">
+                <h3>Cards</h3>
+                <div class="demo-items">
+                    <?php echo MD3Card::simple('Card Title', 'Card content example with Material Design 3 styling.'); ?>
+                </div>
+            </div>
+
+            <div class="component-demo">
+                <h3>Navigation Components</h3>
+                <div class="demo-items" style="font-size: 13px; color: var(--md-sys-color-on-surface-variant);">
+                    <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">bottom_navigation</span> Navigation Bar
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">menu_open</span> Navigation Drawer
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">dock_to_left</span> Navigation Rail
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="component-demo">
-            <h3>Fields mit Icons</h3>
-            <div class="demo-fields">
-                <?php
-                echo MD3TextField::withLeadingIcon('search', 'Suche', 'search');
-                echo MD3TextField::withTrailingIcon('phone', 'Telefon', 'phone', true);
-                ?>
-            </div>
-        </div>
     </div>
 
-    <!-- Card Demo -->
-    <div class="demo-section">
-        <h2><?php echo MD3::icon('web_stories'); ?> Cards</h2>
-
-        <div class="demo-grid">
-            <?php
-            echo MD3Card::simple(
-                'Elevated Card',
-                'Dies ist eine einfache elevated Card mit Titel und Inhalt.',
-                'elevated'
-            );
-
-            echo MD3Card::withIcon(
-                'settings',
-                'Einstellungen',
-                'Verwalte deine App-Einstellungen und Präferenzen.',
-                'outlined'
-            );
-
-            $actions = [
-                MD3Button::text('Abbrechen'),
-                MD3Button::filled('Speichern')
-            ];
-            echo MD3Card::withActions(
-                'Formular',
-                'Diese Card enthält Action-Buttons am unteren Rand.',
-                $actions,
-                'filled'
-            );
-            ?>
-        </div>
-    </div>
-
-    <!-- Dialog Demo -->
-    <div class="demo-section">
-        <h2><?php echo MD3::icon('open_in_new'); ?> Dialogs</h2>
-
-        <div class="demo-buttons">
-            <?php
-            echo MD3Dialog::trigger('demo-alert', 'Alert Dialog', 'outlined');
-            echo MD3Dialog::trigger('demo-confirm', 'Confirm Dialog', 'outlined');
-            echo MD3Dialog::trigger('demo-form', 'Form Dialog', 'outlined');
-            ?>
-        </div>
-
-        <!-- Alert Dialog -->
-        <?php
-        echo MD3Dialog::alert('demo-alert', 'Information', 'Dies ist ein einfacher Alert Dialog.');
-        ?>
-
-        <!-- Confirm Dialog -->
-        <?php
-        echo MD3Dialog::confirm('demo-confirm', 'Bestätigung', 'Möchtest du diese Aktion wirklich ausführen?', 'Ja, fortfahren', 'Abbrechen');
-        ?>
-
-        <!-- Form Dialog -->
-        <?php
-        $formContent = MD3TextField::filled('dialog_name', 'Name') .
-                      MD3TextField::emailOutlined('dialog_email', 'E-Mail');
-        echo MD3Dialog::form('demo-form', 'Kontakt hinzufügen', $formContent);
-        ?>
-    </div>
-
-    <!-- Version Info -->
-    <div class="demo-section">
-        <h2><?php echo MD3::icon('info'); ?> Library Information</h2>
-
-        <?php
-        echo MD3::getVersionDisplay(true);
-        ?>
-
-        <div style="margin-top: 16px;">
-            <?php
-            $libraryInfo = MD3Card::simple(
-                'Material Design 3 Pure CSS Implementation',
-                'Diese Library implementiert Material Design 3 als reine PHP/CSS-Lösung ohne externe Abhängigkeiten. ' .
-                'Alle Komponenten sind offline-fähig und vollständig funktional für Produktionsumgebungen.',
-                'outlined'
-            );
-            echo $libraryInfo;
-            ?>
-        </div>
-    </div>
-
-    <footer style="text-align: center; padding: 24px 0; color: var(--md-sys-color-on-surface-variant); border-top: 1px solid var(--md-sys-color-outline-variant); margin-top: 32px;">
-        <p>Material Design 3 PHP Library Demo |
-        <a href="https://m3.material.io" style="color: var(--md-sys-color-primary);">Material Design 3</a> |
-        <a href="https://github.com/material-components/material-web" style="color: var(--md-sys-color-primary);">Material Web Components</a>
+    <div class="footer">
+        <p>Material Design 3 PHP Library •
+        <a href="https://m3.material.io" target="_blank">Material Design 3</a> •
+        <a href="playground.php" target="_blank">Interactive Playground</a> •
+        Made with ❤️ for pure PHP implementations
         </p>
-    </footer>
-
-    <?php echo MD3List::getListScript(); ?>
-    <?php echo MD3Theme::getThemeScript(); ?>
+    </div>
 
     <script>
-        // Dialog functionality
-        function confirmAction() {
-            alert('Aktion bestätigt!');
+        // Initialize mode from localStorage or system preference
+        function initializeColorScheme() {
+            const savedMode = localStorage.getItem('md3-color-scheme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initialMode = savedMode || (systemPrefersDark ? 'dark' : 'light');
+
+            console.log('Initializing color scheme:', initialMode);
+
+            document.documentElement.setAttribute('data-theme', initialMode);
+
+            const modeButton = document.getElementById('mode-toggle');
+            if (modeButton) {
+                // Show opposite icon of current mode
+                const icon = initialMode === 'dark' ? 'light_mode' : 'dark_mode';
+                modeButton.querySelector('.material-symbols-outlined').textContent = icon;
+                console.log('Set initial icon to:', icon);
+            }
+
+            console.log('HTML data-theme attribute:', document.documentElement.getAttribute('data-theme'));
         }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeColorScheme();
+        });
     </script>
 </body>
 </html>
