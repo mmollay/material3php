@@ -94,7 +94,7 @@ class MD3
         $html[] = 'md-icon-button, md-filled-icon-button, md-filled-tonal-icon-button, md-outlined-icon-button,';
         $html[] = 'md-fab, md-filled-text-field, md-outlined-text-field, md-elevated-card, md-filled-card, md-outlined-card,';
         $html[] = 'md-list, md-list-item, md-divider, md-chip-set, md-assist-chip, md-filter-chip, md-input-chip, md-suggestion-chip,';
-        $html[] = 'md-tooltip, md-switch, md-checkbox, md-radio {';
+        $html[] = 'md-tooltip, md-switch, md-checkbox, md-radio, md-filled-select, md-outlined-select {';
         $html[] = '  display: block;';
         $html[] = '}';
 
@@ -366,36 +366,150 @@ class MD3
         $html[] = '  color: var(--md-sys-color-on-surface);';
         $html[] = '}';
 
-        // Form Controls
-        $html[] = 'md-switch, md-checkbox, md-radio {';
-        $html[] = '  display: inline-block;';
+        // Form Controls - Use actual HTML form elements with MD3 styling
+        $html[] = '.switch-container, .checkbox-container, .radio-container {';
+        $html[] = '  display: flex;';
+        $html[] = '  align-items: center;';
+        $html[] = '  gap: 12px;';
+        $html[] = '  margin: 8px 0;';
+        $html[] = '}';
+
+        $html[] = '.switch-container label, .checkbox-container label, .radio-container label {';
+        $html[] = '  font-size: 14px;';
+        $html[] = '  color: var(--md-sys-color-on-surface);';
         $html[] = '  cursor: pointer;';
         $html[] = '}';
 
-        $html[] = 'md-switch {';
+        // Switch styling
+        $html[] = 'input[type="checkbox"].md-switch {';
+        $html[] = '  appearance: none;';
         $html[] = '  width: 52px;';
         $html[] = '  height: 32px;';
         $html[] = '  background-color: var(--md-sys-color-surface-container-high);';
         $html[] = '  border-radius: 16px;';
-        $html[] = '  position: relative;';
         $html[] = '  border: 2px solid var(--md-sys-color-outline);';
+        $html[] = '  position: relative;';
+        $html[] = '  cursor: pointer;';
         $html[] = '  transition: all 0.2s ease;';
         $html[] = '}';
 
-        $html[] = 'md-checkbox, md-radio {';
+        $html[] = 'input[type="checkbox"].md-switch:checked {';
+        $html[] = '  background-color: var(--md-sys-color-primary);';
+        $html[] = '  border-color: var(--md-sys-color-primary);';
+        $html[] = '}';
+
+        $html[] = 'input[type="checkbox"].md-switch::before {';
+        $html[] = '  content: "";';
+        $html[] = '  position: absolute;';
+        $html[] = '  width: 20px;';
+        $html[] = '  height: 20px;';
+        $html[] = '  border-radius: 50%;';
+        $html[] = '  background-color: var(--md-sys-color-outline);';
+        $html[] = '  top: 4px;';
+        $html[] = '  left: 4px;';
+        $html[] = '  transition: all 0.2s ease;';
+        $html[] = '}';
+
+        $html[] = 'input[type="checkbox"].md-switch:checked::before {';
+        $html[] = '  background-color: var(--md-sys-color-on-primary);';
+        $html[] = '  transform: translateX(20px);';
+        $html[] = '}';
+
+        // Checkbox styling
+        $html[] = 'input[type="checkbox"].md-checkbox {';
+        $html[] = '  appearance: none;';
         $html[] = '  width: 18px;';
         $html[] = '  height: 18px;';
         $html[] = '  border: 2px solid var(--md-sys-color-outline);';
+        $html[] = '  border-radius: 2px;';
         $html[] = '  background-color: transparent;';
+        $html[] = '  cursor: pointer;';
+        $html[] = '  position: relative;';
         $html[] = '  transition: all 0.2s ease;';
         $html[] = '}';
 
-        $html[] = 'md-checkbox {';
-        $html[] = '  border-radius: 2px;';
+        $html[] = 'input[type="checkbox"].md-checkbox:checked {';
+        $html[] = '  background-color: var(--md-sys-color-primary);';
+        $html[] = '  border-color: var(--md-sys-color-primary);';
         $html[] = '}';
 
-        $html[] = 'md-radio {';
+        $html[] = 'input[type="checkbox"].md-checkbox:checked::before {';
+        $html[] = '  content: "✓";';
+        $html[] = '  position: absolute;';
+        $html[] = '  color: var(--md-sys-color-on-primary);';
+        $html[] = '  font-size: 12px;';
+        $html[] = '  font-weight: bold;';
+        $html[] = '  top: -1px;';
+        $html[] = '  left: 2px;';
+        $html[] = '}';
+
+        // Radio styling
+        $html[] = 'input[type="radio"].md-radio {';
+        $html[] = '  appearance: none;';
+        $html[] = '  width: 18px;';
+        $html[] = '  height: 18px;';
+        $html[] = '  border: 2px solid var(--md-sys-color-outline);';
         $html[] = '  border-radius: 50%;';
+        $html[] = '  background-color: transparent;';
+        $html[] = '  cursor: pointer;';
+        $html[] = '  position: relative;';
+        $html[] = '  transition: all 0.2s ease;';
+        $html[] = '}';
+
+        $html[] = 'input[type="radio"].md-radio:checked {';
+        $html[] = '  border-color: var(--md-sys-color-primary);';
+        $html[] = '}';
+
+        $html[] = 'input[type="radio"].md-radio:checked::before {';
+        $html[] = '  content: "";';
+        $html[] = '  position: absolute;';
+        $html[] = '  width: 10px;';
+        $html[] = '  height: 10px;';
+        $html[] = '  border-radius: 50%;';
+        $html[] = '  background-color: var(--md-sys-color-primary);';
+        $html[] = '  top: 2px;';
+        $html[] = '  left: 2px;';
+        $html[] = '}';
+
+        // Select Fields
+        $html[] = 'md-filled-select, md-outlined-select {';
+        $html[] = '  display: block;';
+        $html[] = '  position: relative;';
+        $html[] = '  width: 100%;';
+        $html[] = '  min-width: 200px;';
+        $html[] = '}';
+
+        $html[] = 'md-filled-select select, md-outlined-select select {';
+        $html[] = '  width: 100%;';
+        $html[] = '  font-family: inherit;';
+        $html[] = '  font-size: 16px;';
+        $html[] = '  padding: 16px;';
+        $html[] = '  border: none;';
+        $html[] = '  background: transparent;';
+        $html[] = '  color: var(--md-sys-color-on-surface);';
+        $html[] = '  cursor: pointer;';
+        $html[] = '}';
+
+        $html[] = 'md-filled-select {';
+        $html[] = '  background-color: var(--md-sys-color-surface-container-high);';
+        $html[] = '  border-radius: 4px 4px 0 0;';
+        $html[] = '  border-bottom: 1px solid var(--md-sys-color-on-surface-variant);';
+        $html[] = '}';
+
+        $html[] = 'md-outlined-select {';
+        $html[] = '  border: 1px solid var(--md-sys-color-outline);';
+        $html[] = '  border-radius: 4px;';
+        $html[] = '}';
+
+        $html[] = 'md-filled-select label, md-outlined-select label {';
+        $html[] = '  position: absolute;';
+        $html[] = '  top: -8px;';
+        $html[] = '  left: 12px;';
+        $html[] = '  font-size: 12px;';
+        $html[] = '  color: var(--md-sys-color-primary);';
+        $html[] = '  background: var(--md-sys-color-surface);';
+        $html[] = '  padding: 0 4px;';
+        $html[] = '  pointer-events: none;';
         $html[] = '}';
 
         // Tooltips

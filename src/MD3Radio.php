@@ -9,26 +9,28 @@ class MD3Radio
 {
     public static function basic(string $name, string $value, bool $checked = false, array $attributes = []): string
     {
+        $attributes['type'] = 'radio';
         $attributes['name'] = $name;
         $attributes['value'] = $value;
-        
+        $attributes['class'] = 'md-radio';
+
         if ($checked) {
             $attributes['checked'] = true;
         }
 
-        return '<md-radio' . MD3::escapeAttributes($attributes) . '></md-radio>';
+        return '<input' . MD3::escapeAttributes($attributes) . '>';
     }
 
     public static function withLabel(string $name, string $value, string $label, bool $checked = false, array $attributes = []): string
     {
         $radioId = 'radio-' . $name . '-' . $value;
         $attributes['id'] = $radioId;
-        
+
         $radio = self::basic($name, $value, $checked, $attributes);
-        
-        return '<div class="radio-container">' . 
+
+        return '<div class="radio-container">' .
+               $radio .
                '<label for="' . htmlspecialchars($radioId) . '">' . htmlspecialchars($label) . '</label>' .
-               $radio . 
                '</div>';
     }
 

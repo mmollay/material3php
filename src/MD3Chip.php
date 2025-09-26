@@ -40,23 +40,28 @@ class MD3Chip
      */
     public static function filter(string $label, string $value, string $name, bool $selected = false, string $icon = '', array $attributes = []): string
     {
-        if ($selected) {
-            $attributes['selected'] = true;
-        }
+        $chipId = 'chip-' . $name . '-' . str_replace(' ', '-', strtolower($value));
+        $hiddenId = 'hidden-' . $name . '-' . str_replace(' ', '-', strtolower($value));
 
+        $attributes['id'] = $chipId;
         $attributes['data-value'] = $value;
         $attributes['data-name'] = $name;
+        $attributes['data-hidden'] = $hiddenId;
         $attributes['onclick'] = 'toggleFilterChip(this)';
+
+        if ($selected) {
+            $attributes['selected'] = 'true';
+        }
 
         $content = '';
         if ($icon) {
-            $content .= '<div slot="icon">' . MD3::icon($icon) . '</div>';
+            $content .= '<span class="chip-icon">' . MD3::icon($icon) . '</span>';
         }
         $content .= htmlspecialchars($label);
 
         // Hidden input for form submission
         $hiddenInput = '<input type="hidden" name="' . htmlspecialchars($name) . '" value="' .
-                      ($selected ? htmlspecialchars($value) : '') . '" id="hidden-' . htmlspecialchars($name . '-' . $value) . '">';
+                      ($selected ? htmlspecialchars($value) : '') . '" id="' . $hiddenId . '">';
 
         return $hiddenInput . '<md-filter-chip' . MD3::escapeAttributes($attributes) . '>' . $content . '</md-filter-chip>';
     }
@@ -234,16 +239,24 @@ class MD3Chip
         return '<script>
             function toggleFilterChip(chip) {
                 const value = chip.getAttribute("data-value");
-                const name = chip.getAttribute("data-name");
-                const hiddenInput = document.getElementById("hidden-" + name + "-" + value);
+                const hiddenId = chip.getAttribute("data-hidden");
+                const hiddenInput = document.getElementById(hiddenId);
+
+                if (!hiddenInput) {
+                    console.warn("Hidden input not found:", hiddenId);
+                    return;
+                }
 
                 if (chip.hasAttribute("selected")) {
                     chip.removeAttribute("selected");
                     hiddenInput.value = "";
                 } else {
-                    chip.setAttribute("selected", "");
+                    chip.setAttribute("selected", "true");
                     hiddenInput.value = value;
                 }
+
+                // Trigger change event
+                hiddenInput.dispatchEvent(new Event("change"));
             }
 
             function selectSuggestionChip(chip) {

@@ -19,14 +19,16 @@ class MD3Switch
      */
     public static function basic(string $name, string $value = '1', bool $checked = false, array $attributes = []): string
     {
+        $attributes['type'] = 'checkbox';
         $attributes['name'] = $name;
         $attributes['value'] = $value;
-        
+        $attributes['class'] = 'md-switch';
+
         if ($checked) {
             $attributes['checked'] = true;
         }
 
-        return '<md-switch' . MD3::escapeAttributes($attributes) . '></md-switch>';
+        return '<input' . MD3::escapeAttributes($attributes) . '>';
     }
 
     /**
@@ -43,12 +45,12 @@ class MD3Switch
     {
         $switchId = 'switch-' . $name;
         $attributes['id'] = $switchId;
-        
+
         $switch = self::basic($name, $value, $checked, $attributes);
-        
-        return '<div class="switch-container">' . 
+
+        return '<div class="switch-container">' .
+               $switch .
                '<label for="' . htmlspecialchars($switchId) . '">' . htmlspecialchars($label) . '</label>' .
-               $switch . 
                '</div>';
     }
 
