@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,7 @@
     require_once 'src/MD3Checkbox.php';
     require_once 'src/MD3Radio.php';
     require_once 'src/MD3Theme.php';
+    require_once 'src/MD3Select.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
@@ -114,10 +115,10 @@
         </p>
     </header>
 
-    <!-- Theme Selection -->
+    <!-- Theme & Mode Selection -->
     <div class="demo-section">
-        <h2><?php echo MD3::icon('palette'); ?> Theme-Auswahl</h2>
-        <?php echo MD3Theme::toggleChips($currentTheme); ?>
+        <h2><?php echo MD3::icon('palette'); ?> Theme & Dark/Light Mode</h2>
+        <?php echo MD3Theme::selectorWithModeToggle($currentTheme); ?>
     </div>
 
     <!-- Demo Navigation -->

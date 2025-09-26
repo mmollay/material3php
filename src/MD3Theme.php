@@ -351,6 +351,45 @@ class MD3Theme
     }
 
     /**
+     * Generate combined theme selector with dark/light mode toggle
+     *
+     * @param string $currentTheme Current active theme
+     * @param array $attributes Additional HTML attributes
+     * @return string HTML for combined theme and mode controls
+     */
+    public static function selectorWithModeToggle(string $currentTheme = 'default', array $attributes = []): string
+    {
+        require_once 'MD3Select.php';
+
+        $themes = self::getAvailableThemes();
+        $options = [];
+        foreach ($themes as $key => $theme) {
+            $options[$key] = $theme['name'];
+        }
+
+        $html = '<div class="theme-mode-controls"' . MD3::escapeAttributes($attributes) . '>';
+
+        // Theme Selector using MD3Select
+        $html .= '<div class="theme-selector-wrapper">';
+        $html .= MD3Select::filled('theme-select', 'Theme auswählen', $options, $currentTheme, [
+            'onchange' => 'changeTheme(this.value)',
+            'style' => 'min-width: 200px;'
+        ]);
+        $html .= '</div>';
+
+        // Dark/Light Mode Toggle
+        $html .= '<div class="mode-toggle-wrapper">';
+        $html .= '<button class="md3-mode-toggle" onclick="toggleMode()" id="mode-toggle-btn" title="Dark/Light Mode wechseln">';
+        $html .= '<span class="material-symbols-outlined">dark_mode</span>';
+        $html .= '</button>';
+        $html .= '</div>';
+
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    /**
      * Generate JavaScript for theme switching
      *
      * @return string JavaScript code for theme functionality
@@ -371,6 +410,9 @@ class MD3Theme
 
             // Load saved theme on page load
             document.addEventListener("DOMContentLoaded", function() {
+                // Initialize color scheme first
+                initializeColorScheme();
+
                 const savedTheme = localStorage.getItem("md3-theme") || "default";
                 const urlParams = new URLSearchParams(window.location.search);
                 const urlTheme = urlParams.get("theme");
@@ -398,7 +440,53 @@ class MD3Theme
                 });
             });
 
-            // Note: Dark/Light mode toggle is handled by playground.php
+            // Dark/Light Mode Toggle
+            function toggleMode() {
+                const currentMode = document.documentElement.getAttribute("data-theme") || "light";
+                const newMode = currentMode === "light" ? "dark" : "light";
+
+                console.log("Toggling from", currentMode, "to", newMode);
+
+                // Update data attribute for CSS
+                document.documentElement.setAttribute("data-theme", newMode);
+
+                // Save preference
+                localStorage.setItem("md3-color-scheme", newMode);
+
+                // Update button icon - show opposite of current mode
+                const button = document.getElementById("mode-toggle-btn");
+                if (button) {
+                    const icon = newMode === "dark" ? "light_mode" : "dark_mode";
+                    button.querySelector(".material-symbols-outlined").textContent = icon;
+                }
+
+                console.log("Applied theme:", document.documentElement.getAttribute("data-theme"));
+            }
+
+            // Initialize color scheme from localStorage or system preference
+            function initializeColorScheme() {
+                const savedMode = localStorage.getItem("md3-color-scheme");
+                const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                const initialMode = savedMode || (systemPrefersDark ? "dark" : "light");
+
+                console.log("Initializing color scheme:", initialMode);
+
+                document.documentElement.setAttribute("data-theme", initialMode);
+
+                const modeButton = document.getElementById("mode-toggle-btn");
+                if (modeButton) {
+                    // Show opposite icon of current mode
+                    const icon = initialMode === "dark" ? "light_mode" : "dark_mode";
+                    modeButton.querySelector(".material-symbols-outlined").textContent = icon;
+                    console.log("Set initial icon to:", icon);
+                }
+
+                console.log("HTML data-theme attribute:", document.documentElement.getAttribute("data-theme"));
+            }
+
+            // Make functions globally available
+            window.changeTheme = changeTheme;
+            window.toggleMode = toggleMode;
         </script>';
     }
 
@@ -466,6 +554,76 @@ class MD3Theme
                 color: var(--md-sys-color-on-surface);
                 font-family: inherit;
                 min-width: 180px;
+            }
+
+            .theme-mode-controls {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 16px;
+                background: var(--md-sys-color-surface-container);
+                border-radius: 12px;
+                margin: 16px 0;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .theme-selector-wrapper {
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .mode-toggle-wrapper {
+                display: flex;
+                align-items: center;
+            }
+
+            .md3-mode-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 48px;
+                height: 48px;
+                border: none;
+                border-radius: 24px;
+                background: var(--md-sys-color-primary);
+                color: var(--md-sys-color-on-primary);
+                cursor: pointer;
+                transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+                box-shadow: var(--md-sys-elevation-1);
+                font-size: 24px;
+            }
+
+            .md3-mode-toggle:hover {
+                background: var(--md-sys-color-primary);
+                box-shadow: var(--md-sys-elevation-2);
+                transform: scale(1.05);
+            }
+
+            .md3-mode-toggle:active {
+                transform: scale(0.95);
+                box-shadow: var(--md-sys-elevation-1);
+            }
+
+            .md3-mode-toggle .material-symbols-outlined {
+                font-size: 20px;
+                transition: transform 0.2s;
+            }
+
+            @media (max-width: 480px) {
+                .theme-mode-controls {
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 12px;
+                }
+
+                .theme-selector-wrapper {
+                    min-width: auto;
+                }
+
+                .mode-toggle-wrapper {
+                    justify-content: center;
+                }
             }
 
             .theme-toggle-chips {
