@@ -37,6 +37,8 @@ require_once 'src/MD3TextField.php';
 require_once 'src/MD3Card.php';
 require_once 'src/MD3List.php';
 require_once 'src/MD3NavigationBar.php';
+require_once 'src/MD3NavigationDrawer.php';
+require_once 'src/MD3NavigationRail.php';
 require_once 'src/MD3Menu.php';
 require_once 'src/MD3Dialog.php';
 require_once 'src/MD3FloatingActionButton.php';
@@ -114,6 +116,16 @@ function generateComponent($component, $values) {
         case 'navigation':
             $html = generateNavigation($values);
             $php = generateNavigationPHP($values);
+            break;
+
+        case 'navigationdrawer':
+            $html = generateNavigationDrawer($values);
+            $php = generateNavigationDrawerPHP($values);
+            break;
+
+        case 'navigationrail':
+            $html = generateNavigationRail($values);
+            $php = generateNavigationRailPHP($values);
             break;
 
         case 'menu':
@@ -947,6 +959,177 @@ function generateIconButtonPHP($values) {
                 $code .= "echo MD3IconButton::standard('{$icon}', \$options);";
                 break;
         }
+    }
+
+    $code .= "\n?>";
+    return $code;
+}
+
+function generateNavigationDrawer($values) {
+    $type = $values['type'] ?? 'modal';
+    $title = $values['title'] ?? 'Navigation';
+    $subtitle = $values['subtitle'] ?? '';
+    $itemsText = $values['items'] ?? 'home|Home|/\ninbox|Inbox|/inbox\nfavorites|Favorites|/favorites\n---\nsettings|Settings|/settings';
+    $open = $values['open'] ?? false;
+
+    // Parse items
+    $items = [];
+    $itemsText = str_replace('\\n', "\n", $itemsText);
+    $lines = explode("\n", trim($itemsText));
+    foreach ($lines as $i => $line) {
+        $line = trim($line);
+        if ($line === '---') {
+            $items[] = ['type' => 'divider'];
+        } elseif ($line) {
+            $parts = explode('|', $line);
+            $items[] = [
+                'icon' => $parts[0] ?? 'circle',
+                'text' => $parts[1] ?? 'Item ' . ($i + 1),
+                'href' => $parts[2] ?? '#',
+                'active' => $i === 0
+            ];
+        }
+    }
+
+    $options = [
+        'title' => $title,
+        'subtitle' => $subtitle,
+        'open' => $open,
+        'id' => 'demo-nav-drawer'
+    ];
+
+    if ($type === 'standard') {
+        return MD3NavigationDrawer::standard($items, $options);
+    } else {
+        $toggleButton = '<button class="md3-button md3-button--filled" onclick="toggleNavigationDrawer(\'demo-nav-drawer\')" style="margin: 20px;">Toggle Navigation Drawer</button>';
+        return $toggleButton . MD3NavigationDrawer::modal($items, $options);
+    }
+}
+
+function generateNavigationDrawerPHP($values) {
+    $type = $values['type'] ?? 'modal';
+    $title = addslashes($values['title'] ?? 'Navigation');
+    $subtitle = addslashes($values['subtitle'] ?? '');
+    $itemsText = $values['items'] ?? 'home|Home|/\ninbox|Inbox|/inbox\nfavorites|Favorites|/favorites\n---\nsettings|Settings|/settings';
+    $open = $values['open'] ?? false ? 'true' : 'false';
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3NavigationDrawer.php';\n\n";
+    $code .= "\$items = [\n";
+
+    $itemsText = str_replace('\\n', "\n", $itemsText);
+    $lines = explode("\n", trim($itemsText));
+    foreach ($lines as $i => $line) {
+        $line = trim($line);
+        if ($line === '---') {
+            $code .= "    ['type' => 'divider'],\n";
+        } elseif ($line) {
+            $parts = explode('|', $line);
+            $icon = addslashes($parts[0] ?? 'circle');
+            $text = addslashes($parts[1] ?? 'Item ' . ($i + 1));
+            $href = addslashes($parts[2] ?? '#');
+            $active = $i === 0 ? 'true' : 'false';
+            $code .= "    ['icon' => '{$icon}', 'text' => '{$text}', 'href' => '{$href}', 'active' => {$active}],\n";
+        }
+    }
+
+    $code .= "];\n\n";
+    $code .= "\$options = [\n";
+    $code .= "    'title' => '{$title}',\n";
+    $code .= "    'subtitle' => '{$subtitle}',\n";
+    $code .= "    'open' => {$open},\n";
+    $code .= "    'id' => 'demo-nav-drawer'\n";
+    $code .= "];\n\n";
+
+    if ($type === 'standard') {
+        $code .= "echo MD3NavigationDrawer::standard(\$items, \$options);";
+    } else {
+        $code .= "echo '<button class=\"md3-button md3-button--filled\" onclick=\"toggleNavigationDrawer(\\'demo-nav-drawer\\')\">Toggle Navigation Drawer</button>';\n";
+        $code .= "echo MD3NavigationDrawer::modal(\$items, \$options);";
+    }
+
+    $code .= "\n?>";
+    return $code;
+}
+
+function generateNavigationRail($values) {
+    $type = $values['type'] ?? 'standard';
+    $itemsText = $values['items'] ?? 'home|Home|/\ninbox|Inbox|/inbox\nfavorites|Favorites|/favorites\nsettings|Settings|/settings';
+    $fabIcon = $values['fab_icon'] ?? 'add';
+
+    // Parse items
+    $items = [];
+    $itemsText = str_replace('\\n', "\n", $itemsText);
+    $lines = explode("\n", trim($itemsText));
+    foreach ($lines as $i => $line) {
+        $line = trim($line);
+        if ($line) {
+            $parts = explode('|', $line);
+            $items[] = [
+                'icon' => $parts[0] ?? 'circle',
+                'label' => $parts[1] ?? 'Item ' . ($i + 1),
+                'href' => $parts[2] ?? '#',
+                'active' => $i === 0
+            ];
+        }
+    }
+
+    $options = [
+        'id' => 'demo-nav-rail',
+        'fab_icon' => $fabIcon,
+        'fab_action' => 'alert("FAB clicked")'
+    ];
+
+    switch ($type) {
+        case 'with-header':
+            return MD3NavigationRail::withHeader($items, $options);
+        case 'compact':
+            return MD3NavigationRail::compact($items, $options);
+        default:
+            return MD3NavigationRail::create($items, $options);
+    }
+}
+
+function generateNavigationRailPHP($values) {
+    $type = $values['type'] ?? 'standard';
+    $itemsText = $values['items'] ?? 'home|Home|/\ninbox|Inbox|/inbox\nfavorites|Favorites|/favorites\nsettings|Settings|/settings';
+    $fabIcon = addslashes($values['fab_icon'] ?? 'add');
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3NavigationRail.php';\n\n";
+    $code .= "\$items = [\n";
+
+    $itemsText = str_replace('\\n', "\n", $itemsText);
+    $lines = explode("\n", trim($itemsText));
+    foreach ($lines as $i => $line) {
+        $line = trim($line);
+        if ($line) {
+            $parts = explode('|', $line);
+            $icon = addslashes($parts[0] ?? 'circle');
+            $label = addslashes($parts[1] ?? 'Item ' . ($i + 1));
+            $href = addslashes($parts[2] ?? '#');
+            $active = $i === 0 ? 'true' : 'false';
+            $code .= "    ['icon' => '{$icon}', 'label' => '{$label}', 'href' => '{$href}', 'active' => {$active}],\n";
+        }
+    }
+
+    $code .= "];\n\n";
+    $code .= "\$options = [\n";
+    $code .= "    'id' => 'demo-nav-rail',\n";
+    $code .= "    'fab_icon' => '{$fabIcon}',\n";
+    $code .= "    'fab_action' => 'alert(\"FAB clicked\")'\n";
+    $code .= "];\n\n";
+
+    switch ($type) {
+        case 'with-header':
+            $code .= "echo MD3NavigationRail::withHeader(\$items, \$options);";
+            break;
+        case 'compact':
+            $code .= "echo MD3NavigationRail::compact(\$items, \$options);";
+            break;
+        default:
+            $code .= "echo MD3NavigationRail::create(\$items, \$options);";
+            break;
     }
 
     $code .= "\n?>";

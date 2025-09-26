@@ -148,13 +148,13 @@ class MD3NavigationBar
             bottom: 0;
             left: 0;
             right: 0;
-            height: 80px;
+            height: 64px;
             background: var(--md-sys-color-surface);
             border-top: 1px solid var(--md-sys-color-outline-variant);
             display: flex;
-            align-items: center;
+            align-items: stretch;
             justify-content: space-around;
-            padding: 0 8px;
+            padding: 0;
             box-sizing: border-box;
             z-index: 100;
         }
@@ -164,7 +164,7 @@ class MD3NavigationBar
             bottom: 16px;
             left: 16px;
             right: 16px;
-            height: 80px;
+            height: 64px;
             border-radius: 16px;
             border: none;
             background: var(--md-sys-color-surface-container);
@@ -172,7 +172,7 @@ class MD3NavigationBar
         }
 
         .md3-navigation-bar--icons-only {
-            height: 64px;
+            height: 48px;
         }
 
         .md3-navigation-bar__item {
@@ -181,12 +181,11 @@ class MD3NavigationBar
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-width: 64px;
-            height: 64px;
-            padding: 12px 16px 16px;
+            flex: 1;
+            height: 100%;
+            padding: 8px 4px 4px;
             text-decoration: none;
             color: var(--md-sys-color-on-surface-variant);
-            border-radius: 16px;
             transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
             cursor: pointer;
             user-select: none;
@@ -195,7 +194,6 @@ class MD3NavigationBar
         }
 
         .md3-navigation-bar__item:hover {
-            background: var(--md-sys-color-on-surface-variant);
             background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 8%, transparent);
         }
 
@@ -206,7 +204,7 @@ class MD3NavigationBar
         }
 
         .md3-navigation-bar__item--active {
-            color: var(--md-sys-color-on-secondary-container);
+            color: var(--md-sys-color-on-surface);
         }
 
         .md3-navigation-bar__item--active .md3-navigation-bar__indicator {
@@ -226,9 +224,9 @@ class MD3NavigationBar
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
-            margin-bottom: 4px;
+            width: 24px;
+            height: 24px;
+            margin-bottom: 2px;
             font-size: 24px;
             line-height: 1;
             z-index: 1;
@@ -236,12 +234,16 @@ class MD3NavigationBar
 
         .md3-navigation-bar__label {
             position: relative;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 500;
-            line-height: 16px;
+            line-height: 12px;
             letter-spacing: 0.5px;
             text-align: center;
-            min-height: 16px;
+            min-height: 12px;
+            max-width: 64px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             z-index: 1;
         }
 
@@ -255,16 +257,16 @@ class MD3NavigationBar
 
         .md3-navigation-bar__indicator {
             position: absolute;
-            top: 4px;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%) scaleX(0);
-            width: 64px;
-            height: 32px;
-            background: var(--md-sys-color-secondary-container);
-            border-radius: 16px;
+            width: 32px;
+            height: 3px;
+            background: var(--md-sys-color-on-surface);
+            border-radius: 2px 2px 0 0;
             opacity: 0;
             transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
-            z-index: 0;
+            z-index: 1;
         }
 
         .md3-navigation-bar__badge {

@@ -7,6 +7,49 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.6] - 2025-09-26
+
+### 🚀 Neue Komponenten - Navigation System Komplett
+- **🧭 Navigation Drawer:** Side Navigation Panel für Desktop/Tablet
+  - Standard (immer sichtbar) und Modal (mit Overlay) Varianten
+  - Header mit Titel/Subtitle, Navigation Items mit Active States
+  - Dividers, Subheader und Badge Support
+  - Responsive Overlay für Mobile mit Escape/Click-to-close
+  - Material Design 3 konforme Slide-in Animation
+
+- **🧭 Navigation Rail:** Kompakte vertikale Navigation für mittlere Geräte
+  - Standard, With-Header (mit FAB), Compact (nur Icons) Varianten
+  - Vertikale Navigation Items mit Icons, Labels und Active States
+  - Optional Header-Bereich mit Floating Action Button
+  - Responsive für Tablet-Größen (1024px+) mit automatischem Body-Padding
+
+### 🎨 Design Updates
+- **🧭 Navigation Bar:** Komplett redesignt nach Material Design 3 Spezifikation
+  - Neue kompakte Höhe: 64px statt 80px für moderneres Design
+  - Active State: Schwarze Unterlinie statt violetter Pill-Form
+  - Flex Layout: Items nehmen gleichmäßig vollen verfügbaren Raum ein
+  - Kleinere Icons (24px) und Labels (10px) für kompakteres Design
+  - Entspricht jetzt exakt der offiziellen MD3 Navigation Bar Spezifikation
+
+### 🔧 Bug Fixes & Verbesserungen
+- **📄 Index.php:** Fatal Error durch fehlende MD3List Include behoben
+- **🧬 Playground Integration:** Navigation Drawer und Rail vollständig konfigurierbar
+- **📱 Responsive Design:** Alle Navigation Komponenten arbeiten nahtlos zusammen
+- **🎛️ Controls:** Vollständige Playground-Konfiguration für alle Navigation-Typen
+
+### 📊 Navigation System Übersicht (4/6 - 67% vollständig)
+- ✅ **Navigation Bar** - Bottom Navigation für Smartphones (redesignt)
+- ✅ **Navigation Drawer** - Side Panel für Desktop/Laptop (NEU)
+- ✅ **Navigation Rail** - Kompakte vertikale Navigation für Tablets (NEU)
+- ✅ **Menu** - Dropdown und Context Menus
+- ❌ **Tabs** - Horizontal Tab Navigation
+- ❌ **Top App Bar** - Header mit Actions
+
+### 🎯 Gesamtfortschritt
+**17/33 Komponenten implementiert (52% vollständig)**
+
+---
+
 ## [0.2.5] - 2025-09-26
 
 ### 🐛 Bug Fixes

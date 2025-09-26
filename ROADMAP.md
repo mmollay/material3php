@@ -1,6 +1,6 @@
 # 🗺️ Material Design 3 PHP Library - Komponenten Roadmap
 
-## ✅ **Implementiert (15/33 Komponenten)**
+## ✅ **Implementiert (17/33 Komponenten)**
 
 ### 🎯 **Actions (3/4)**
 - ✅ **Button** - Alle Varianten (Filled, Outlined, Text, Elevated, Tonal)
@@ -20,11 +20,11 @@
 - ❌ **Bottom Sheet** - Slide-up Modal Content
 - ❌ **Side Sheet** - Slide-in Side Modal
 
-### 🧭 **Navigation (2/6)**
+### 🧭 **Navigation (4/6)**
 - ✅ **Navigation Bar** - Bottom Navigation mit Icons und Labels
+- ✅ **Navigation Drawer** - Side Navigation Panel *(NEU)*
+- ✅ **Navigation Rail** - Compact Vertical Navigation *(NEU)*
 - ✅ **Menu** - Dropdown und Context Menus
-- ❌ **Navigation Drawer** - Side Navigation Panel
-- ❌ **Navigation Rail** - Compact Vertical Navigation
 - ❌ **Tabs** - Horizontal Tab Navigation
 - ❌ **Top App Bar** - Header mit Actions
 

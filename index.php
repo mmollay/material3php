@@ -9,6 +9,7 @@
     require_once 'src/MD3Button.php';
     require_once 'src/MD3TextField.php';
     require_once 'src/MD3Card.php';
+    require_once 'src/MD3List.php';
     require_once 'src/MD3Breadcrumb.php';
     require_once 'src/MD3Dialog.php';
     require_once 'src/MD3Theme.php';

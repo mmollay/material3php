@@ -15,6 +15,8 @@
         require_once 'src/MD3Card.php';
         require_once 'src/MD3List.php';
         require_once 'src/MD3NavigationBar.php';
+        require_once 'src/MD3NavigationDrawer.php';
+        require_once 'src/MD3NavigationRail.php';
         require_once 'src/MD3Menu.php';
         require_once 'src/MD3Dialog.php';
         require_once 'src/MD3FloatingActionButton.php';
@@ -37,6 +39,8 @@
         <?php
         // Additional component CSS inside style tag
         echo MD3NavigationBar::getCSS();
+        echo MD3NavigationDrawer::getCSS();
+        echo MD3NavigationRail::getCSS();
         echo MD3Menu::getCSS();
         echo MD3Dialog::getCSS();
         echo MD3FloatingActionButton::getCSS();
@@ -575,6 +579,12 @@
                 <a href="?component=navigation&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'navigation' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('bottom_navigation'); ?> Navigation Bar
                 </a>
+                <a href="?component=navigationdrawer&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'navigationdrawer' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('menu_open'); ?> Navigation Drawer
+                </a>
+                <a href="?component=navigationrail&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'navigationrail' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('dock_to_left'); ?> Navigation Rail
+                </a>
                 <a href="?component=menu&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'menu' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('more_vert'); ?> Menu
                 </a>
@@ -902,6 +912,65 @@
                         type: 'number',
                         label: 'Active Item (0-based)',
                         default: 0
+                    }
+                }
+            },
+            navigationdrawer: {
+                name: 'Navigation Drawer',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Drawer Type',
+                        options: {
+                            'modal': 'Modal (with overlay)',
+                            'standard': 'Standard (always visible)'
+                        },
+                        default: 'modal'
+                    },
+                    title: {
+                        type: 'text',
+                        label: 'Title',
+                        default: 'Navigation'
+                    },
+                    subtitle: {
+                        type: 'text',
+                        label: 'Subtitle',
+                        default: 'Main navigation menu'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Items (format: icon|text|href)',
+                        default: 'home|Home|/\\ninbox|Inbox|/inbox\\nfavorites|Favorites|/favorites\\n---\\nsettings|Settings|/settings'
+                    },
+                    open: {
+                        type: 'checkbox',
+                        label: 'Initially Open',
+                        default: true
+                    }
+                }
+            },
+            navigationrail: {
+                name: 'Navigation Rail',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Rail Type',
+                        options: {
+                            'standard': 'Standard',
+                            'with-header': 'With Header/FAB',
+                            'compact': 'Compact (icons only)'
+                        },
+                        default: 'standard'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Items (format: icon|label|href)',
+                        default: 'home|Home|/\\ninbox|Inbox|/inbox\\nfavorites|Favorites|/favorites\\nsettings|Settings|/settings'
+                    },
+                    fab_icon: {
+                        type: 'text',
+                        label: 'FAB Icon (for with-header)',
+                        default: 'add'
                     }
                 }
             },
@@ -1261,6 +1330,8 @@
         initializeColorScheme();
 
         <?php echo MD3IconButton::getJS(); ?>
+        <?php echo MD3NavigationDrawer::getJS(); ?>
+        <?php echo MD3NavigationRail::getJS(); ?>
 
         // Theme selector functionality
         function toggleThemeSelector() {
