@@ -155,27 +155,32 @@ class MD3Header
     }
 
     /**
-     * Build theme URL for different page types
+     * Build theme URL for current page
      */
     private static function buildThemeUrl(string $currentPage, string $theme): string
     {
-        $themeParam = $theme !== 'default' ? '?theme=' . $theme : '';
+        // Get current script name
+        $currentScript = $_SERVER['SCRIPT_NAME'] ?? '';
+        $currentScript = basename($currentScript);
 
-        switch ($currentPage) {
-            case 'playground':
-                $component = $_GET['component'] ?? 'button';
-                return 'playground.php?theme=' . $theme . '&component=' . $component;
+        // Build URL parameters
+        $params = [];
 
-            case 'demo':
-            case 'demo-extended':
-                return 'demo-extended.php' . $themeParam;
-
-            case 'demo-functional':
-                return 'demo-functional.php' . $themeParam;
-
-            default:
-                return 'index.php' . $themeParam;
+        // Add theme parameter
+        if ($theme !== 'default') {
+            $params['theme'] = $theme;
         }
+
+        // For playground, preserve component parameter
+        if ($currentPage === 'playground' && isset($_GET['component'])) {
+            $params['component'] = $_GET['component'];
+        }
+
+        // Build query string
+        $queryString = !empty($params) ? '?' . http_build_query($params) : '';
+
+        // Return current page with new theme
+        return $currentScript . $queryString;
     }
 
     /**
