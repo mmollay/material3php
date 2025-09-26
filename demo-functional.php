@@ -107,10 +107,10 @@
         <h3><?php echo MD3::icon('explore'); ?> Demo-Seiten Navigation</h3>
         <div class="nav-buttons">
             <?php
-            echo MD3Button::outlined('🏠 Basis Demo', 'index.php');
-            echo MD3Button::outlined('🚀 Erweiterte Demo', 'demo-extended.php');
-            echo MD3Button::filled('⚡ Funktionale Demo', 'demo-functional.php');
-            echo MD3Button::text('🧪 Test Seite', 'test.html');
+            echo '<a href="index.php" style="text-decoration: none;">' . MD3Button::outlined('🏠 Basis Demo') . '</a>';
+            echo '<a href="demo-extended.php" style="text-decoration: none;">' . MD3Button::outlined('🚀 Erweiterte Demo') . '</a>';
+            echo '<a href="demo-functional.php" style="text-decoration: none;">' . MD3Button::filled('⚡ Funktionale Demo') . '</a>';
+            echo '<a href="test.html" style="text-decoration: none;">' . MD3Button::text('🧪 Test Seite') . '</a>';
             ?>
         </div>
         <p style="margin: 12px 0 0 0; font-size: 14px; color: var(--md-sys-color-on-primary-container);">
