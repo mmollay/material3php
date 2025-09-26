@@ -84,7 +84,7 @@ class MD3Header
     {
         // Mode toggle button
         $modeToggle = '
-        <button class="md3-mode-toggle" onclick="toggleMode()" id="mode-toggle" title="Dark/Light Mode wechseln">
+        <button class="md3-mode-toggle" onclick="toggleMode()" id="mode-toggle-btn" title="Dark/Light Mode wechseln">
             ' . MD3::icon('dark_mode') . '
         </button>';
 
