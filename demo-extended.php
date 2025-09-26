@@ -129,6 +129,7 @@
             echo '<a href="index.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::outlined('🏠 Basis Demo') . '</a>';
             echo '<a href="demo-extended.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::filled('🚀 Erweiterte Demo') . '</a>';
             echo '<a href="demo-functional.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::elevated('⚡ Funktionale Demo') . '</a>';
+            echo '<a href="playground.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::tonal('🎮 Interactive Playground') . '</a>';
             echo '<a href="test.html" style="text-decoration: none;">' . MD3Button::text('🧪 Test Seite') . '</a>';
             ?>
         </div>

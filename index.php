@@ -114,13 +114,15 @@
             echo '<a href="index.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::filled('🏠 Basis Demo') . '</a>';
             echo '<a href="demo-extended.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::outlined('🚀 Erweiterte Demo') . '</a>';
             echo '<a href="demo-functional.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::elevated('⚡ Funktionale Demo') . '</a>';
+            echo '<a href="playground.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::tonal('🎮 Interactive Playground') . '</a>';
             echo '<a href="test.html" style="text-decoration: none;">' . MD3Button::text('🧪 Test Seite') . '</a>';
             ?>
         </div>
         <p style="margin: 12px 0 0 0; font-size: 14px; color: var(--md-sys-color-on-primary-container);">
-            <strong>Basis Demo:</strong> Grundlegende Komponenten |
-            <strong>Erweiterte Demo:</strong> Alle neuen Komponenten |
-            <strong>Funktionale Demo:</strong> Vollständige Form-Integration
+            <strong>Basis:</strong> Grundkomponenten |
+            <strong>Erweitert:</strong> Alle Komponenten |
+            <strong>Funktional:</strong> Form-Integration |
+            <strong>Playground:</strong> Interaktive Komponenten-Demo
         </p>
     </div>
 
