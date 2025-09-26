@@ -109,13 +109,7 @@
     <?php echo MD3Header::demo('Material Design 3 PHP Library - Funktionale Demo', 'integration_instructions', $currentTheme); ?>
 
     <div class="content-wrapper">
-        <!-- Theme Selection -->
-        <div class="demo-section">
-            <h2><?php echo MD3::icon('palette'); ?> Theme-Auswahl</h2>
-            <?php echo MD3Theme::selectorWithModeToggle($currentTheme); ?>
-        </div>
-
-    <!-- Demo Navigation -->
+        <!-- Demo Navigation -->
     <div class="demo-navigation">
         <h3><?php echo MD3::icon('explore'); ?> Demo-Seiten Navigation</h3>
         <div class="nav-buttons">

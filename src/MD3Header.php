@@ -419,7 +419,44 @@ class MD3Header
     {
         return "
         <script>
+        // Dark/Light Mode Toggle - defined immediately for onclick access
+        window.toggleMode = function() {
+            const currentMode = document.documentElement.getAttribute('data-theme') || 'light';
+            const newMode = currentMode === 'light' ? 'dark' : 'light';
+
+            console.log('Toggling from', currentMode, 'to', newMode);
+
+            // Update data attribute for CSS
+            document.documentElement.setAttribute('data-theme', newMode);
+
+            // Save preference
+            localStorage.setItem('md3-color-scheme', newMode);
+
+            // Update button icon - show opposite of current mode
+            const button = document.getElementById('mode-toggle-btn');
+            if (button) {
+                const icon = newMode === 'dark' ? 'light_mode' : 'dark_mode';
+                button.querySelector('.material-symbols-outlined').textContent = icon;
+            }
+
+            console.log('Applied theme:', document.documentElement.getAttribute('data-theme'));
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize color scheme on page load
+            const savedMode = localStorage.getItem('md3-color-scheme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initialMode = savedMode || (systemPrefersDark ? 'dark' : 'light');
+
+            document.documentElement.setAttribute('data-theme', initialMode);
+
+            const modeButton = document.getElementById('mode-toggle-btn');
+            if (modeButton) {
+                // Show opposite icon of current mode
+                const icon = initialMode === 'dark' ? 'light_mode' : 'dark_mode';
+                modeButton.querySelector('.material-symbols-outlined').textContent = icon;
+            }
+
             // Theme selector functionality
             window.toggleThemeSelector = function() {
                 const dropdown = document.getElementById('theme-dropdown');
