@@ -19,6 +19,7 @@
     echo MD3::init(true, true, $currentTheme);
     echo MD3Theme::getThemeCSS();
     echo MD3List::getListCSS();
+    echo MD3::getVersionCSS();
     ?>
     <style>
         body {
@@ -281,28 +282,24 @@
         ?>
     </div>
 
-    <!-- Component Overview -->
+    <!-- Version Info -->
     <div class="demo-section">
-        <h2><?php echo MD3::icon('info'); ?> Über die Library</h2>
+        <h2><?php echo MD3::icon('info'); ?> Library Information</h2>
 
         <?php
-        $libraryInfo = MD3Card::simple(
-            'Material Design 3 PHP Library',
-            'Diese Library bietet eine einfache PHP-Schnittstelle zu den Material Web Components. ' .
-            'Alle Komponenten generieren standardkonformes HTML mit Material Design 3 Styling. ' .
-            'Die Library ist erweiterbar und produktionsbereit.',
-            'elevated'
-        );
-        echo $libraryInfo;
+        echo MD3::getVersionDisplay(true);
         ?>
 
-        <div style="margin-top: 16px; padding: 16px; background: var(--md-sys-color-primary-container); border-radius: 8px;">
-            <h3 style="margin: 0 0 8px 0; color: var(--md-sys-color-on-primary-container);">
-                <?php echo MD3::icon('code'); ?> Version: <?php echo MD3::getVersion(); ?>
-            </h3>
-            <p style="margin: 0; color: var(--md-sys-color-on-primary-container-variant);">
-                Verfügbare Komponenten: Button, TextField, Card, Breadcrumb, Dialog und weitere.
-            </p>
+        <div style="margin-top: 16px;">
+            <?php
+            $libraryInfo = MD3Card::simple(
+                'Material Design 3 Pure CSS Implementation',
+                'Diese Library implementiert Material Design 3 als reine PHP/CSS-Lösung ohne externe Abhängigkeiten. ' .
+                'Alle Komponenten sind offline-fähig und vollständig funktional für Produktionsumgebungen.',
+                'outlined'
+            );
+            echo $libraryInfo;
+            ?>
         </div>
     </div>
 

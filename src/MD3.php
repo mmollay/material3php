@@ -7,7 +7,7 @@
 class MD3
 {
     private static $initialized = false;
-    private static $version = '2.0.1';
+    private static $version = null;
 
     /**
      * Initialize Material Design 3 resources
@@ -603,5 +603,241 @@ class MD3
     {
         require_once 'MD3Theme.php';
         return MD3Theme::getThemeColors($theme);
+    }
+
+    /**
+     * Get library version from VERSION file
+     *
+     * @return string Current version
+     */
+    public static function getVersion(): string
+    {
+        if (self::$version === null) {
+            $versionFile = dirname(__DIR__) . '/VERSION';
+            if (file_exists($versionFile)) {
+                self::$version = trim(file_get_contents($versionFile));
+            } else {
+                self::$version = '2.1.0'; // Fallback version
+            }
+        }
+        return self::$version;
+    }
+
+    /**
+     * Get version info with additional metadata
+     *
+     * @return array Version information
+     */
+    public static function getVersionInfo(): array
+    {
+        return [
+            'version' => self::getVersion(),
+            'name' => 'Material Design 3 PHP Library',
+            'build_date' => date('Y-m-d'),
+            'php_version' => PHP_VERSION,
+            'material_web_components' => false, // We don't use the official components
+            'css_only' => true,
+            'offline_ready' => true,
+            'components' => [
+                'MD3Button', 'MD3TextField', 'MD3Card', 'MD3Breadcrumb',
+                'MD3Dialog', 'MD3List', 'MD3Search', 'MD3Chip', 'MD3Tooltip',
+                'MD3Switch', 'MD3Checkbox', 'MD3Radio', 'MD3Select', 'MD3Theme'
+            ]
+        ];
+    }
+
+    /**
+     * Check if a component class exists
+     *
+     * @param string $component Component name (e.g., 'Button', 'TextField')
+     * @return bool Whether component exists
+     */
+    public static function hasComponent(string $component): bool
+    {
+        $className = 'MD3' . ucfirst($component);
+        return class_exists($className);
+    }
+
+    /**
+     * Get changelog entries for current or specific version
+     *
+     * @param string|null $version Specific version or null for current
+     * @return array Changelog entries
+     */
+    public static function getChangelog(string $version = null): array
+    {
+        $changelogFile = dirname(__DIR__) . '/CHANGELOG.md';
+        if (!file_exists($changelogFile)) {
+            return ['error' => 'Changelog not found'];
+        }
+
+        $changelog = file_get_contents($changelogFile);
+        $targetVersion = $version ?? self::getVersion();
+
+        // Extract version section
+        $pattern = '/## \[' . preg_quote($targetVersion) . '\].*?\n(.*?)(?=\n## \[|$)/s';
+        if (preg_match($pattern, $changelog, $matches)) {
+            $content = trim($matches[1]);
+
+            // Parse sections
+            $sections = [];
+            if (preg_match_all('/### (.*?)\n(.*?)(?=\n### |$)/s', $content, $sectionMatches, PREG_SET_ORDER)) {
+                foreach ($sectionMatches as $match) {
+                    $sectionName = trim($match[1]);
+                    $sectionContent = trim($match[2]);
+
+                    // Parse list items
+                    $items = [];
+                    if (preg_match_all('/^- (.*)$/m', $sectionContent, $itemMatches)) {
+                        $items = $itemMatches[1];
+                    }
+
+                    $sections[$sectionName] = $items;
+                }
+            }
+
+            return [
+                'version' => $targetVersion,
+                'sections' => $sections,
+                'raw' => $content
+            ];
+        }
+
+        return ['error' => "Version {$targetVersion} not found in changelog"];
+    }
+
+    /**
+     * Generate version information display
+     *
+     * @param bool $includeChangelog Include changelog for current version
+     * @return string HTML for version display
+     */
+    public static function getVersionDisplay(bool $includeChangelog = false): string
+    {
+        $info = self::getVersionInfo();
+        $html = '<div class="md3-version-info">';
+
+        $html .= '<div class="version-header">';
+        $html .= '<h3>' . self::icon('info') . ' ' . htmlspecialchars($info['name']) . '</h3>';
+        $html .= '<div class="version-badge">v' . htmlspecialchars($info['version']) . '</div>';
+        $html .= '</div>';
+
+        $html .= '<div class="version-details">';
+        $html .= '<div class="detail-item"><strong>Build:</strong> ' . htmlspecialchars($info['build_date']) . '</div>';
+        $html .= '<div class="detail-item"><strong>PHP:</strong> ' . htmlspecialchars($info['php_version']) . '</div>';
+        $html .= '<div class="detail-item"><strong>Komponenten:</strong> ' . count($info['components']) . '</div>';
+        $html .= '<div class="detail-item"><strong>Offline:</strong> ' . ($info['offline_ready'] ? '✅' : '❌') . '</div>';
+        $html .= '</div>';
+
+        if ($includeChangelog) {
+            $changelog = self::getChangelog();
+            if (isset($changelog['sections'])) {
+                $html .= '<div class="version-changelog">';
+                $html .= '<h4>Changelog v' . htmlspecialchars($changelog['version']) . '</h4>';
+
+                foreach ($changelog['sections'] as $section => $items) {
+                    $html .= '<div class="changelog-section">';
+                    $html .= '<h5>' . htmlspecialchars($section) . '</h5>';
+                    $html .= '<ul>';
+                    foreach ($items as $item) {
+                        $html .= '<li>' . htmlspecialchars($item) . '</li>';
+                    }
+                    $html .= '</ul>';
+                    $html .= '</div>';
+                }
+
+                $html .= '</div>';
+            }
+        }
+
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    /**
+     * Generate CSS for version display
+     *
+     * @return string CSS for version components
+     */
+    public static function getVersionCSS(): string
+    {
+        return '<style>
+            .md3-version-info {
+                background: var(--md-sys-color-surface-container);
+                border: 1px solid var(--md-sys-color-outline-variant);
+                border-radius: 12px;
+                padding: 16px;
+                margin: 16px 0;
+            }
+
+            .version-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 12px;
+            }
+
+            .version-header h3 {
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                color: var(--md-sys-color-on-surface);
+            }
+
+            .version-badge {
+                background: var(--md-sys-color-primary);
+                color: var(--md-sys-color-on-primary);
+                padding: 4px 12px;
+                border-radius: 16px;
+                font-weight: 500;
+                font-size: 14px;
+            }
+
+            .version-details {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+
+            .detail-item {
+                font-size: 14px;
+                color: var(--md-sys-color-on-surface-variant);
+            }
+
+            .version-changelog {
+                border-top: 1px solid var(--md-sys-color-outline-variant);
+                padding-top: 16px;
+            }
+
+            .version-changelog h4 {
+                margin: 0 0 12px 0;
+                color: var(--md-sys-color-primary);
+            }
+
+            .changelog-section {
+                margin-bottom: 16px;
+            }
+
+            .changelog-section h5 {
+                margin: 0 0 8px 0;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--md-sys-color-on-surface);
+            }
+
+            .changelog-section ul {
+                margin: 0;
+                padding-left: 20px;
+                font-size: 14px;
+                color: var(--md-sys-color-on-surface-variant);
+            }
+
+            .changelog-section li {
+                margin-bottom: 4px;
+            }
+        </style>';
     }
 }
