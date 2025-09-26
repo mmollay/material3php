@@ -643,7 +643,7 @@
                 <div class="code-section">
                     <h4><?php echo MD3::icon('code'); ?> PHP Code</h4>
                     <pre id="php-code">
-                        <button class="copy-button" onclick="copyCode('php')">Copy</button>
+                        <button class="copy-button" onclick="copyCode('php', this)">Copy</button>
                         <code id="php-code-content">// PHP code will appear here</code>
                     </pre>
                 </div>
@@ -651,7 +651,7 @@
                 <div class="code-section">
                     <h4><?php echo MD3::icon('html'); ?> Generated HTML</h4>
                     <pre id="html-code">
-                        <button class="copy-button" onclick="copyCode('html')">Copy</button>
+                        <button class="copy-button" onclick="copyCode('html', this)">Copy</button>
                         <code id="html-code-content"><!-- HTML output will appear here --></code>
                     </pre>
                 </div>
@@ -1247,13 +1247,12 @@
             });
         }
 
-        function copyCode(type) {
+        function copyCode(type, button) {
             const codeElement = document.getElementById(type + '-code-content');
             const text = codeElement.textContent;
 
             navigator.clipboard.writeText(text).then(function() {
                 // Show success feedback
-                const button = event.target;
                 const originalText = button.textContent;
                 button.textContent = 'Copied!';
                 button.style.background = 'var(--md-sys-color-primary)';

@@ -10,69 +10,50 @@
     require_once 'src/MD3TextField.php';
     require_once 'src/MD3Card.php';
     require_once 'src/MD3Theme.php';
+    require_once 'src/MD3Header.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
 
     echo MD3::init(true, true, $currentTheme);
     echo MD3Theme::getThemeCSS();
+    echo MD3Header::getCSS();
     echo MD3::getVersionCSS();
     ?>
     <style>
         body {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            margin: 0;
+            padding: 0;
             font-size: 14px;
         }
 
-        .header {
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-section {
             padding: 32px 0;
             text-align: center;
             border-bottom: 1px solid var(--md-sys-color-outline-variant);
-            position: relative;
         }
 
-        .header h1 {
-            margin: 0 0 8px 0;
-            font-size: 2.5rem;
-            font-weight: 400;
-            color: var(--md-sys-color-primary);
-        }
-
-        .header .subtitle {
-            margin: 0;
+        .subtitle {
+            margin: 0 0 16px 0;
             font-size: 1.1rem;
             color: var(--md-sys-color-on-surface-variant);
         }
 
         .version-badge {
             display: inline-block;
-            margin-top: 12px;
-            padding: 4px 12px;
+            padding: 6px 16px;
             background: var(--md-sys-color-primary-container);
             color: var(--md-sys-color-on-primary-container);
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 12px;
             font-weight: 500;
-        }
-
-        .mode-toggle {
-            position: absolute;
-            top: 20px;
-            right: 0;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--md-sys-color-on-surface-variant);
-            padding: 8px;
-            border-radius: 20px;
-            transition: all 0.2s;
-        }
-
-        .mode-toggle:hover {
-            background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
+            box-shadow: var(--md-sys-elevation-1);
         }
 
         .stats-grid {
@@ -208,58 +189,15 @@
         }
     </style>
 
-    <script>
-        // Define functions immediately to avoid reference errors
-        function toggleMode() {
-            const currentMode = document.documentElement.getAttribute('data-theme') || 'light';
-            const newMode = currentMode === 'light' ? 'dark' : 'light';
-
-            console.log('Toggling from', currentMode, 'to', newMode);
-
-            // Update data attribute for CSS
-            document.documentElement.setAttribute('data-theme', newMode);
-
-            // Save preference
-            localStorage.setItem('md3-color-scheme', newMode);
-
-            // Update button icon - show opposite of current mode
-            const button = document.getElementById('mode-toggle');
-            if (button) {
-                const icon = newMode === 'dark' ? 'light_mode' : 'dark_mode';
-                button.querySelector('.material-symbols-outlined').textContent = icon;
-            }
-
-            console.log('Applied theme:', document.documentElement.getAttribute('data-theme'));
-        }
-
-        function changeTheme(themeName) {
-            const currentUrl = new URL(window.location);
-
-            // Update URL parameter
-            if (themeName === 'default') {
-                currentUrl.searchParams.delete('theme');
-            } else {
-                currentUrl.searchParams.set('theme', themeName);
-            }
-
-            // Navigate to new URL
-            window.location.href = currentUrl.toString();
-        }
-
-        // Make functions globally available
-        window.toggleMode = toggleMode;
-        window.changeTheme = changeTheme;
-    </script>
 </head>
 <body>
-    <header class="header">
-        <button class="mode-toggle" onclick="toggleMode()" id="mode-toggle">
-            <span class="material-symbols-outlined">dark_mode</span>
-        </button>
-        <h1>Material Design 3 PHP Library</h1>
-        <p class="subtitle">Pure PHP Implementation • 17 Components • MD3 Compliant</p>
-        <span class="version-badge">v<?php echo file_get_contents('VERSION'); ?></span>
-    </header>
+    <?php echo MD3Header::demo('Material Design 3 PHP Library', 'home', $currentTheme); ?>
+
+    <div class="content-wrapper">
+        <div class="hero-section">
+            <p class="subtitle">Pure PHP Implementation • 17 Components • MD3 Compliant</p>
+            <span class="version-badge">v<?php echo file_get_contents('VERSION'); ?></span>
+        </div>
 
     <!-- Statistics -->
     <div class="stats-grid">
@@ -360,33 +298,12 @@
         Made with ❤️ for pure PHP implementations
         </p>
     </div>
+    </div>
 
-    <script>
-        // Initialize mode from localStorage or system preference
-        function initializeColorScheme() {
-            const savedMode = localStorage.getItem('md3-color-scheme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const initialMode = savedMode || (systemPrefersDark ? 'dark' : 'light');
+    <?php
+    echo MD3Header::getScript();
+    echo MD3Theme::getThemeScript();
+    ?>
 
-            console.log('Initializing color scheme:', initialMode);
-
-            document.documentElement.setAttribute('data-theme', initialMode);
-
-            const modeButton = document.getElementById('mode-toggle');
-            if (modeButton) {
-                // Show opposite icon of current mode
-                const icon = initialMode === 'dark' ? 'light_mode' : 'dark_mode';
-                modeButton.querySelector('.material-symbols-outlined').textContent = icon;
-                console.log('Set initial icon to:', icon);
-            }
-
-            console.log('HTML data-theme attribute:', document.documentElement.getAttribute('data-theme'));
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeColorScheme();
-        });
-    </script>
 </body>
 </html>

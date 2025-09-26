@@ -19,16 +19,23 @@
     require_once 'src/MD3Select.php';
     require_once 'src/MD3Dialog.php';
     require_once 'src/MD3Theme.php';
+    require_once 'src/MD3Header.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
 
     echo MD3::init(true, true, $currentTheme);
     echo MD3Theme::getThemeCSS();
+    echo MD3Header::getCSS();
     echo MD3List::getListCSS();
     ?>
     <style>
         body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content-wrapper {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 16px;
@@ -99,20 +106,14 @@
     </style>
 </head>
 <body>
-    <header style="padding: 24px 0; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
-        <h1 style="margin: 0; text-align: center; color: var(--md-sys-color-primary);">
-            Material Design 3 PHP Library - Funktionale Demo
-        </h1>
-        <p style="text-align: center; margin: 8px 0 0 0; color: var(--md-sys-color-on-surface-variant);">
-            Vollständig funktionsfähige Komponenten mit korrekten Form-Elementen
-        </p>
-    </header>
+    <?php echo MD3Header::demo('Material Design 3 PHP Library - Funktionale Demo', 'integration_instructions', $currentTheme); ?>
 
-    <!-- Theme Selection -->
-    <div class="demo-section">
-        <h2><?php echo MD3::icon('palette'); ?> Theme-Auswahl</h2>
-        <?php echo MD3Theme::toggleChips($currentTheme); ?>
-    </div>
+    <div class="content-wrapper">
+        <!-- Theme Selection -->
+        <div class="demo-section">
+            <h2><?php echo MD3::icon('palette'); ?> Theme-Auswahl</h2>
+            <?php echo MD3Theme::selectorWithModeToggle($currentTheme); ?>
+        </div>
 
     <!-- Demo Navigation -->
     <div class="demo-navigation">
@@ -388,14 +389,16 @@
         </div>
     </div>
 
-    <footer style="text-align: center; padding: 24px 0; color: var(--md-sys-color-on-surface-variant); border-top: 1px solid var(--md-sys-color-outline-variant); margin-top: 32px;">
-        <p><strong>Material Design 3 PHP Library - Funktionale Demo</strong><br>
-        <small>Alle Komponenten sind vollständig funktionsfähig und form-kompatibel</small>
-        </p>
-    </footer>
+        <footer style="text-align: center; padding: 24px 0; color: var(--md-sys-color-on-surface-variant); border-top: 1px solid var(--md-sys-color-outline-variant); margin-top: 32px;">
+            <p><strong>Material Design 3 PHP Library - Funktionale Demo</strong><br>
+            <small>Alle Komponenten sind vollständig funktionsfähig und form-kompatibel</small>
+            </p>
+        </footer>
+    </div>
 
     <?php
     // Include JavaScript for interactive components
+    echo MD3Header::getScript();
     echo MD3Search::getSearchScript();
     echo MD3Chip::getChipScript();
     echo MD3Tooltip::getTooltipScript();
