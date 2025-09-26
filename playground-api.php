@@ -693,11 +693,12 @@ function generateMenu($values) {
         }
     }
 
-    $triggerButton = "<button class=\"md3-button md3-button--filled\">{$trigger}</button>";
 
     if ($type === 'context') {
-        return MD3Menu::context($items, ['target' => '.preview-area']);
+        $contextDemo = '<div class="context-demo-hint" style="background: var(--md-sys-color-surface-variant); border: 2px dashed var(--md-sys-color-outline); border-radius: 12px; padding: 32px; text-align: center; color: var(--md-sys-color-on-surface-variant); font-size: 14px; margin: 20px 0; cursor: context-menu; user-select: none;"><span class="material-symbols-outlined" style="font-size: 32px; margin-bottom: 8px; display: block;">right_click</span>Right-click here to open context menu<br><small>Rechtsklick um das Kontextmenü zu öffnen</small></div>';
+        return $contextDemo . MD3Menu::context($items, ['target' => '.context-demo-hint']);
     } else {
+        $triggerButton = "<button class=\"md3-button md3-button--filled\">{$trigger}</button>";
         return MD3Menu::dropdown($triggerButton, $items, ['position' => $position]);
     }
 }
@@ -730,7 +731,8 @@ function generateMenuPHP($values) {
     $code .= "];\n\n";
 
     if ($type === 'context') {
-        $code .= "echo MD3Menu::context(\$items, ['target' => '.preview-area']);";
+        $code .= "\$contextDemo = '<div class=\"context-demo-hint\" style=\"background: var(--md-sys-color-surface-variant); border: 2px dashed var(--md-sys-color-outline); border-radius: 12px; padding: 32px; text-align: center; color: var(--md-sys-color-on-surface-variant); font-size: 14px; margin: 20px 0; cursor: context-menu; user-select: none;\"><span class=\"material-symbols-outlined\" style=\"font-size: 32px; margin-bottom: 8px; display: block;\">right_click</span>Right-click here to open context menu<br><small>Rechtsklick um das Kontextmenü zu öffnen</small></div>';\n";
+        $code .= "echo \$contextDemo . MD3Menu::context(\$items, ['target' => '.context-demo-hint']);";
     } else {
         $code .= "\$triggerButton = \"<button class='md3-button md3-button--filled'>{$trigger}</button>\";\n";
         $code .= "echo MD3Menu::dropdown(\$triggerButton, \$items, ['position' => '{$position}']);";

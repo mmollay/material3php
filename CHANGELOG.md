@@ -7,6 +7,64 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.5] - 2025-09-26
+
+### 🐛 Bug Fixes
+- **🧭 Navigation Bar:** Active State Indicator repariert
+  - Z-Index Problem behoben - Indicator jetzt sichtbar hinter Icon und Label
+  - Pill-Form Positionierung korrigiert (top: 4px, width: 64px, height: 32px)
+  - Material Design 3 konforme Darstellung wie in offizieller Spezifikation
+  - Padding angepasst für bessere Icon/Label Balance
+
+- **📋 Context Menu:** Preview-Problem gelöst
+  - Context Menu Demo-Bereich mit "Right-click here" Hinweis hinzugefügt
+  - Material Design Icon und deutsche/englische Beschriftung
+  - Proper Target-Selector `.context-demo-hint` statt `.preview-area`
+  - Context Menu Generator für PHP-Code ebenfalls korrigiert
+
+### 🔧 Technische Verbesserungen
+- **playground-api.php:** Context Menu Generator mit visueller Demo-Area
+- **MD3NavigationBar.php:** CSS Indicator Styling nach MD3 Guide korrigiert
+- **Z-Index Management:** Proper Layering für Navigation Bar Komponenten
+
+---
+
+## [0.2.4] - 2025-09-26
+
+### 🚀 Neue Komponenten
+- **🎯 Icon Button:** Vollständige MD3-konforme Implementierung
+  - Standard, Filled, Outlined, Tonal Varianten
+  - Toggle-Funktionalität mit separaten Icons für selected/unselected Zustände
+  - Interactive States (Hover, Focus, Pressed) und Disabled Support
+  - ARIA-Labels und Keyboard Navigation für Accessibility
+  - Material Design 3 konforme Farben und Ripple-Effekte
+  - Integration in Playground mit vollständigen Controls
+
+### 📋 Roadmap Updates
+- **🎯 Actions Kategorie:** 75% vollständig (3/4 Komponenten implementiert)
+  - Button ✅, FAB ✅, Icon Button ✅, Segmented Button ❌
+- **📊 Gesamtfortschritt:** 15/33 Komponenten implementiert (45% Fortschritt)
+- **🚀 Phase 1 Prioritäten:** Badge ✅, Icon Button ✅ abgeschlossen
+
+### 🔧 Technische Verbesserungen
+- **Component-Integration:** Icon Button vollständig in playground-api.php integriert
+- **CSS-Architektur:** MD3-konforme Color-Token und State-Layers
+- **JavaScript-Funktionalität:** Toggle-Events und Custom Event Dispatching
+- **Playground-Enhancement:** Icon Button Konfiguration mit allen Optionen
+
+### 📊 Aktuelle Komponenten-Übersicht
+**Actions:** Button ✅, FAB ✅, Icon Button ✅ | **Communication:** Badge ✅
+**Containment:** Card ✅, Dialog ✅ | **Navigation:** Navigation Bar ✅, Menu ✅
+**Selection:** Checkbox ✅, Radio ✅, Switch ✅, Select ✅ | **Text Inputs:** TextField ✅
+**Display:** Lists ✅, Chip ✅
+
+### 🎯 Nächste Prioritäten (Phase 1)
+- Progress Indicator (Linear & Circular Loading States)
+- Snackbar (User Feedback System)
+- Tabs (Navigation System erweitern)
+
+---
+
 ## [0.2.3] - 2025-09-26
 
 ### 🚀 Neue Komponenten

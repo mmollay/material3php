@@ -183,7 +183,7 @@ class MD3NavigationBar
             justify-content: center;
             min-width: 64px;
             height: 64px;
-            padding: 4px 12px 8px;
+            padding: 12px 16px 16px;
             text-decoration: none;
             color: var(--md-sys-color-on-surface-variant);
             border-radius: 16px;
@@ -231,15 +231,18 @@ class MD3NavigationBar
             margin-bottom: 4px;
             font-size: 24px;
             line-height: 1;
+            z-index: 1;
         }
 
         .md3-navigation-bar__label {
+            position: relative;
             font-size: 12px;
             font-weight: 500;
             line-height: 16px;
             letter-spacing: 0.5px;
             text-align: center;
             min-height: 16px;
+            z-index: 1;
         }
 
         .md3-navigation-bar--icons-only .md3-navigation-bar__label {
@@ -252,7 +255,7 @@ class MD3NavigationBar
 
         .md3-navigation-bar__indicator {
             position: absolute;
-            top: 0;
+            top: 4px;
             left: 50%;
             transform: translateX(-50%) scaleX(0);
             width: 64px;
@@ -261,7 +264,7 @@ class MD3NavigationBar
             border-radius: 16px;
             opacity: 0;
             transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
-            z-index: -1;
+            z-index: 0;
         }
 
         .md3-navigation-bar__badge {
