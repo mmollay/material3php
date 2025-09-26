@@ -408,49 +408,7 @@ class MD3Theme
                 window.location.href = url.toString();
             }
 
-            // Dark/Light Mode Toggle - must be defined before DOMContentLoaded
-            function toggleMode() {
-                const currentMode = document.documentElement.getAttribute("data-theme") || "light";
-                const newMode = currentMode === "light" ? "dark" : "light";
-
-                console.log("Toggling from", currentMode, "to", newMode);
-
-                // Update data attribute for CSS
-                document.documentElement.setAttribute("data-theme", newMode);
-
-                // Save preference
-                localStorage.setItem("md3-color-scheme", newMode);
-
-                // Update button icon - show opposite of current mode
-                const button = document.getElementById("mode-toggle-btn");
-                if (button) {
-                    const icon = newMode === "dark" ? "light_mode" : "dark_mode";
-                    button.querySelector(".material-symbols-outlined").textContent = icon;
-                }
-
-                console.log("Applied theme:", document.documentElement.getAttribute("data-theme"));
-            }
-
-            // Initialize color scheme from localStorage or system preference
-            function initializeColorScheme() {
-                const savedMode = localStorage.getItem("md3-color-scheme");
-                const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-                const initialMode = savedMode || (systemPrefersDark ? "dark" : "light");
-
-                console.log("Initializing color scheme:", initialMode);
-
-                document.documentElement.setAttribute("data-theme", initialMode);
-
-                const modeButton = document.getElementById("mode-toggle-btn");
-                if (modeButton) {
-                    // Show opposite icon of current mode
-                    const icon = initialMode === "dark" ? "light_mode" : "dark_mode";
-                    modeButton.querySelector(".material-symbols-outlined").textContent = icon;
-                    console.log("Set initial icon to:", icon);
-                }
-
-                console.log("HTML data-theme attribute:", document.documentElement.getAttribute("data-theme"));
-            }
+            // Note: toggleMode and initializeColorScheme are now handled by MD3Header::getScript()
 
             // Make functions globally available immediately
             window.changeTheme = changeTheme;
@@ -458,8 +416,7 @@ class MD3Theme
 
             // Load saved theme on page load
             document.addEventListener("DOMContentLoaded", function() {
-                // Initialize color scheme first
-                initializeColorScheme();
+                // Note: Color scheme initialization is handled by MD3Header::getScript()
 
                 const savedTheme = localStorage.getItem("md3-theme") || "default";
                 const urlParams = new URLSearchParams(window.location.search);
