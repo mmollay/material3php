@@ -547,12 +547,8 @@ class MD3
     }
 
     /**
-     * Get current library version
+     * Get current library version (removed duplicate - see line 613)
      */
-    public static function getVersion(): string
-    {
-        return self::$version;
-    }
 
     /**
      * Generate Material Icon

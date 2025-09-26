@@ -36,6 +36,9 @@ require_once 'src/MD3Button.php';
 require_once 'src/MD3TextField.php';
 require_once 'src/MD3Card.php';
 require_once 'src/MD3List.php';
+require_once 'src/MD3NavigationBar.php';
+require_once 'src/MD3Menu.php';
+require_once 'src/MD3Dialog.php';
 require_once 'src/MD3Switch.php';
 require_once 'src/MD3Checkbox.php';
 require_once 'src/MD3Radio.php';
@@ -104,6 +107,21 @@ function generateComponent($component, $values) {
         case 'chip':
             $html = generateChip($values);
             $php = generateChipPHP($values);
+            break;
+
+        case 'navigation':
+            $html = generateNavigation($values);
+            $php = generateNavigationPHP($values);
+            break;
+
+        case 'menu':
+            $html = generateMenu($values);
+            $php = generateMenuPHP($values);
+            break;
+
+        case 'dialog':
+            $html = generateDialog($values);
+            $php = generateDialogPHP($values);
             break;
 
         default:
@@ -556,6 +574,222 @@ function generateChipPHP($values) {
     }
 
     $code .= "\necho MD3Chip::set(\$chips, '{$type}');";
+
+    return $code;
+}
+
+function generateNavigation($values) {
+    $type = $values['type'] ?? 'fixed';
+    $itemsText = $values['items'] ?? 'home|Home|/\nsearch|Search|/search\nfavorite|Favorites|/favorites';
+    $activeIndex = (int)($values['activeIndex'] ?? 0);
+
+    // Parse items
+    $items = [];
+    $lines = explode("\n", trim($itemsText));
+    foreach ($lines as $i => $line) {
+        $line = trim($line);
+        if ($line) {
+            $parts = explode('|', $line);
+            $items[] = [
+                'icon' => $parts[0] ?? 'circle',
+                'label' => $parts[1] ?? 'Item ' . ($i + 1),
+                'href' => $parts[2] ?? '#',
+                'active' => $i === $activeIndex
+            ];
+        }
+    }
+
+    switch ($type) {
+        case 'floating':
+            return MD3NavigationBar::floating($items);
+        case 'icons-only':
+            return MD3NavigationBar::iconsOnly($items);
+        default:
+            return MD3NavigationBar::create($items);
+    }
+}
+
+function generateNavigationPHP($values) {
+    $type = $values['type'] ?? 'fixed';
+    $itemsText = $values['items'] ?? 'home|Home|/\nsearch|Search|/search\nfavorite|Favorites|/favorites';
+    $activeIndex = (int)($values['activeIndex'] ?? 0);
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3NavigationBar.php';\n\n";
+    $code .= "\$items = [\n";
+
+    $lines = explode("\n", trim($itemsText));
+    foreach ($lines as $i => $line) {
+        $line = trim($line);
+        if ($line) {
+            $parts = explode('|', $line);
+            $icon = addslashes($parts[0] ?? 'circle');
+            $label = addslashes($parts[1] ?? 'Item ' . ($i + 1));
+            $href = addslashes($parts[2] ?? '#');
+            $active = $i === $activeIndex ? 'true' : 'false';
+            $code .= "    ['icon' => '{$icon}', 'label' => '{$label}', 'href' => '{$href}', 'active' => {$active}],\n";
+        }
+    }
+    $code .= "];\n\n";
+
+    switch ($type) {
+        case 'floating':
+            $code .= "echo MD3NavigationBar::floating(\$items);";
+            break;
+        case 'icons-only':
+            $code .= "echo MD3NavigationBar::iconsOnly(\$items);";
+            break;
+        default:
+            $code .= "echo MD3NavigationBar::create(\$items);";
+    }
+
+    return $code;
+}
+
+function generateMenu($values) {
+    $type = $values['type'] ?? 'dropdown';
+    $trigger = $values['trigger'] ?? 'More Options';
+    $itemsText = $values['items'] ?? 'Settings|settings|settings\nProfile|person|profile\n---\nLogout|logout|logout';
+    $position = $values['position'] ?? 'bottom-start';
+
+    // Parse items
+    $items = [];
+    $lines = explode("\n", trim($itemsText));
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if ($line === '---') {
+            $items[] = ['type' => 'divider'];
+        } elseif ($line) {
+            $parts = explode('|', $line);
+            $items[] = [
+                'text' => $parts[0] ?? 'Item',
+                'icon' => $parts[1] ?? null,
+                'onclick' => 'alert("' . ($parts[2] ?? 'action') . '")'
+            ];
+        }
+    }
+
+    $triggerButton = "<button class=\"md3-button md3-button--filled\">{$trigger}</button>";
+
+    if ($type === 'context') {
+        return MD3Menu::context($items, ['target' => '.preview-area']);
+    } else {
+        return MD3Menu::dropdown($triggerButton, $items, ['position' => $position]);
+    }
+}
+
+function generateMenuPHP($values) {
+    $type = $values['type'] ?? 'dropdown';
+    $trigger = addslashes($values['trigger'] ?? 'More Options');
+    $itemsText = $values['items'] ?? 'Settings|settings|settings\nProfile|person|profile\n---\nLogout|logout|logout';
+    $position = $values['position'] ?? 'bottom-start';
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Menu.php';\n\n";
+    $code .= "\$items = [\n";
+
+    $lines = explode("\n", trim($itemsText));
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if ($line === '---') {
+            $code .= "    ['type' => 'divider'],\n";
+        } elseif ($line) {
+            $parts = explode('|', $line);
+            $text = addslashes($parts[0] ?? 'Item');
+            $icon = !empty($parts[1]) ? "'" . addslashes($parts[1]) . "'" : 'null';
+            $action = addslashes($parts[2] ?? 'action');
+            $code .= "    ['text' => '{$text}', 'icon' => {$icon}, 'onclick' => 'alert(\"{$action}\")'],\n";
+        }
+    }
+    $code .= "];\n\n";
+
+    if ($type === 'context') {
+        $code .= "echo MD3Menu::context(\$items, ['target' => '.preview-area']);";
+    } else {
+        $code .= "\$triggerButton = \"<button class='md3-button md3-button--filled'>{$trigger}</button>\";\n";
+        $code .= "echo MD3Menu::dropdown(\$triggerButton, \$items, ['position' => '{$position}']);";
+    }
+
+    return $code;
+}
+
+function generateDialog($values) {
+    $type = $values['type'] ?? 'basic';
+    $title = $values['title'] ?? 'Dialog Title';
+    $content = $values['content'] ?? 'This is the dialog content.';
+    $confirmText = $values['confirmText'] ?? 'OK';
+    $cancelText = $values['cancelText'] ?? 'Cancel';
+
+    $id = 'demo-dialog';
+
+    switch ($type) {
+        case 'alert':
+            $dialog = MD3Dialog::alert($id, $title, $content, ['confirmText' => $confirmText]);
+            break;
+        case 'confirm':
+            $dialog = MD3Dialog::confirm($id, $title, $content, [
+                'confirmText' => $confirmText,
+                'cancelText' => $cancelText
+            ]);
+            break;
+        case 'fullscreen':
+            $dialog = MD3Dialog::fullscreen($id, $title, $content);
+            break;
+        case 'form':
+            $formContent = '<div class="md3-dialog__form"><input type="text" placeholder="Enter your name" required></div>';
+            $dialog = MD3Dialog::form($id, $title, $formContent, [
+                'submitText' => $confirmText,
+                'cancelText' => $cancelText
+            ]);
+            break;
+        default:
+            $dialog = MD3Dialog::basic($id, $title, $content);
+    }
+
+    $trigger = "<button class=\"md3-button md3-button--filled\" onclick=\"MD3Dialog.open('{$id}')\">Open {$title}</button>";
+
+    return $trigger . $dialog;
+}
+
+function generateDialogPHP($values) {
+    $type = $values['type'] ?? 'basic';
+    $title = addslashes($values['title'] ?? 'Dialog Title');
+    $content = addslashes($values['content'] ?? 'This is the dialog content.');
+    $confirmText = addslashes($values['confirmText'] ?? 'OK');
+    $cancelText = addslashes($values['cancelText'] ?? 'Cancel');
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Dialog.php';\n\n";
+    $code .= "\$id = 'demo-dialog';\n";
+    $code .= "\$title = '{$title}';\n";
+    $code .= "\$content = '{$content}';\n\n";
+
+    switch ($type) {
+        case 'alert':
+            $code .= "\$dialog = MD3Dialog::alert(\$id, \$title, \$content, ['confirmText' => '{$confirmText}']);\n";
+            break;
+        case 'confirm':
+            $code .= "\$dialog = MD3Dialog::confirm(\$id, \$title, \$content, [\n";
+            $code .= "    'confirmText' => '{$confirmText}',\n";
+            $code .= "    'cancelText' => '{$cancelText}'\n";
+            $code .= "]);\n";
+            break;
+        case 'fullscreen':
+            $code .= "\$dialog = MD3Dialog::fullscreen(\$id, \$title, \$content);\n";
+            break;
+        case 'form':
+            $code .= "\$formContent = '<div class=\"md3-dialog__form\"><input type=\"text\" placeholder=\"Enter your name\" required></div>';\n";
+            $code .= "\$dialog = MD3Dialog::form(\$id, \$title, \$formContent, [\n";
+            $code .= "    'submitText' => '{$confirmText}',\n";
+            $code .= "    'cancelText' => '{$cancelText}'\n";
+            $code .= "]);\n";
+            break;
+        default:
+            $code .= "\$dialog = MD3Dialog::basic(\$id, \$title, \$content);\n";
+    }
+
+    $code .= "\n\$trigger = \"<button class='md3-button md3-button--filled' onclick='MD3Dialog.open('{\$id}')'>Open {\$title}</button>\";\n";
+    $code .= "echo \$trigger . \$dialog;";
 
     return $code;
 }

@@ -1,0 +1,1 @@
+- Nach jeder Änderung eine neue Versionsnummer erzeugem, das ChangeLog anpassen und auf Github hochladen

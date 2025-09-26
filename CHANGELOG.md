@@ -7,7 +7,115 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
-## [2.1.0] - 2025-09-26
+## [0.2.1] - 2025-09-26
+
+### 🐛 Bug Fixes
+- **JavaScript:** Escape-Sequenzen in Playground-Komponenten-Konfiguration behoben
+  - Alle `\n` Zeichen in JavaScript-Strings korrekt escaped (`\\n`)
+  - "Uncaught SyntaxError: invalid escape sequence" Error behoben
+
+### 🎨 UI Verbesserungen
+- **🧭 Playground-Optimierung:** Kompakte und aufgeräumte Benutzeroberfläche
+  - Theme-Auswahl: Kompakter Dropdown-Button statt große Theme-Chips
+  - Sidebar: Reduziert von 280px auf 240px Breite für mehr Platzausnutzung
+  - Spacing: Kompaktere Paddings und Margins durchgehend optimiert
+  - Navigation: Kleinere Font-Größen (13px) und reduzierte Button-Paddings
+  - Controls: Effizientere Platznutzung bei Form-Elementen
+
+### 🔧 Technische Details
+- **Enhanced UX:** Bessere Bildschirmplatz-Ausnutzung bei beibehaltener Usability
+- **CSS-Optimierung:** Durchgehend kompakteres Design ohne Funktionalitätsverlust
+- **JavaScript-Stabilität:** Eliminierung aller Syntax-Fehler durch korrekte String-Escaping
+
+---
+
+## [0.2.0] - 2025-09-26
+
+### 🚀 Neue Komponenten
+- **🧭 MD3NavigationBar:** Vollständige Bottom Navigation Bar implementiert
+  - Fixed und Floating Varianten
+  - Icons mit Labels oder Icons-Only Modus
+  - Badge-Support für Notifications
+  - Active State Highlighting mit Indicators
+  - Ripple-Effekte bei Interaktionen
+  - Responsive Design (Mobile → Desktop Navigation Rail)
+  - Accessibility Features (ARIA, Keyboard Navigation)
+
+- **📋 MD3Menu:** Vollständiges Menu-System implementiert
+  - Dropdown Menus mit verschiedenen Positionen
+  - Context Menus (Right-Click)
+  - Sub-Menu Support
+  - Menu Items mit Icons, Dividers, Headers
+  - Selection States und Destructive Actions
+  - Keyboard Navigation (Arrow Keys, Enter, Escape)
+  - Viewport-aware Positioning
+
+- **💬 MD3Dialog:** Komplett überarbeitetes Dialog-System
+  - Basic, Alert, Confirmation, Form und Fullscreen Dialogs
+  - Native CSS/HTML Implementation (ersetzt Material Web Components)
+  - Backdrop Click und Escape Key Support
+  - Focus Management für Accessibility
+  - Form Submit Handling mit Custom Events
+  - Responsive Mobile Adaptierung
+  - Smooth Animations mit CSS Transforms
+
+### 🎨 Playground Erweiterungen
+- **Navigation & Overlays Kategorien:** Neue Komponenten im Playground verfügbar
+- **Enhanced Navigation:** Strukturierte Komponentenkategorien (Basic, Navigation, Overlays, Form Controls)
+- **Playground CSS:** Verbesserte Form Controls mit Material Design 3 Styling
+
+### 🔧 Verbesserungen
+- **Enhanced CSS:** Color-mix Support für moderne Browser
+- **JavaScript Events:** Custom Events für alle Komponenten-Interaktionen
+- **Accessibility:** Vollständige ARIA-Unterstützung und Keyboard Navigation
+- **Responsive Design:** Mobile-First Approach für alle neuen Komponenten
+
+### Technische Details
+- **Neue Dateien:** MD3NavigationBar.php, MD3Menu.php, MD3Dialog.php (überarbeitet)
+- **Playground Integration:** Alle Komponenten verfügbar unter entsprechenden URLs
+- **CSS Animations:** Cubic-bezier Transitions für flüssige Bewegungen
+- **Event System:** Standardisierte Custom Events für alle Komponenten
+
+---
+
+## [0.1.0] - 2025-09-26
+
+### 🚀 Entwicklungsstart
+- **Versionierung:** Projekt auf Entwicklungsversion v0.1.0 zurückgesetzt
+- **📋 Interactive Playground:** Vollständiges Material Design 3 Playground implementiert
+  - Live-Komponenten-Vorschau mit Theme-Switching
+  - Dynamische PHP-Code-Generierung
+  - Material Design Controls mit Radio Buttons, TextFields und Checkboxes
+  - Responsive 3-Panel Layout (Navigation, Controls, Preview)
+  - AJAX-basierte Komponenten-Updates
+  - Debug-Tools für Entwicklung
+- **🎨 Enhanced UI Controls:** Material Design 3 styled Form-Controls
+  - Custom Radio Buttons mit Hover/Active States
+  - Improved Select Dropdowns mit Custom Arrow
+  - Enhanced Checkbox Containers
+  - Focus/Hover States mit Primary Color Integration
+- **🔧 Bug Fixes:**
+  - MD3List Class Loading Error behoben
+  - Doppelte getVersion() Methoden-Deklaration entfernt
+  - PHP 500 Errors im Playground debugged
+- **📖 Documentation:** Git Workflow in CLAUDE.md dokumentiert
+- **⚙️ Development Setup:** Debug-Tools und vereinfachte Playground-Version
+
+### Technische Details
+- **Playground-Dateien:** playground.php, playground-simple.php, playground-debug.php, playground-api.php
+- **CSS-Verbesserungen:** Enhanced Material Design 3 Form Controls
+- **JavaScript:** Dynamische Code-Generierung und State Management
+- **PHP-Integration:** Vollständige MD3-Komponenten-Bibliothek Integration
+
+### Nächste Schritte für v0.2.0
+- AJAX-Live-Preview Funktionalität vervollständigen
+- Weitere Komponenten (Switch, Radio, Select) ins Playground integrieren
+- Mobile-responsive Verbesserungen
+- Performance-Optimierungen
+
+---
+
+## [2.1.0] - 2025-09-26 [ARCHIVIERT]
 
 ### Hinzugefügt
 - **🎨 Theme-System:** 5 vordefinierte Material Design 3 Themes (Default, Ocean, Forest, Sunset, Minimal)

@@ -5,27 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material Design 3 PHP Library - Interactive Playground</title>
     <?php
-    require_once 'src/MD3.php';
-    require_once 'src/MD3Button.php';
-    require_once 'src/MD3TextField.php';
-    require_once 'src/MD3Card.php';
-    require_once 'src/MD3List.php';
-    require_once 'src/MD3Switch.php';
-    require_once 'src/MD3Checkbox.php';
-    require_once 'src/MD3Radio.php';
-    require_once 'src/MD3Select.php';
-    require_once 'src/MD3Chip.php';
-    require_once 'src/MD3Theme.php';
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
-    // Get theme from URL parameter or default
-    $currentTheme = $_GET['theme'] ?? 'default';
+    try {
+        require_once 'src/MD3.php';
+        require_once 'src/MD3Button.php';
+        require_once 'src/MD3TextField.php';
+        require_once 'src/MD3Card.php';
+        require_once 'src/MD3List.php';
+        require_once 'src/MD3NavigationBar.php';
+        require_once 'src/MD3Menu.php';
+        require_once 'src/MD3Dialog.php';
+        require_once 'src/MD3Theme.php';
 
-    echo MD3::init(true, true, $currentTheme);
-    echo MD3Theme::getThemeCSS();
-    echo MD3List::getListCSS();
-    echo MD3::getVersionCSS();
+        // Get theme from URL parameter or default
+        $currentTheme = $_GET['theme'] ?? 'default';
+
+        echo MD3::init(true, true, $currentTheme);
+        if (class_exists('MD3Theme')) {
+            echo MD3Theme::getThemeCSS();
+        }
+        echo MD3::getVersionCSS();
+    } catch (Exception $e) {
+        echo "<!-- Error: " . htmlspecialchars($e->getMessage()) . " -->";
+    }
     ?>
     <style>
+        <?php
+        // Additional component CSS inside style tag
+        echo MD3NavigationBar::getCSS();
+        echo MD3Menu::getCSS();
+        echo MD3Dialog::getCSS();
+        ?>
         * {
             margin: 0;
             padding: 0;
@@ -45,7 +57,7 @@
             grid-template-areas:
                 "header header"
                 "sidebar content";
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 240px 1fr;
             grid-template-rows: 64px 1fr;
             min-height: 100vh;
         }
@@ -54,10 +66,121 @@
             grid-area: header;
             background: var(--md-sys-color-surface);
             border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            padding: 12px 24px;
+        }
+
+        .header-main {
             display: flex;
             align-items: center;
-            padding: 0 24px;
+            justify-content: space-between;
             gap: 16px;
+        }
+
+        .header-main h1 {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--md-sys-color-primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Compact Theme Selector */
+        .theme-selector-compact {
+            position: relative;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--md-sys-color-surface-container);
+            color: var(--md-sys-color-on-surface);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            min-width: 120px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--md-sys-color-surface-container-high);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .theme-current {
+            flex: 1;
+            text-align: left;
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--md-sys-color-surface-container);
+            border-radius: 8px;
+            box-shadow: var(--md-sys-elevation-2);
+            padding: 8px 0;
+            min-width: 200px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .theme-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--md-sys-color-on-surface);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .theme-option:hover {
+            background: var(--md-sys-color-surface-container-high);
+        }
+
+        .theme-option.active {
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .theme-icon {
+            width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-name {
+            flex: 1;
+        }
+
+        .theme-check {
+            width: 20px;
+            color: var(--md-sys-color-primary);
+        }
+
+        .back-link {
+            text-decoration: none;
         }
 
         .playground-sidebar {
@@ -65,7 +188,7 @@
             background: var(--md-sys-color-surface);
             border-right: 1px solid var(--md-sys-color-outline-variant);
             overflow-y: auto;
-            padding: 16px;
+            padding: 12px;
         }
 
         .playground-content {
@@ -91,25 +214,25 @@
 
         /* Navigation */
         .nav-section {
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
 
         .nav-section h3 {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--md-sys-color-primary);
-            margin-bottom: 8px;
-            padding: 0 16px;
+            margin-bottom: 6px;
+            padding: 0 12px;
         }
 
         .nav-item {
             display: block;
-            padding: 12px 16px;
-            border-radius: 24px;
+            padding: 10px 12px;
+            border-radius: 20px;
             text-decoration: none;
             color: var(--md-sys-color-on-surface);
-            font-size: 14px;
-            margin-bottom: 4px;
+            font-size: 13px;
+            margin-bottom: 2px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -168,13 +291,95 @@
 
         /* Controls */
         .control-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .control-group h4 {
-            font-size: 16px;
-            margin-bottom: 12px;
+            font-size: 15px;
+            margin-bottom: 10px;
             color: var(--md-sys-color-on-surface);
+        }
+
+        /* Enhanced input styling */
+        .control-group label {
+            display: block;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .control-group select,
+        .control-group input[type="text"],
+        .control-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 8px;
+            background: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-family: inherit;
+            font-size: 16px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+
+        .control-group select:focus,
+        .control-group input[type="text"]:focus,
+        .control-group textarea:focus {
+            outline: none;
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px rgba(66, 165, 245, 0.12);
+        }
+
+        .control-group select:hover,
+        .control-group input[type="text"]:hover,
+        .control-group textarea:hover {
+            border-color: var(--md-sys-color-outline-variant);
+        }
+
+        /* Enhanced select styling */
+        .control-group select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 40px;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        /* Enhanced checkbox styling */
+        .control-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--md-sys-color-primary);
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        /* Special styling for checkbox containers */
+        .control-group:has(input[type="checkbox"]) {
+            padding: 12px 16px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 12px;
+            background: var(--md-sys-color-surface);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .control-group:has(input[type="checkbox"]):hover {
+            background: var(--md-sys-color-surface-container-high);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .control-group:has(input[type="checkbox"]) label {
+            margin: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
         }
 
         .control-item {
@@ -270,30 +475,54 @@
     <div class="playground-container">
         <!-- Header -->
         <header class="playground-header">
-            <h1 style="font-size: 20px; font-weight: 500; color: var(--md-sys-color-primary);">
-                <?php echo MD3::icon('play_arrow'); ?> Material Design 3 PHP Playground
-            </h1>
-            <div style="margin-left: auto; display: flex; gap: 12px;">
-                <?php
-                echo '<a href="index.php' . ($currentTheme !== 'default' ? '?theme=' . $currentTheme : '') . '" style="text-decoration: none;">' . MD3Button::text('← Zurück zur Demo') . '</a>';
-                ?>
+            <div class="header-main">
+                <h1>
+                    <?php echo MD3::icon('play_arrow'); ?> MD3 Playground
+                </h1>
+                <div class="header-actions">
+                    <div class="theme-selector-compact">
+                        <button class="theme-toggle" onclick="toggleThemeSelector()">
+                            <?php echo MD3::icon('palette'); ?>
+                            <span class="theme-current"><?php
+                                if (class_exists('MD3Theme')) {
+                                    $themes = MD3Theme::getAvailableThemes();
+                                    echo $themes[$currentTheme]['name'] ?? ucfirst($currentTheme);
+                                } else {
+                                    echo ucfirst($currentTheme);
+                                }
+                            ?></span>
+                            <?php echo MD3::icon('expand_more'); ?>
+                        </button>
+                        <div class="theme-dropdown" id="theme-dropdown">
+                            <?php
+                            try {
+                                if (class_exists('MD3Theme')) {
+                                    $themes = MD3Theme::getAvailableThemes();
+                                    foreach ($themes as $key => $theme) {
+                                        $isActive = $key === $currentTheme;
+                                        $url = 'playground.php?theme=' . $key . '&component=' . ($_GET['component'] ?? 'button');
+                                        echo '<a href="' . $url . '" class="theme-option' . ($isActive ? ' active' : '') . '">';
+                                        echo '<span class="theme-icon">' . MD3::icon($theme['icon']) . '</span>';
+                                        echo '<span class="theme-name">' . $theme['name'] . '</span>';
+                                        if ($isActive) echo '<span class="theme-check">' . MD3::icon('check') . '</span>';
+                                        echo '</a>';
+                                    }
+                                }
+                            } catch (Exception $e) {
+                                echo '<!-- Theme error: ' . htmlspecialchars($e->getMessage()) . ' -->';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <a href="index.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="back-link">
+                        <?php echo MD3Button::text('← Demo'); ?>
+                    </a>
+                </div>
             </div>
         </header>
 
         <!-- Sidebar Navigation -->
         <nav class="playground-sidebar">
-            <div class="theme-selector-playground">
-                <?php
-                $themes = MD3Theme::getAvailableThemes();
-                foreach ($themes as $key => $theme) {
-                    $isActive = $key === $currentTheme;
-                    $url = 'playground.php?theme=' . $key . '&component=' . ($_GET['component'] ?? 'button');
-                    echo '<a href="' . $url . '" class="theme-chip' . ($isActive ? ' active' : '') . '">';
-                    echo MD3::icon($theme['icon']) . ' ' . $theme['name'];
-                    echo '</a>';
-                }
-                ?>
-            </div>
 
             <div class="nav-section">
                 <h3>Basic Components</h3>
@@ -305,6 +534,23 @@
                 </a>
                 <a href="?component=card&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'card' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('web_stories'); ?> Card
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <h3>Navigation</h3>
+                <a href="?component=navigation&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'navigation' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('bottom_navigation'); ?> Navigation Bar
+                </a>
+                <a href="?component=menu&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'menu' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('more_vert'); ?> Menu
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <h3>Overlays</h3>
+                <a href="?component=dialog&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'dialog' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('open_in_new'); ?> Dialog
                 </a>
             </div>
 
@@ -383,6 +629,9 @@
     </div>
 
     <?php echo MD3List::getListScript(); ?>
+    <?php echo MD3NavigationBar::getScript(); ?>
+    <?php echo MD3Menu::getScript(); ?>
+    <?php echo MD3Dialog::getScript(); ?>
     <?php echo MD3Theme::getThemeScript(); ?>
 
     <script>
@@ -508,7 +757,7 @@
                     options: {
                         type: 'textarea',
                         label: 'Options (one per line)',
-                        default: 'Option 1\nOption 2\nOption 3'
+                        default: 'Option 1\\nOption 2\\nOption 3'
                     }
                 }
             },
@@ -548,7 +797,7 @@
                     options: {
                         type: 'textarea',
                         label: 'Options (one per line)',
-                        default: 'Option A\nOption B\nOption C'
+                        default: 'Option A\\nOption B\\nOption C'
                     },
                     selected: {
                         type: 'number',
@@ -573,7 +822,7 @@
                     items: {
                         type: 'textarea',
                         label: 'Items (one per line)',
-                        default: 'Inbox\nStarred\nSent mail\nDrafts'
+                        default: 'Inbox\\nStarred\\nSent mail\\nDrafts'
                     }
                 }
             },
@@ -593,7 +842,104 @@
                     labels: {
                         type: 'textarea',
                         label: 'Chip Labels (one per line)',
-                        default: 'Design\nDevelopment\nTesting'
+                        default: 'Design\\nDevelopment\\nTesting'
+                    }
+                }
+            },
+            navigation: {
+                name: 'Navigation Bar',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Navigation Type',
+                        options: {
+                            'fixed': 'Fixed Bottom',
+                            'floating': 'Floating',
+                            'icons-only': 'Icons Only'
+                        },
+                        default: 'fixed'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Items (format: icon|label|href)',
+                        default: 'home|Home|/\\nsearch|Search|/search\\nfavorite|Favorites|/favorites\\nnotifications|Alerts|/alerts'
+                    },
+                    activeIndex: {
+                        type: 'number',
+                        label: 'Active Item (0-based)',
+                        default: 0
+                    }
+                }
+            },
+            menu: {
+                name: 'Menu',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Menu Type',
+                        options: {
+                            'dropdown': 'Dropdown Menu',
+                            'context': 'Context Menu'
+                        },
+                        default: 'dropdown'
+                    },
+                    trigger: {
+                        type: 'text',
+                        label: 'Trigger Text',
+                        default: 'More Options'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Menu Items (format: text|icon|action)',
+                        default: 'Settings|settings|settings\\nProfile|person|profile\\n---\\nLogout|logout|logout'
+                    },
+                    position: {
+                        type: 'select',
+                        label: 'Position',
+                        options: {
+                            'bottom-start': 'Bottom Start',
+                            'bottom-end': 'Bottom End',
+                            'top-start': 'Top Start',
+                            'top-end': 'Top End'
+                        },
+                        default: 'bottom-start'
+                    }
+                }
+            },
+            dialog: {
+                name: 'Dialog',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Dialog Type',
+                        options: {
+                            'basic': 'Basic Dialog',
+                            'alert': 'Alert Dialog',
+                            'confirm': 'Confirmation',
+                            'fullscreen': 'Fullscreen',
+                            'form': 'Form Dialog'
+                        },
+                        default: 'basic'
+                    },
+                    title: {
+                        type: 'text',
+                        label: 'Title',
+                        default: 'Dialog Title'
+                    },
+                    content: {
+                        type: 'textarea',
+                        label: 'Content',
+                        default: 'This is the dialog content. You can add any text or HTML here.'
+                    },
+                    confirmText: {
+                        type: 'text',
+                        label: 'Confirm Button',
+                        default: 'OK'
+                    },
+                    cancelText: {
+                        type: 'text',
+                        label: 'Cancel Button (if applicable)',
+                        default: 'Cancel'
                     }
                 }
             }
@@ -742,6 +1088,22 @@
         if (componentParam && componentConfigs[componentParam]) {
             currentComponent = componentParam;
         }
+
+        // Theme selector functionality
+        function toggleThemeSelector() {
+            const dropdown = document.getElementById('theme-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const selector = document.querySelector('.theme-selector-compact');
+            const dropdown = document.getElementById('theme-dropdown');
+
+            if (!selector.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
     </script>
 </body>
 </html>
