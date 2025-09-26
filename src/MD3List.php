@@ -516,14 +516,13 @@ class MD3List
     }
 
     /**
-     * Generate CSS for list styling
-     *
-     * @return string CSS for list components
+     * Get List CSS
      */
-    public static function getListCSS(): string
+    public static function getCSS(): string
     {
-        return '<style>
-            /* Base List Styles */
+        return '
+/* Material Design 3 List Component */
+/* Base List Styles */
             .md3-list {
                 list-style: none;
                 margin: 0;
@@ -739,18 +738,17 @@ class MD3List
                 background: var(--md-sys-color-outline-variant);
                 margin: 0;
             }
-        </style>';
+';
     }
 
     /**
-     * Generate JavaScript for list interactions
-     *
-     * @return string JavaScript for list functionality
+     * Get List JavaScript
      */
-    public static function getListScript(): string
+    public static function getJS(): string
     {
-        return '<script>
-            document.addEventListener("DOMContentLoaded", function() {
+        return '
+// List Interaction Management
+document.addEventListener("DOMContentLoaded", function() {
                 // Handle selectable list interactions
                 const selectableLists = document.querySelectorAll(".md3-list-selectable");
 
@@ -821,6 +819,22 @@ class MD3List
                 `;
                 document.head.appendChild(style);
             }
-        </script>';
+});
+
+// CSS Animation for ripple effect
+if (!document.querySelector("#md3-list-animations")) {
+    const style = document.createElement("style");
+    style.id = "md3-list-animations";
+    style.textContent = `
+        @keyframes md3-ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+';
     }
 }
