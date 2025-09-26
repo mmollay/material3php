@@ -257,7 +257,7 @@
             <div class="component-demo">
                 <h3>Text Fields</h3>
                 <div class="demo-items">
-                    <?php echo MD3TextField::filled('demo', 'Demo Field', '', ['style' => 'max-width: 200px']); ?>
+                    <?php echo MD3TextField::filled('demo', 'Demo Field', ['style' => 'max-width: 200px']); ?>
                 </div>
             </div>
 
