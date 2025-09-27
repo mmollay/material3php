@@ -7,6 +7,27 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.31] - 2025-09-27
+
+### 🎨 Playground UI Optimization
+- **Compact Sidebar:** Sidebar von 240px auf 200px reduziert für bessere Raumnutzung
+- **Optimized Navigation:** Kompaktere Navigation Items mit reduzierten Padding und Margins
+- **Typography Refinement:** Kleinere, aber bessere lesbare Schriftgrößen in der Navigation
+- **Enhanced Component Coverage:** Breadcrumb, Toolbar und Tooltip zu Navigation/Overlays hinzugefügt
+- **Information Panel:** Kompakte Info-Section mit platzsparender Darstellung
+
+### 🧭 Improved Navigation Structure
+- **Complete Component List:** Alle verfügbaren Komponenten jetzt in der Sidebar sichtbar
+- **Logical Grouping:** Bessere Kategorisierung mit kürzeren, präziseren Label-Namen
+- **Icon Consistency:** Einheitliche 16px Icon-Größe mit optimaler visueller Ausrichtung
+- **Active State Enhancement:** Verbesserte Darstellung der aktiven Navigation
+
+### ⚡ Performance & UX
+- **Reduced Visual Clutter:** Weniger verschwendeter Whitespace in der Navigation
+- **Better Content Ratio:** Mehr Platz für Component Preview durch kompakte Sidebar
+- **Responsive Optimization:** Verbesserte mobile Darstellung der Navigation
+- **Smooth Transitions:** Optimierte Hover und Active States für bessere Interaktion
+
 ## [0.2.30] - 2025-09-27
 
 ### 🔄 Major Button Architecture Overhaul

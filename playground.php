@@ -90,7 +90,7 @@
             grid-template-areas:
                 "header header"
                 "sidebar content";
-            grid-template-columns: 240px 1fr;
+            grid-template-columns: 200px 1fr;
             grid-template-rows: 64px 1fr;
             min-height: 100vh;
         }
@@ -242,7 +242,7 @@
             background: var(--md-sys-color-surface);
             border-right: 1px solid var(--md-sys-color-outline-variant);
             overflow-y: auto;
-            padding: 12px;
+            padding: 8px;
         }
 
         .playground-content {
@@ -268,27 +268,39 @@
 
         /* Navigation */
         .nav-section {
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
         .nav-section h3 {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--md-sys-color-primary);
-            margin-bottom: 6px;
-            padding: 0 12px;
+            margin-bottom: 4px;
+            padding: 0 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .nav-item {
-            display: block;
-            padding: 10px 12px;
-            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 8px;
+            border-radius: 16px;
             text-decoration: none;
             color: var(--md-sys-color-on-surface);
-            font-size: 13px;
-            margin-bottom: 2px;
+            font-size: 12px;
+            margin-bottom: 1px;
             cursor: pointer;
             transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-item .material-symbols-outlined {
+            font-size: 16px;
+            flex-shrink: 0;
         }
 
         .nav-item:hover {
@@ -736,13 +748,19 @@
             <div class="nav-section">
                 <h3>Navigation</h3>
                 <a href="?component=navigation&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'navigation' ? 'active' : ''; ?>">
-                    <?php echo MD3::icon('bottom_navigation'); ?> Navigation Bar
+                    <?php echo MD3::icon('bottom_navigation'); ?> Nav Bar
                 </a>
                 <a href="?component=navigationdrawer&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'navigationdrawer' ? 'active' : ''; ?>">
-                    <?php echo MD3::icon('menu_open'); ?> Navigation Drawer
+                    <?php echo MD3::icon('menu_open'); ?> Nav Drawer
                 </a>
                 <a href="?component=navigationrail&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'navigationrail' ? 'active' : ''; ?>">
-                    <?php echo MD3::icon('dock_to_left'); ?> Navigation Rail
+                    <?php echo MD3::icon('dock_to_left'); ?> Nav Rail
+                </a>
+                <a href="?component=breadcrumb&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'breadcrumb' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('chevron_right'); ?> Breadcrumb
+                </a>
+                <a href="?component=toolbar&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'toolbar' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('view_headline'); ?> Toolbar
                 </a>
                 <a href="?component=menu&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'menu' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('more_vert'); ?> Menu
@@ -753,6 +771,9 @@
                 <h3>Overlays</h3>
                 <a href="?component=dialog&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'dialog' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('open_in_new'); ?> Dialog
+                </a>
+                <a href="?component=tooltip&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'tooltip' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('help'); ?> Tooltip
                 </a>
             </div>
 
@@ -783,11 +804,11 @@
             </div>
 
             <div class="nav-section">
-                <h3>Information</h3>
-                <div style="padding: 12px 16px; font-size: 12px; color: var(--md-sys-color-on-surface-variant);">
-                    <div><strong>Version:</strong> <?php echo MD3::getVersion(); ?></div>
-                    <div><strong>Komponenten:</strong> <?php echo count(MD3::getVersionInfo()['components']); ?></div>
-                    <div><strong>Theme:</strong> <?php echo ucfirst($currentTheme); ?></div>
+                <h3>Info</h3>
+                <div style="padding: 8px; font-size: 10px; color: var(--md-sys-color-on-surface-variant); line-height: 1.3;">
+                    <div><strong>v<?php echo MD3::getVersion(); ?></strong></div>
+                    <div><?php echo count(MD3::getVersionInfo()['components']); ?> Components</div>
+                    <div><?php echo ucfirst($currentTheme); ?> Theme</div>
                 </div>
             </div>
         </nav>
