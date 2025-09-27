@@ -184,6 +184,46 @@ function generateComponent($component, $values) {
             $php = generateBreadcrumbPHP($values);
             break;
 
+        case 'progress':
+            $html = generateProgress($values);
+            $php = generateProgressPHP($values);
+            break;
+
+        case 'slider':
+            $html = generateSlider($values);
+            $php = generateSliderPHP($values);
+            break;
+
+        case 'tabs':
+            $html = generateTabs($values);
+            $php = generateTabsPHP($values);
+            break;
+
+        case 'badge':
+            $html = generateBadge($values);
+            $php = generateBadgePHP($values);
+            break;
+
+        case 'bottomsheet':
+            $html = generateBottomsheet($values);
+            $php = generateBottomsheetPHP($values);
+            break;
+
+        case 'datetimepicker':
+            $html = generateDatetimepicker($values);
+            $php = generateDatetimepickerPHP($values);
+            break;
+
+        case 'header':
+            $html = generateHeader($values);
+            $php = generateHeaderPHP($values);
+            break;
+
+        case 'snackbar':
+            $html = generateSnackbar($values);
+            $php = generateSnackbarPHP($values);
+            break;
+
         default:
             throw new Exception('Unknown component: ' . $component);
     }
