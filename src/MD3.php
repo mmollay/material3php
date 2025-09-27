@@ -643,9 +643,12 @@ class MD3
             'css_only' => true,
             'offline_ready' => true,
             'components' => [
-                'MD3Button', 'MD3TextField', 'MD3Card', 'MD3Breadcrumb',
-                'MD3Dialog', 'MD3List', 'MD3Search', 'MD3Chip', 'MD3Tooltip',
-                'MD3Switch', 'MD3Checkbox', 'MD3Radio', 'MD3Select', 'MD3Theme'
+                'MD3Badge', 'MD3BottomSheet', 'MD3Breadcrumb', 'MD3Button', 'MD3Card',
+                'MD3Checkbox', 'MD3Chip', 'MD3DateTimePicker', 'MD3Dialog', 'MD3FloatingActionButton',
+                'MD3Header', 'MD3IconButton', 'MD3List', 'MD3Menu', 'MD3NavigationBar',
+                'MD3NavigationDrawer', 'MD3NavigationRail', 'MD3Progress', 'MD3Radio', 'MD3Search',
+                'MD3Select', 'MD3Slider', 'MD3Snackbar', 'MD3Switch', 'MD3Tabs',
+                'MD3TextField', 'MD3Toolbar', 'MD3Tooltip'
             ]
         ];
     }

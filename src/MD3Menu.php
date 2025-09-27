@@ -116,13 +116,15 @@ class MD3Menu
      */
     private static function renderMenuItem(array $item): string
     {
+        $type = $item['type'] ?? '';
+
         // Handle dividers
-        if ($item['type'] === 'divider') {
+        if ($type === 'divider') {
             return '<hr class="md3-menu__divider" role="separator">';
         }
 
         // Handle sub-menu headers
-        if ($item['type'] === 'header') {
+        if ($type === 'header') {
             return sprintf(
                 '<div class="md3-menu__header">%s</div>',
                 htmlspecialchars($item['text'] ?? '')
@@ -228,22 +230,25 @@ class MD3Menu
             min-width: 112px;
             max-width: 280px;
             background: var(--md-sys-color-surface-container);
-            border-radius: 4px;
-            box-shadow: var(--md-sys-elevation-2);
+            border-radius: 12px;
+            box-shadow:
+                0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
             padding: 8px 0;
             opacity: 0;
             visibility: hidden;
-            transform: scale(0.8);
+            transform: scale(0.9) translateY(-8px);
             transform-origin: top left;
-            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
             z-index: 1000;
             outline: none;
+            font-family: \"Google Sans\", \"Roboto\", system-ui, sans-serif;
         }
 
         .md3-menu--visible {
             opacity: 1;
             visibility: visible;
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
 
         .md3-menu--bottom--start {
@@ -274,19 +279,21 @@ class MD3Menu
         }
 
         .md3-menu__header {
-            padding: 8px 12px;
+            padding: 8px 16px;
             font-size: 11px;
             font-weight: 500;
             color: var(--md-sys-color-on-surface-variant);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin: 0 8px;
         }
 
         .md3-menu__divider {
-            margin: 8px 0;
+            margin: 8px 16px;
             border: none;
             height: 1px;
             background: var(--md-sys-color-outline-variant);
+            opacity: 0.6;
         }
 
         .md3-menu__item-container {
@@ -297,25 +304,32 @@ class MD3Menu
             display: flex;
             align-items: center;
             min-height: 48px;
-            padding: 12px;
+            padding: 12px 16px;
             color: var(--md-sys-color-on-surface);
             cursor: pointer;
             text-decoration: none;
-            transition: background-color 0.2s;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
             position: relative;
             outline: none;
+            border-radius: 8px;
+            margin: 0 8px;
+            font-weight: 400;
         }
 
         .md3-menu__item:hover {
-            background: var(--md-sys-color-on-surface);
             background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+            transform: scale(1.02);
         }
 
         .md3-menu__item:focus-visible {
-            background: var(--md-sys-color-on-surface);
             background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
             outline: 2px solid var(--md-sys-color-primary);
-            outline-offset: -2px;
+            outline-offset: 2px;
+        }
+
+        .md3-menu__item:active {
+            background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+            transform: scale(0.98);
         }
 
         .md3-menu__item--disabled {
@@ -353,6 +367,8 @@ class MD3Menu
             flex: 1;
             font-size: 14px;
             line-height: 20px;
+            font-weight: 400;
+            letter-spacing: 0.25px;
         }
 
         .md3-menu__item-arrow,
@@ -384,11 +400,32 @@ class MD3Menu
         }
 
         /* Animation delays for staggered appearance */
-        .md3-menu__item:nth-child(1) { animation-delay: 0ms; }
-        .md3-menu__item:nth-child(2) { animation-delay: 25ms; }
-        .md3-menu__item:nth-child(3) { animation-delay: 50ms; }
-        .md3-menu__item:nth-child(4) { animation-delay: 75ms; }
-        .md3-menu__item:nth-child(5) { animation-delay: 100ms; }
+        .md3-menu--visible .md3-menu__item:nth-child(1) {
+            animation: md3-menu-item-fade-in 0.2s ease-out 0ms forwards;
+        }
+        .md3-menu--visible .md3-menu__item:nth-child(2) {
+            animation: md3-menu-item-fade-in 0.2s ease-out 50ms forwards;
+        }
+        .md3-menu--visible .md3-menu__item:nth-child(3) {
+            animation: md3-menu-item-fade-in 0.2s ease-out 100ms forwards;
+        }
+        .md3-menu--visible .md3-menu__item:nth-child(4) {
+            animation: md3-menu-item-fade-in 0.2s ease-out 150ms forwards;
+        }
+        .md3-menu--visible .md3-menu__item:nth-child(5) {
+            animation: md3-menu-item-fade-in 0.2s ease-out 200ms forwards;
+        }
+
+        @keyframes md3-menu-item-fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* Responsive behavior */
         @media (max-width: 480px) {

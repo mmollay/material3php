@@ -30,14 +30,15 @@ class MD3Breadcrumb
         $totalItems = count($items);
         foreach ($items as $index => $item) {
             $isLast = ($index === $totalItems - 1);
+            $text = $item['label'] ?? $item['text'] ?? '';
 
             if ($isLast) {
-                $html .= '<span style="color: var(--md-sys-color-on-surface-variant);">' . htmlspecialchars($item['label']) . '</span>';
+                $html .= '<span style="color: var(--md-sys-color-on-surface-variant);">' . htmlspecialchars($text) . '</span>';
             } else {
                 if (isset($item['href'])) {
-                    $html .= '<md-text-button href="' . htmlspecialchars($item['href']) . '">' . htmlspecialchars($item['label']) . '</md-text-button>';
+                    $html .= '<md-text-button href="' . htmlspecialchars($item['href']) . '">' . htmlspecialchars($text) . '</md-text-button>';
                 } else {
-                    $html .= '<span style="color: var(--md-sys-color-primary);">' . htmlspecialchars($item['label']) . '</span>';
+                    $html .= '<span style="color: var(--md-sys-color-primary);">' . htmlspecialchars($text) . '</span>';
                 }
                 $html .= MD3::icon('chevron_right', [
                     'style' => 'color: var(--md-sys-color-on-surface-variant); font-size: 16px;'
@@ -105,14 +106,15 @@ class MD3Breadcrumb
         $totalItems = count($items);
         foreach ($items as $index => $item) {
             $isLast = ($index === $totalItems - 1);
+            $text = $item['label'] ?? $item['text'] ?? '';
 
             if ($isLast) {
-                $html .= '<span style="color: var(--md-sys-color-on-surface-variant);">' . htmlspecialchars($item['label']) . '</span>';
+                $html .= '<span style="color: var(--md-sys-color-on-surface-variant);">' . htmlspecialchars($text) . '</span>';
             } else {
                 if (isset($item['href'])) {
-                    $html .= '<md-text-button href="' . htmlspecialchars($item['href']) . '">' . htmlspecialchars($item['label']) . '</md-text-button>';
+                    $html .= '<md-text-button href="' . htmlspecialchars($item['href']) . '">' . htmlspecialchars($text) . '</md-text-button>';
                 } else {
-                    $html .= '<span style="color: var(--md-sys-color-primary);">' . htmlspecialchars($item['label']) . '</span>';
+                    $html .= '<span style="color: var(--md-sys-color-primary);">' . htmlspecialchars($text) . '</span>';
                 }
                 $html .= MD3::icon($separator, [
                     'style' => 'color: var(--md-sys-color-on-surface-variant); font-size: 16px;'
@@ -151,7 +153,8 @@ class MD3Breadcrumb
             if (isset($item['icon'])) {
                 $content .= MD3::icon($item['icon'], ['style' => 'font-size: 16px; margin-right: 4px;']);
             }
-            $content .= htmlspecialchars($item['label']);
+            $text = $item['label'] ?? $item['text'] ?? '';
+            $content .= htmlspecialchars($text);
 
             if ($isLast) {
                 $html .= '<span style="color: var(--md-sys-color-on-surface-variant); display: flex; align-items: center;">' . $content . '</span>';
@@ -194,14 +197,15 @@ class MD3Breadcrumb
         $totalItems = count($items);
         foreach ($items as $index => $item) {
             $isLast = ($index === $totalItems - 1);
+            $text = $item['label'] ?? $item['text'] ?? '';
 
             if ($isLast) {
-                $html .= '<span style="color: var(--md-sys-color-on-surface-variant);">' . htmlspecialchars($item['label']) . '</span>';
+                $html .= '<span style="color: var(--md-sys-color-on-surface-variant);">' . htmlspecialchars($text) . '</span>';
             } else {
                 if (isset($item['href'])) {
-                    $html .= '<a href="' . htmlspecialchars($item['href']) . '" style="color: var(--md-sys-color-primary); text-decoration: none;">' . htmlspecialchars($item['label']) . '</a>';
+                    $html .= '<a href="' . htmlspecialchars($item['href']) . '" style="color: var(--md-sys-color-primary); text-decoration: none;">' . htmlspecialchars($text) . '</a>';
                 } else {
-                    $html .= '<span style="color: var(--md-sys-color-primary);">' . htmlspecialchars($item['label']) . '</span>';
+                    $html .= '<span style="color: var(--md-sys-color-primary);">' . htmlspecialchars($text) . '</span>';
                 }
                 $html .= ' <span style="color: var(--md-sys-color-on-surface-variant); margin: 0 4px;">' . htmlspecialchars($separator) . '</span> ';
             }

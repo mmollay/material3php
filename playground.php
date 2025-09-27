@@ -809,7 +809,7 @@
                 <h3>Info</h3>
                 <div style="padding: 8px; font-size: 10px; color: var(--md-sys-color-on-surface-variant); line-height: 1.3;">
                     <div><strong>v<?php echo MD3::getVersion(); ?></strong></div>
-                    <div>17 Components</div>
+                    <div id="component-count">0 Components</div>
                     <div><?php echo ucfirst($currentTheme); ?> Theme</div>
                 </div>
             </div>
@@ -854,6 +854,7 @@
     </div>
 
     <script><?php echo MD3List::getJS(); ?></script>
+    <script><?php echo MD3Tooltip::getJS(); ?></script>
     <?php echo MD3NavigationBar::getScript(); ?>
     <?php echo MD3Menu::getScript(); ?>
     <?php echo MD3Dialog::getScript(); ?>
@@ -1018,30 +1019,6 @@
                         label: 'Icon (optional)',
                         default: '',
                         placeholder: 'e.g. info, warning'
-                    }
-                }
-            },
-            select: {
-                name: 'Select',
-                controls: {
-                    type: {
-                        type: 'select',
-                        label: 'Select Type',
-                        options: {
-                            'filled': 'Filled',
-                            'outlined': 'Outlined'
-                        },
-                        default: 'filled'
-                    },
-                    label: {
-                        type: 'text',
-                        label: 'Label',
-                        default: 'Choose option'
-                    },
-                    options: {
-                        type: 'textarea',
-                        label: 'Options (one per line)',
-                        default: 'Option 1\nOption 2\nOption 3'
                     }
                 }
             },
@@ -1412,7 +1389,9 @@
                         label: 'Select Type',
                         options: {
                             'filled': 'Filled',
-                            'outlined': 'Outlined'
+                            'outlined': 'Outlined',
+                            'large': 'Large',
+                            'dense': 'Dense'
                         },
                         default: 'filled'
                     },
@@ -1425,6 +1404,11 @@
                         type: 'textarea',
                         label: 'Options (one per line)',
                         default: 'Option 1\\nOption 2\\nOption 3\\nOption 4'
+                    },
+                    disabled: {
+                        type: 'checkbox',
+                        label: 'Disabled',
+                        default: false
                     }
                 }
             },
@@ -1512,6 +1496,10 @@
 
         // Initialize playground
         document.addEventListener('DOMContentLoaded', function() {
+            // Update component count dynamically
+            const componentCount = Object.keys(componentConfigs).length;
+            document.getElementById('component-count').textContent = componentCount + ' Components';
+
             loadComponent(currentComponent);
         });
 
@@ -1665,6 +1653,13 @@
 
                 // Re-initialize interactive components after loading
                 if (window.initializeMenus) window.initializeMenus();
+
+                // Re-initialize tooltips
+                document.querySelectorAll(".md3-tooltip").forEach(function(tooltip) {
+                    if (typeof initTooltip === 'function') {
+                        initTooltip(tooltip);
+                    }
+                });
             })
             .catch(error => {
                 console.error('Error:', error);

@@ -58,6 +58,26 @@ class MD3Select
     }
 
     /**
+     * Generate a large select field (MD3 Large variant)
+     */
+    public static function large(string $name, string $label, array $options = [], string $selected = '', bool $outlined = false, array $attributes = []): string
+    {
+        $variant = $outlined ? 'outlined' : 'filled';
+        $attributes['data-size'] = 'large';
+        return self::renderSelect($name, $label, $options, $selected, $attributes, $variant);
+    }
+
+    /**
+     * Generate a dense select field (smaller variant)
+     */
+    public static function dense(string $name, string $label, array $options = [], string $selected = '', bool $outlined = false, array $attributes = []): string
+    {
+        $variant = $outlined ? 'outlined' : 'filled';
+        $attributes['data-size'] = 'dense';
+        return self::renderSelect($name, $label, $options, $selected, $attributes, $variant);
+    }
+
+    /**
      * Generate a country select field
      */
     public static function country(string $name, string $label = 'Land', string $selected = 'DE', bool $outlined = false, array $attributes = []): string
@@ -93,6 +113,11 @@ class MD3Select
 
         $classes = ['md3-select', "md3-select--{$variant}"];
         if ($disabled) $classes[] = 'md3-select--disabled';
+
+        // Add size variant classes
+        if (isset($attributes['data-size'])) {
+            $classes[] = 'md3-select--' . $attributes['data-size'];
+        }
 
         $containerAttrs = [
             'class' => implode(' ', $classes),
@@ -183,6 +208,8 @@ class MD3Select
     font-size: 16px;
     color: var(--md-sys-color-on-surface-variant);
     z-index: 1;
+    white-space: nowrap;
+    user-select: none;
 }
 
 .md3-select select {
@@ -245,6 +272,7 @@ class MD3Select
     font-size: 12px;
     color: var(--md-sys-color-primary);
     background: none;
+    font-weight: 500;
 }
 
 /* Outlined Select */
@@ -312,6 +340,57 @@ class MD3Select
     height: auto;
     min-height: 120px;
     padding: 8px 16px;
+}
+
+/* Size Variants */
+.md3-select--large select {
+    height: 72px;
+    padding: 24px 56px 24px 24px;
+    font-size: 18px;
+}
+
+.md3-select--large .md3-select__label {
+    font-size: 14px;
+}
+
+.md3-select--large.md3-select--filled .md3-select__label {
+    left: 24px;
+    top: 12px;
+}
+
+.md3-select--large.md3-select--outlined .md3-select__label {
+    left: 16px;
+    top: -10px;
+    font-size: 14px;
+}
+
+.md3-select--large .md3-select__arrow {
+    right: 16px;
+}
+
+.md3-select--dense select {
+    height: 40px;
+    padding: 8px 40px 8px 12px;
+    font-size: 14px;
+}
+
+.md3-select--dense .md3-select__label {
+    font-size: 10px;
+}
+
+.md3-select--dense.md3-select--filled .md3-select__label {
+    left: 12px;
+    top: 4px;
+}
+
+.md3-select--dense.md3-select--outlined .md3-select__label {
+    left: 8px;
+    top: -6px;
+    font-size: 10px;
+}
+
+.md3-select--dense .md3-select__arrow {
+    right: 8px;
 }
 
 /* Responsive Design */

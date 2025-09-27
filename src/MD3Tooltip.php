@@ -501,15 +501,13 @@ class MD3Tooltip {
     public static function getJS(): string {
         return '
 // Tooltip Management
-document.addEventListener("DOMContentLoaded", function() {
+(function() {
     let activeTooltips = new Map();
     let showTimeouts = new Map();
     let hideTimeouts = new Map();
 
-    // Initialize all tooltips
-    document.querySelectorAll(".md3-tooltip").forEach(initTooltip);
-
-    function initTooltip(tooltip) {
+    // Global tooltip initialization function
+    window.initTooltip = function(tooltip) {
         const targetId = tooltip.dataset.target;
         const target = document.getElementById(targetId);
 
@@ -597,7 +595,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    function showTooltip(tooltip) {
+    window.showTooltip = function(tooltip) {
         // Update position before showing
         const targetId = tooltip.dataset.target;
         const target = document.getElementById(targetId);
@@ -616,7 +614,7 @@ document.addEventListener("DOMContentLoaded", function() {
         tooltip.dispatchEvent(event);
     }
 
-    function hideTooltip(tooltip) {
+    window.hideTooltip = function(tooltip) {
         tooltip.classList.remove("md3-tooltip--visible");
         tooltip.setAttribute("aria-hidden", "true");
         activeTooltips.delete(tooltip);
@@ -628,7 +626,7 @@ document.addEventListener("DOMContentLoaded", function() {
         tooltip.dispatchEvent(event);
     }
 
-    function positionTooltip(tooltip, target) {
+    window.positionTooltip = function(tooltip, target) {
         const targetRect = target.getBoundingClientRect();
         const tooltipRect = tooltip.getBoundingClientRect();
         const viewport = {
@@ -712,7 +710,21 @@ document.addEventListener("DOMContentLoaded", function() {
         childList: true,
         subtree: true
     });
-});
+
+    // Initialize all tooltips on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".md3-tooltip").forEach(initTooltip);
+    });
+
+    // Initialize tooltips immediately if DOM is already ready
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".md3-tooltip").forEach(initTooltip);
+        });
+    } else {
+        document.querySelectorAll(".md3-tooltip").forEach(initTooltip);
+    }
+})();
 
 // Utility functions
 window.showTooltip = function(tooltipId) {

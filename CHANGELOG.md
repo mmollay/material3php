@@ -7,6 +7,50 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.35] - 2025-09-27
+
+### 🎨 Enhanced Material Design 3 Menu Component
+- **Visual Design Overhaul:** MD3Menu entspricht jetzt vollständig den Material Design 3 Standards
+- **Improved Elevation:** Realistische box-shadow mit doppelter Schattierung für bessere Tiefe
+- **Modern Border Radius:** 12px Container-Rundung und 8px Item-Rundung für zeitgemäße Ästhetik
+- **Typography Enhancement:** Google Sans Font-Familie, letter-spacing und optimierte Gewichtung
+
+### ⚡ Advanced Animation System
+- **Fluid Menu Entry:** scale(0.9) + translateY(-8px) für natürliche Bewegungsabläufe
+- **Staggered Item Animation:** Gestaffelte fade-in Animation für Menu-Items mit 50ms Verzögerung
+- **Smooth Hover Effects:** scale(1.02) und subtile Transform-Übergänge
+- **Professional Timing:** 0.25s cubic-bezier für flüssige Animationen
+
+### 🛠️ Tooltip System Fixes
+- **Global Function Scope:** initTooltip, showTooltip, positionTooltip als globale Funktionen verfügbar
+- **AJAX Compatibility:** Tooltip-Funktionalität nach dynamischem Content-Loading wiederhergestellt
+- **Improved Integration:** Automatische Re-Initialisierung in playground.php updatePreview()
+
+### 🐛 Critical Bug Fixes
+- **PHP Parse Error:** Anführungszeichen in font-family CSS korrekt escaped
+- **Tooltip Hover:** Funktionalität in playground.php vollständig repariert
+- **IIFE Structure:** Tooltip JavaScript als Immediately Invoked Function Expression umstrukturiert
+
+## [0.2.34] - 2025-09-27
+
+### ✅ Critical Bug Fixes & Component Enhancements
+- **Tooltip JavaScript Integration:** Tooltip JavaScript in playground.php integriert - Tooltips funktionieren jetzt korrekt
+- **MD3Select Component Enhancements:** Neue Größenvarianten large() und dense() hinzugefügt mit vollständigem CSS
+- **Select API Generator Updates:** generateSelect() und generateSelectPHP() Funktionen für alle neuen Varianten erweitert
+- **MD3Breadcrumb Compatibility Fix:** Unterstützung für sowohl 'text' als auch 'label' Array-Keys hinzugefügt
+- **Dynamic Component Count:** Hardcodierte "17 Components" durch dynamische JavaScript-Berechnung ersetzt
+- **Duplicate Select Config Removal:** Doppelte select-Konfiguration in componentConfigs entfernt
+
+### 🎯 Component Architecture Improvements
+- **Select Component:** 4 Varianten verfügbar (filled, outlined, large, dense)
+- **Tooltip System:** Vollständige Hover-, Touch- und Keyboard-Unterstützung
+- **Breadcrumb Flexibility:** Akzeptiert sowohl Material Design 'text' als auch legacy 'label' Properties
+
+### 🔧 Playground Enhancements
+- **Real-time Component Count:** Komponenten-Anzahl wird automatisch aus componentConfigs berechnet
+- **Enhanced Select Demo:** Alle Select-Varianten in playground verfügbar
+- **Better Error Handling:** Undefined array key Warnungen in MD3Breadcrumb behoben
+
 ## [0.2.33] - 2025-09-27
 
 ### 🔧 Complete Playground JavaScript Configuration

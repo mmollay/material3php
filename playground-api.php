@@ -39,6 +39,7 @@ require_once 'src/MD3.php';
 require_once 'src/MD3Button.php';
 require_once 'src/MD3TextField.php';
 require_once 'src/MD3Search.php';
+require_once 'src/MD3Select.php';
 require_once 'src/MD3Card.php';
 require_once 'src/MD3List.php';
 require_once 'src/MD3NavigationBar.php';
@@ -47,6 +48,9 @@ require_once 'src/MD3NavigationRail.php';
 require_once 'src/MD3Menu.php';
 require_once 'src/MD3Dialog.php';
 require_once 'src/MD3FloatingActionButton.php';
+require_once 'src/MD3Toolbar.php';
+require_once 'src/MD3Tooltip.php';
+require_once 'src/MD3Breadcrumb.php';
 require_once 'src/MD3IconButton.php';
 require_once 'src/MD3Switch.php';
 require_once 'src/MD3Checkbox.php';
@@ -421,9 +425,17 @@ function generateSelect($values) {
         }
     }
 
-    return $type === 'outlined'
-        ? MD3Select::outlined('demo_select', $label, $options)
-        : MD3Select::filled('demo_select', $label, $options);
+    switch ($type) {
+        case 'outlined':
+            return MD3Select::outlined('demo_select', $label, $options);
+        case 'large':
+            return MD3Select::large('demo_select', $label, $options, '', false);
+        case 'dense':
+            return MD3Select::dense('demo_select', $label, $options, '', false);
+        case 'filled':
+        default:
+            return MD3Select::filled('demo_select', $label, $options);
+    }
 }
 
 function generateSelectPHP($values) {
@@ -445,8 +457,26 @@ function generateSelectPHP($values) {
     }
     $code .= "];\n\n";
 
-    $method = $type === 'outlined' ? 'outlined' : 'filled';
-    $code .= "echo MD3Select::{$method}('demo_select', '" . addslashes($label) . "', \$options);";
+    switch ($type) {
+        case 'outlined':
+            $method = 'outlined';
+            $params = "'demo_select', '" . addslashes($label) . "', \$options";
+            break;
+        case 'large':
+            $method = 'large';
+            $params = "'demo_select', '" . addslashes($label) . "', \$options, '', false";
+            break;
+        case 'dense':
+            $method = 'dense';
+            $params = "'demo_select', '" . addslashes($label) . "', \$options, '', false";
+            break;
+        case 'filled':
+        default:
+            $method = 'filled';
+            $params = "'demo_select', '" . addslashes($label) . "', \$options";
+            break;
+    }
+    $code .= "echo MD3Select::{$method}({$params});";
 
     return $code;
 }
@@ -1404,8 +1434,11 @@ function generateTooltip($values) {
     $text = $values['text'] ?? 'This is a tooltip';
     $position = $values['position'] ?? 'top';
     $triggerText = $values['trigger'] ?? 'Hover me';
+    $targetId = 'tooltip-target-' . uniqid();
 
-    return MD3Tooltip::simple($triggerText, $text, ['position' => $position]);
+    $triggerElement = '<button id="' . $targetId . '" style="padding: 8px 16px; border: 1px solid #ccc; background: #f5f5f5; cursor: pointer;">' . htmlspecialchars($triggerText) . '</button>';
+
+    return $triggerElement . MD3Tooltip::positioned($text, $targetId, $position);
 }
 
 function generateTooltipPHP($values) {
@@ -1415,7 +1448,9 @@ function generateTooltipPHP($values) {
 
     $code = "<?php\n";
     $code .= "require_once 'src/MD3Tooltip.php';\n\n";
-    $code .= "echo MD3Tooltip::simple('{$triggerText}', '{$text}', ['position' => '{$position}']);";
+    $code .= "\$targetId = 'tooltip-target-' . uniqid();\n";
+    $code .= "\$triggerElement = '<button id=\"' . \$targetId . '\" style=\"padding: 8px 16px; border: 1px solid #ccc; background: #f5f5f5; cursor: pointer;\">{$triggerText}</button>';\n";
+    $code .= "echo \$triggerElement . MD3Tooltip::positioned('{$text}', \$targetId, '{$position}');";
 
     return $code;
 }
