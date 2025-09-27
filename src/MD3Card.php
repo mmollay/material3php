@@ -158,23 +158,44 @@ class MD3Card {
      * Render Card Actions
      */
     private static function renderActions(array $actions): string {
+        if (empty($actions)) {
+            return '';
+        }
+
+        require_once 'MD3Button.php';
+
         $actionsHtml = '';
         foreach ($actions as $action) {
             $text = $action['text'] ?? '';
-            $href = $action['href'] ?? '#';
+            $type = $action['type'] ?? 'text';
+            $onclick = $action['onclick'] ?? '';
+            $href = $action['href'] ?? null;
             $icon = $action['icon'] ?? '';
-            $primary = $action['primary'] ?? false;
 
-            $buttonClass = $primary ? 'md3-button md3-button--filled' : 'md3-button md3-button--text';
-            $iconHtml = $icon ? sprintf('<span class="material-symbols-outlined">%s</span>', $icon) : '';
+            $attributes = [];
+            if ($onclick) {
+                $attributes['onclick'] = $onclick;
+            }
+            if ($icon) {
+                $attributes['data-icon'] = $icon;
+            }
 
-            $actionsHtml .= sprintf(
-                '<a href="%s" class="%s">%s%s</a>',
-                $href,
-                $buttonClass,
-                $iconHtml,
-                htmlspecialchars($text)
-            );
+            switch ($type) {
+                case 'filled':
+                    $actionsHtml .= MD3Button::filled($text, $href, $attributes);
+                    break;
+                case 'outlined':
+                    $actionsHtml .= MD3Button::outlined($text, $href, $attributes);
+                    break;
+                case 'tonal':
+                    $actionsHtml .= MD3Button::tonal($text, $href, $attributes);
+                    break;
+                case 'elevated':
+                    $actionsHtml .= MD3Button::elevated($text, $href, $attributes);
+                    break;
+                default: // text
+                    $actionsHtml .= MD3Button::text($text, $href, $attributes);
+            }
         }
 
         return sprintf('<div class="md3-card__actions">%s</div>', $actionsHtml);
@@ -313,10 +334,20 @@ class MD3Card {
     gap: 8px;
     padding: 8px 16px 16px;
     margin-top: auto;
+    flex-wrap: wrap;
 }
 
+/* CSS-based MD3 Buttons in Card Actions */
 .md3-card__actions .md3-button {
     margin: 0;
+    height: 36px;
+    font-size: 14px;
+    padding: 0 16px;
+}
+
+.md3-card__actions .md3-button--text {
+    padding: 0 12px;
+    min-width: auto;
 }
 
 /* Media Support */

@@ -7,6 +7,31 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.30] - 2025-09-27
+
+### 🔄 Major Button Architecture Overhaul
+- **MD3Button Redesign:** Komplette Umstellung von Material Web Components auf CSS-basierte Buttons
+- **System Compatibility:** MD3Button jetzt kompatibel mit dem rein CSS-basierten Ansatz der Library
+- **Card Actions Fixed:** Card-Buttons werden jetzt korrekt als CSS-Buttons gerendert statt Web Components
+- **Playground Compatibility:** Vollständige Integration der neuen Button-Architektur in alle Playground-Komponenten
+
+### 🎨 Enhanced Card Component
+- **MD3Card::renderActions():** Aktualisiert für CSS-basierte MD3Button-Integration
+- **Button Variants:** Unterstützung für filled, outlined, text, elevated und tonal Button-Typen in Cards
+- **Consistent Styling:** Einheitliches Button-Design zwischen Standalone und Card-eingebetteten Buttons
+- **Action Area Optimization:** Verbesserte Card Actions Layout mit responsive Design
+
+### 💅 CSS Button Implementation
+- **Pure CSS Buttons:** Vollständige Material Design 3 Button-Implementierung ohne JavaScript-Dependencies
+- **Interactive States:** Hover, Focus, Active und Disabled States für alle Button-Varianten
+- **Responsive Design:** Mobile-optimierte Button-Größen und Spacing
+- **Theme Integration:** Dark Theme Support und Theme-spezifische Color Token
+
+### ✅ Quality Assurance
+- **Playground Testing:** Bestätigt dass Card-Komponente jetzt korrekt in playground.php funktioniert
+- **Cross-Component Compatibility:** Alle Button-abhängigen Komponenten verwenden einheitliches CSS-System
+- **Performance Improvement:** Reduzierte Abhängigkeiten durch Elimination von Web Components JavaScript
+
 ## [0.2.29] - 2025-09-27
 
 ### 🛠️ Critical Playground Loading Fix

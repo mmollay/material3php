@@ -4,172 +4,97 @@ require_once 'MD3.php';
 
 /**
  * MD3Button - Material Design 3 Button Components
- * Generates HTML for Material Web Components buttons
+ * Generates HTML for CSS-based Material Design 3 buttons
  */
 class MD3Button
 {
     /**
      * Generate a filled button (primary action)
-     *
-     * @param string $text Button text
-     * @param string|null $href URL for link behavior (optional)
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-filled-button
      */
     public static function filled(string $text, ?string $href = null, array $attributes = []): string
     {
-        if ($href) {
-            $attributes['href'] = $href;
-        }
-
-        return self::renderButton('md-filled-button', $text, $attributes);
+        $classes = ['md3-button', 'md3-button--filled'];
+        return self::renderButton($text, $href, $attributes, $classes);
     }
 
     /**
      * Generate an outlined button (secondary action)
-     *
-     * @param string $text Button text
-     * @param string|null $href URL for link behavior (optional)
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-outlined-button
      */
     public static function outlined(string $text, ?string $href = null, array $attributes = []): string
     {
-        if ($href) {
-            $attributes['href'] = $href;
-        }
-
-        return self::renderButton('md-outlined-button', $text, $attributes);
+        $classes = ['md3-button', 'md3-button--outlined'];
+        return self::renderButton($text, $href, $attributes, $classes);
     }
 
     /**
      * Generate a text button (tertiary action)
-     *
-     * @param string $text Button text
-     * @param string|null $href URL for link behavior (optional)
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-text-button
      */
     public static function text(string $text, ?string $href = null, array $attributes = []): string
     {
-        if ($href) {
-            $attributes['href'] = $href;
-        }
-
-        return self::renderButton('md-text-button', $text, $attributes);
+        $classes = ['md3-button', 'md3-button--text'];
+        return self::renderButton($text, $href, $attributes, $classes);
     }
 
     /**
      * Generate an elevated button
-     *
-     * @param string $text Button text
-     * @param string|null $href URL for link behavior (optional)
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-elevated-button
      */
     public static function elevated(string $text, ?string $href = null, array $attributes = []): string
     {
-        if ($href) {
-            $attributes['href'] = $href;
-        }
-
-        return self::renderButton('md-elevated-button', $text, $attributes);
+        $classes = ['md3-button', 'md3-button--elevated'];
+        return self::renderButton($text, $href, $attributes, $classes);
     }
 
     /**
      * Generate a tonal button
-     *
-     * @param string $text Button text
-     * @param string|null $href URL for link behavior (optional)
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-filled-tonal-button
      */
     public static function tonal(string $text, ?string $href = null, array $attributes = []): string
     {
+        $classes = ['md3-button', 'md3-button--tonal'];
+        return self::renderButton($text, $href, $attributes, $classes);
+    }
+
+    /**
+     * Render button with specified classes and content
+     */
+    private static function renderButton(string $text, ?string $href, array $attributes, array $classes): string
+    {
+        // Add icon support
+        $icon = $attributes['data-icon'] ?? '';
+        unset($attributes['data-icon']);
+
+        // Merge additional classes
+        if (isset($attributes['class'])) {
+            $classes[] = $attributes['class'];
+            unset($attributes['class']);
+        }
+
+        $classStr = implode(' ', $classes);
+        $content = '';
+
+        // Add icon if provided
+        if ($icon) {
+            $content .= '<span class="material-symbols-outlined md3-button__icon">' . htmlspecialchars($icon) . '</span>';
+        }
+
+        // Add text
+        $content .= '<span class="md3-button__label">' . htmlspecialchars($text) . '</span>';
+
+        // Choose tag based on href
         if ($href) {
+            $tag = 'a';
             $attributes['href'] = $href;
+        } else {
+            $tag = 'button';
+            $attributes['type'] = $attributes['type'] ?? 'button';
         }
 
-        return self::renderButton('md-filled-tonal-button', $text, $attributes);
-    }
-
-    /**
-     * Generate a FAB (Floating Action Button)
-     *
-     * @param string $icon Material icon name
-     * @param string|null $text Optional text label
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-fab
-     */
-    public static function fab(string $icon, ?string $text = null, array $attributes = []): string
-    {
-        $content = MD3::icon($icon);
-        if ($text) {
-            $attributes['label'] = $text;
+        // Build attributes string
+        $attributesStr = ' class="' . htmlspecialchars($classStr) . '"';
+        foreach ($attributes as $key => $value) {
+            $attributesStr .= ' ' . htmlspecialchars($key) . '="' . htmlspecialchars($value) . '"';
         }
 
-        return '<md-fab' . MD3::escapeAttributes($attributes) . '>' . $content . '</md-fab>';
-    }
-
-    /**
-     * Generate an Icon Button
-     *
-     * @param string $icon Material icon name
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-icon-button
-     */
-    public static function icon(string $icon, array $attributes = []): string
-    {
-        $content = MD3::icon($icon);
-        return '<md-icon-button' . MD3::escapeAttributes($attributes) . '>' . $content . '</md-icon-button>';
-    }
-
-    /**
-     * Generate a filled icon button
-     *
-     * @param string $icon Material icon name
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-filled-icon-button
-     */
-    public static function iconFilled(string $icon, array $attributes = []): string
-    {
-        $content = MD3::icon($icon);
-        return '<md-filled-icon-button' . MD3::escapeAttributes($attributes) . '>' . $content . '</md-filled-icon-button>';
-    }
-
-    /**
-     * Generate a tonal icon button
-     *
-     * @param string $icon Material icon name
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-filled-tonal-icon-button
-     */
-    public static function iconTonal(string $icon, array $attributes = []): string
-    {
-        $content = MD3::icon($icon);
-        return '<md-filled-tonal-icon-button' . MD3::escapeAttributes($attributes) . '>' . $content . '</md-filled-tonal-icon-button>';
-    }
-
-    /**
-     * Generate an outlined icon button
-     *
-     * @param string $icon Material icon name
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for md-outlined-icon-button
-     */
-    public static function iconOutlined(string $icon, array $attributes = []): string
-    {
-        $content = MD3::icon($icon);
-        return '<md-outlined-icon-button' . MD3::escapeAttributes($attributes) . '>' . $content . '</md-outlined-icon-button>';
-    }
-
-    /**
-     * Render button with specified tag and content
-     */
-    private static function renderButton(string $tag, string $text, array $attributes = []): string
-    {
-        $content = htmlspecialchars($text);
-        return '<' . $tag . MD3::escapeAttributes($attributes) . '>' . $content . '</' . $tag . '>';
+        return '<' . $tag . $attributesStr . '>' . $content . '</' . $tag . '>';
     }
 
     /**
@@ -178,73 +103,181 @@ class MD3Button
     public static function getCSS(): string
     {
         return '
-/* MD3 Button CSS - Material Web Components */
-md-filled-button {
-    --md-filled-button-container-color: var(--md-sys-color-primary);
-    --md-filled-button-label-text-color: var(--md-sys-color-on-primary);
+/* MD3 Button Base Styles */
+.md3-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 64px;
+    box-sizing: border-box;
 }
 
-md-outlined-button {
-    --md-outlined-button-outline-color: var(--md-sys-color-outline);
-    --md-outlined-button-label-text-color: var(--md-sys-color-primary);
+.md3-button:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
-md-text-button {
-    --md-text-button-label-text-color: var(--md-sys-color-primary);
+.md3-button__label {
+    position: relative;
+    z-index: 1;
 }
 
-md-filled-tonal-button {
-    --md-filled-tonal-button-container-color: var(--md-sys-color-secondary-container);
-    --md-filled-tonal-button-label-text-color: var(--md-sys-color-on-secondary-container);
+.md3-button__icon {
+    font-size: 18px;
+    margin-right: 8px;
+    position: relative;
+    z-index: 1;
 }
 
-md-elevated-button {
-    --md-elevated-button-container-color: var(--md-sys-color-surface-container-low);
-    --md-elevated-button-label-text-color: var(--md-sys-color-primary);
+.md3-button__icon:only-child {
+    margin-right: 0;
 }
 
-/* Icon Buttons */
-md-icon-button {
-    --md-icon-button-icon-color: var(--md-sys-color-on-surface-variant);
+/* Filled Button */
+.md3-button--filled {
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
 }
 
-md-filled-icon-button {
-    --md-filled-icon-button-container-color: var(--md-sys-color-primary);
-    --md-filled-icon-button-icon-color: var(--md-sys-color-on-primary);
+.md3-button--filled:hover {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 92%, var(--md-sys-color-on-primary) 8%);
+    box-shadow: var(--md-sys-elevation-1);
 }
 
-md-filled-tonal-icon-button {
-    --md-filled-tonal-icon-button-container-color: var(--md-sys-color-secondary-container);
-    --md-filled-tonal-icon-button-icon-color: var(--md-sys-color-on-secondary-container);
+.md3-button--filled:focus-visible {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 88%, var(--md-sys-color-on-primary) 12%);
 }
 
-md-outlined-icon-button {
-    --md-outlined-icon-button-outline-color: var(--md-sys-color-outline);
-    --md-outlined-icon-button-icon-color: var(--md-sys-color-on-surface-variant);
+.md3-button--filled:active {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 88%, var(--md-sys-color-on-primary) 12%);
+    box-shadow: none;
 }
 
-/* Focus and Hover States */
-md-filled-button:hover {
-    --md-filled-button-container-color: color-mix(in srgb, var(--md-sys-color-primary) 92%, var(--md-sys-color-on-primary) 8%);
+/* Outlined Button */
+.md3-button--outlined {
+    background: transparent;
+    color: var(--md-sys-color-primary);
+    border: 1px solid var(--md-sys-color-outline);
 }
 
-md-outlined-button:hover {
-    --md-outlined-button-container-color: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+.md3-button--outlined:hover {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+    border-color: var(--md-sys-color-outline);
 }
 
-md-text-button:hover {
-    --md-text-button-container-color: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+.md3-button--outlined:focus-visible {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+    border-color: var(--md-sys-color-primary);
+}
+
+.md3-button--outlined:active {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+}
+
+/* Text Button */
+.md3-button--text {
+    background: transparent;
+    color: var(--md-sys-color-primary);
+    padding: 0 12px;
+}
+
+.md3-button--text:hover {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+}
+
+.md3-button--text:focus-visible {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+}
+
+.md3-button--text:active {
+    background: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+}
+
+/* Elevated Button */
+.md3-button--elevated {
+    background: var(--md-sys-color-surface-container-low);
+    color: var(--md-sys-color-primary);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+.md3-button--elevated:hover {
+    background: color-mix(in srgb, var(--md-sys-color-surface-container-low) 92%, var(--md-sys-color-primary) 8%);
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+.md3-button--elevated:focus-visible {
+    background: color-mix(in srgb, var(--md-sys-color-surface-container-low) 88%, var(--md-sys-color-primary) 12%);
+}
+
+.md3-button--elevated:active {
+    background: color-mix(in srgb, var(--md-sys-color-surface-container-low) 88%, var(--md-sys-color-primary) 12%);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+/* Tonal Button */
+.md3-button--tonal {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.md3-button--tonal:hover {
+    background: color-mix(in srgb, var(--md-sys-color-secondary-container) 92%, var(--md-sys-color-on-secondary-container) 8%);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+.md3-button--tonal:focus-visible {
+    background: color-mix(in srgb, var(--md-sys-color-secondary-container) 88%, var(--md-sys-color-on-secondary-container) 12%);
+}
+
+.md3-button--tonal:active {
+    background: color-mix(in srgb, var(--md-sys-color-secondary-container) 88%, var(--md-sys-color-on-secondary-container) 12%);
+    box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .md3-button {
+        height: 36px;
+        padding: 0 16px;
+        font-size: 13px;
+    }
+
+    .md3-button--text {
+        padding: 0 8px;
+    }
 }
 
 /* Dark Theme Support */
-[data-theme="dark"] md-filled-button {
-    --md-filled-button-container-color: var(--md-sys-color-primary);
-    --md-filled-button-label-text-color: var(--md-sys-color-on-primary);
+[data-theme="dark"] .md3-button--filled {
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
 }
 
-[data-theme="dark"] md-outlined-button {
-    --md-outlined-button-outline-color: var(--md-sys-color-outline);
-    --md-outlined-button-label-text-color: var(--md-sys-color-primary);
+[data-theme="dark"] .md3-button--outlined {
+    border-color: var(--md-sys-color-outline);
+    color: var(--md-sys-color-primary);
+}
+
+[data-theme="dark"] .md3-button--elevated {
+    background: var(--md-sys-color-surface-container-low);
+    color: var(--md-sys-color-primary);
 }
 ';
     }
