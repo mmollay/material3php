@@ -165,6 +165,21 @@ function generateComponent($component, $values) {
             $php = generateIconButtonPHP($values);
             break;
 
+        case 'toolbar':
+            $html = generateToolbar($values);
+            $php = generateToolbarPHP($values);
+            break;
+
+        case 'tooltip':
+            $html = generateTooltip($values);
+            $php = generateTooltipPHP($values);
+            break;
+
+        case 'breadcrumb':
+            $html = generateBreadcrumb($values);
+            $php = generateBreadcrumbPHP($values);
+            break;
+
         default:
             throw new Exception('Unknown component: ' . $component);
     }
@@ -1301,6 +1316,166 @@ function generateSearchPHP($values) {
     }
 
     $code .= "echo MD3Search::field('demo_search', '" . addslashes($placeholder) . "'" . $attributesStr . ");";
+    return $code;
+}
+
+// Toolbar Functions
+function generateToolbar($values) {
+    $type = $values['type'] ?? 'top';
+    $title = $values['title'] ?? 'Toolbar Title';
+    $leadingIcon = $values['leading_icon'] ?? 'menu';
+    $trailingActions = [];
+
+    $actionsText = $values['actions'] ?? 'search:Search\nmore_vert:More';
+    $actionsText = str_replace('\\n', "\n", $actionsText);
+    $lines = explode("\n", trim($actionsText));
+
+    foreach ($lines as $line) {
+        if (trim($line) && strpos($line, ':') !== false) {
+            $parts = explode(':', trim($line), 2);
+            $trailingActions[] = [
+                'icon' => trim($parts[0]),
+                'label' => trim($parts[1]),
+                'onclick' => 'alert("' . trim($parts[1]) . ' clicked")'
+            ];
+        }
+    }
+
+    $options = [
+        'leading_icon' => $leadingIcon,
+        'trailing_actions' => $trailingActions
+    ];
+
+    switch ($type) {
+        case 'bottom':
+            return MD3Toolbar::bottomAppBar($trailingActions, ['fab_icon' => 'add']);
+        case 'navigation':
+            $items = [
+                ['text' => 'Home', 'href' => '#'],
+                ['text' => 'Products', 'href' => '#'],
+                ['text' => $title]
+            ];
+            return MD3Toolbar::navigation($items);
+        default:
+            return MD3Toolbar::topAppBar($title, $options);
+    }
+}
+
+function generateToolbarPHP($values) {
+    $type = $values['type'] ?? 'top';
+    $title = addslashes($values['title'] ?? 'Toolbar Title');
+    $leadingIcon = addslashes($values['leading_icon'] ?? 'menu');
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Toolbar.php';\n\n";
+
+    switch ($type) {
+        case 'bottom':
+            $code .= "\$actions = [\n";
+            $code .= "    ['icon' => 'home', 'label' => 'Home'],\n";
+            $code .= "    ['icon' => 'search', 'label' => 'Search']\n";
+            $code .= "];\n\n";
+            $code .= "echo MD3Toolbar::bottomAppBar(\$actions, ['fab_icon' => 'add']);";
+            break;
+        case 'navigation':
+            $code .= "\$items = [\n";
+            $code .= "    ['text' => 'Home', 'href' => '#'],\n";
+            $code .= "    ['text' => 'Products', 'href' => '#'],\n";
+            $code .= "    ['text' => '{$title}']\n";
+            $code .= "];\n\n";
+            $code .= "echo MD3Toolbar::navigation(\$items);";
+            break;
+        default:
+            $code .= "\$options = [\n";
+            $code .= "    'leading_icon' => '{$leadingIcon}',\n";
+            $code .= "    'trailing_actions' => [\n";
+            $code .= "        ['icon' => 'search', 'label' => 'Search'],\n";
+            $code .= "        ['icon' => 'more_vert', 'label' => 'More']\n";
+            $code .= "    ]\n";
+            $code .= "];\n\n";
+            $code .= "echo MD3Toolbar::topAppBar('{$title}', \$options);";
+    }
+
+    return $code;
+}
+
+// Tooltip Functions
+function generateTooltip($values) {
+    $text = $values['text'] ?? 'This is a tooltip';
+    $position = $values['position'] ?? 'top';
+    $triggerText = $values['trigger'] ?? 'Hover me';
+
+    return MD3Tooltip::simple($triggerText, $text, ['position' => $position]);
+}
+
+function generateTooltipPHP($values) {
+    $text = addslashes($values['text'] ?? 'This is a tooltip');
+    $position = $values['position'] ?? 'top';
+    $triggerText = addslashes($values['trigger'] ?? 'Hover me');
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Tooltip.php';\n\n";
+    $code .= "echo MD3Tooltip::simple('{$triggerText}', '{$text}', ['position' => '{$position}']);";
+
+    return $code;
+}
+
+// Breadcrumb Functions
+function generateBreadcrumb($values) {
+    $type = $values['type'] ?? 'simple';
+    $itemsText = $values['items'] ?? 'Home\nProducts\nCurrent Page';
+
+    $items = [];
+    $itemsText = str_replace('\\n', "\n", $itemsText);
+    $lines = explode("\n", trim($itemsText));
+
+    foreach ($lines as $index => $line) {
+        $line = trim($line);
+        if ($line) {
+            $isLast = ($index === count($lines) - 1);
+            $items[] = [
+                'text' => $line,
+                'href' => $isLast ? null : '#'
+            ];
+        }
+    }
+
+    switch ($type) {
+        case 'icons':
+            // Add icons to items
+            foreach ($items as &$item) {
+                $item['icon'] = 'folder';
+            }
+            return MD3Breadcrumb::withIcons($items);
+        case 'separator':
+            return MD3Breadcrumb::withSeparator($items, 'chevron_right');
+        default:
+            return MD3Breadcrumb::fromArray($items);
+    }
+}
+
+function generateBreadcrumbPHP($values) {
+    $type = $values['type'] ?? 'simple';
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Breadcrumb.php';\n\n";
+    $code .= "\$items = [\n";
+    $code .= "    ['text' => 'Home', 'href' => '#'],\n";
+    $code .= "    ['text' => 'Products', 'href' => '#'],\n";
+    $code .= "    ['text' => 'Current Page']\n";
+    $code .= "];\n\n";
+
+    switch ($type) {
+        case 'icons':
+            $code .= "echo MD3Breadcrumb::withIcons(\$items);";
+            break;
+        case 'separator':
+            $code .= "echo MD3Breadcrumb::withSeparator(\$items, 'chevron_right');";
+            break;
+        default:
+            $code .= "echo MD3Breadcrumb::fromArray(\$items);";
+    }
+
     return $code;
 }
 ?>

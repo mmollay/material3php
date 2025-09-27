@@ -7,6 +7,32 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.32] - 2025-09-27
+
+### 🔄 Major MD3Select Architecture Overhaul
+- **MD3Select Redesign:** Komplette Umstellung von Material Web Components auf CSS-basierte Select-Komponenten
+- **Material Design 3 Compliance:** Authentische MD3 Select-Implementierung mit filled und outlined Varianten
+- **Label Positioning:** Korrekte Label-Positionierung nach Material Design 3 Spezifikation
+- **Dropdown Arrow:** Einheitliches arrow_drop_down Icon mit korrekter Positionierung und Hover-States
+
+### 🎯 Enhanced Select Component Features
+- **CSS-Based Implementation:** Vollständig funktionale Select-Komponenten ohne JavaScript-Dependencies
+- **Perfect Styling:** 56px Höhe, korrekte Padding-Werte und MD3-konforme Border-Radius
+- **Interactive States:** Hover, Focus und Disabled States mit korrekten Color Tokens
+- **Responsive Design:** Mobile-optimierte Darstellung mit reduzierten Größen
+
+### 🚀 Complete Playground Integration
+- **Toolbar Component:** Vollständige Integration mit Top App Bar, Bottom App Bar und Navigation Varianten
+- **Tooltip Component:** Einfache Tooltip-Implementierung mit konfigurierbarer Position
+- **Breadcrumb Component:** Navigation-Breadcrumbs mit Icons und Custom Separators
+- **API Completeness:** Alle neuen Komponenten mit playground-api.php Generator-Funktionen
+
+### ✅ Quality Assurance & Fixes
+- **Playground Loading:** Alle Komponenten (select, toolbar, tooltip, breadcrumb) laden fehlerfrei
+- **CSS Integration:** MD3Select::getCSS() korrekt in playground.php eingebunden
+- **Component Discovery:** Alle neuen Komponenten in Sidebar-Navigation verfügbar
+- **Cross-Component Consistency:** Einheitliches CSS-basiertes Design-System
+
 ## [0.2.31] - 2025-09-27
 
 ### 🎨 Playground UI Optimization

@@ -13,6 +13,7 @@
         require_once 'src/MD3Button.php';
         require_once 'src/MD3TextField.php';
         require_once 'src/MD3Search.php';
+        require_once 'src/MD3Select.php';
         require_once 'src/MD3Card.php';
         require_once 'src/MD3List.php';
         require_once 'src/MD3NavigationBar.php';
@@ -52,6 +53,7 @@
         echo MD3NavigationBar::getCSS();
         echo MD3NavigationDrawer::getCSS();
         echo MD3Search::getCSS();
+        echo MD3Select::getCSS();
         echo MD3List::getCSS();
         echo MD3Card::getCSS();
         echo MD3Button::getCSS();
