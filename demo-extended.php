@@ -24,6 +24,17 @@
     require_once 'src/MD3Theme.php';
     require_once 'src/MD3Select.php';
     require_once 'src/MD3Header.php';
+    require_once 'src/MD3Badge.php';
+    require_once 'src/MD3Snackbar.php';
+    require_once 'src/MD3BottomSheet.php';
+    require_once 'src/MD3DateTimePicker.php';
+    require_once 'src/MD3Menu.php';
+    require_once 'src/MD3Toolbar.php';
+    require_once 'src/MD3FloatingActionButton.php';
+    require_once 'src/MD3NavigationBar.php';
+    require_once 'src/MD3NavigationDrawer.php';
+    require_once 'src/MD3Divider.php';
+    require_once 'src/MD3Carousel.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
@@ -45,6 +56,17 @@
     echo MD3Radio::getCSS();
     echo MD3Tabs::getCSS();
     echo MD3Tooltip::getCSS();
+    echo MD3Badge::getCSS();
+    echo MD3Snackbar::getCSS();
+    echo MD3BottomSheet::getCSS();
+    echo MD3DateTimePicker::getCSS();
+    echo MD3Menu::getCSS();
+    echo MD3Toolbar::getCSS();
+    echo MD3FloatingActionButton::getCSS();
+    echo MD3NavigationBar::getCSS();
+    echo MD3NavigationDrawer::getCSS();
+    echo MD3Divider::getCSS();
+    echo MD3Carousel::getCSS();
     ?>
     </style>
     <style>
@@ -521,10 +543,18 @@
     echo MD3Tabs::getJS();
     echo MD3Tooltip::getJS();
     echo MD3List::getJS();
+    echo MD3Snackbar::getJS();
+    echo MD3Badge::getScript();
     ?>
     </script>
     <?php
     echo MD3Theme::getThemeScript();
+    echo MD3Menu::getScript();
+    echo MD3BottomSheet::getScript();
+    echo MD3DateTimePicker::getScript();
+    echo MD3FloatingActionButton::getScript();
+    echo MD3NavigationBar::getScript();
+    echo MD3NavigationDrawer::getScript();
     ?>
 </body>
 </html>

@@ -1856,7 +1856,12 @@ function generateSnackbar($values) {
     }
 
     return $triggerButton . $snackbar .
-           '<script>document.getElementById("' . $triggerId . '").onclick = function() { window.showSnackbar("' . $snackbarId . '"); };</script>';
+           '<script>document.getElementById("' . $triggerId . '").onclick = function() {
+               const snackbar = document.getElementById("' . $snackbarId . '");
+               if (snackbar && window.snackbarManager) {
+                   window.snackbarManager.show(snackbar);
+               }
+           };</script>';
 }
 
 function generateSnackbarPHP($values) {
@@ -1892,7 +1897,7 @@ function generateSnackbarPHP($values) {
     $code .= "        break;\n";
     $code .= "}\n\n";
     $code .= "echo \$triggerButton . \$snackbar;\n";
-    $code .= "echo '<script>document.getElementById(\"' . \$triggerId . '\").onclick = function() { window.showSnackbar(\"' . \$snackbarId . '\"); };</script>';";
+    $code .= "echo '<script>document.getElementById(\"' . \$triggerId . '\").onclick = function() { const snackbar = document.getElementById(\"' . \$snackbarId . '\"); if (snackbar && window.snackbarManager) { window.snackbarManager.show(snackbar); } };</script>';";
 
     return $code;
 }

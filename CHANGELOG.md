@@ -7,6 +7,24 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.38] - 2025-09-27
+
+### 🔧 Critical Functionality Fixes
+- **Snackbar Fix:** Corrected JavaScript integration and showSnackbar functionality
+- **Demo Extended Enhancement:** Added all 28 components to demo-extended.php
+- **Complete Component Coverage:** All require_once statements and CSS/JS included
+- **Playground Integration:** Enhanced Snackbar JavaScript API calls
+
+### 🎨 Component Library Expansion
+- **Demo Extended:** Now includes Badge, Snackbar, BottomSheet, DateTimePicker, Menu, Toolbar, FAB, NavigationBar, NavigationDrawer, Divider, Carousel
+- **CSS Integration:** Complete styling support for all new components
+- **JavaScript Integration:** Full interactive functionality for all components
+
+### 🐛 Bug Fixes
+- **Snackbar API:** Fixed playground-api.php to use correct snackbarManager.show() method
+- **Component Loading:** Complete require_once chain for all 28 components
+- **Theme Compatibility:** All new components support Ocean, Purple, Green themes
+
 ## [0.2.37] - 2025-09-27
 
 ### 🧪 Comprehensive Testing & Quality Assurance

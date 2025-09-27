@@ -891,6 +891,7 @@
 
     <script><?php echo MD3List::getJS(); ?></script>
     <script><?php echo MD3Tooltip::getJS(); ?></script>
+    <script><?php echo MD3Snackbar::getJS(); ?></script>
     <?php echo MD3NavigationBar::getScript(); ?>
     <?php echo MD3Menu::getScript(); ?>
     <?php echo MD3Dialog::getScript(); ?>
