@@ -1,0 +1,24 @@
+{
+  "name": "material3php",
+  "version": "1.0.0",
+  "description": "Eine umfassende PHP-Library zur Generierung von Material Design 3 UI-Komponenten mit reinem CSS - ohne externe CDN-Abhängigkeiten.",
+  "main": "test-all-components.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmollay/material3php.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mmollay/material3php/issues"
+  },
+  "homepage": "https://github.com/mmollay/material3php#readme",
+  "dependencies": {
+    "playwright": "^1.55.1"
+  }
+}

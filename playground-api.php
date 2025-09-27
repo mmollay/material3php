@@ -64,6 +64,8 @@ require_once 'src/MD3Tooltip.php';
 require_once 'src/MD3Snackbar.php';
 require_once 'src/MD3BottomSheet.php';
 require_once 'src/MD3DateTimePicker.php';
+require_once 'src/MD3Header.php';
+require_once 'src/MD3Badge.php';
 
 $component = $input['component'];
 $values = $input['values'] ?? [];
@@ -1836,7 +1838,24 @@ function generateSnackbar($values) {
         $options['action'] = $action;
     }
 
-    return $triggerButton . MD3Snackbar::create($message, $snackbarId, $options) .
+    // Choose the appropriate snackbar method based on type
+    switch($type) {
+        case 'error':
+            $snackbar = MD3Snackbar::error($message, $options);
+            break;
+        case 'warning':
+            $snackbar = MD3Snackbar::warning($message, $options);
+            break;
+        case 'success':
+            $snackbar = MD3Snackbar::success($message, $options);
+            break;
+        case 'info':
+        default:
+            $snackbar = MD3Snackbar::info($message, $options);
+            break;
+    }
+
+    return $triggerButton . $snackbar .
            '<script>document.getElementById("' . $triggerId . '").onclick = function() { window.showSnackbar("' . $snackbarId . '"); };</script>';
 }
 
@@ -1856,7 +1875,23 @@ function generateSnackbarPHP($values) {
         $code .= "\$options['action'] = '$action';\n";
     }
 
-    $code .= "echo \$triggerButton . MD3Snackbar::create('$message', \$snackbarId, \$options);\n";
+    $code .= "// Choose the appropriate snackbar method based on type\n";
+    $code .= "switch('$type') {\n";
+    $code .= "    case 'error':\n";
+    $code .= "        \$snackbar = MD3Snackbar::error('$message', \$options);\n";
+    $code .= "        break;\n";
+    $code .= "    case 'warning':\n";
+    $code .= "        \$snackbar = MD3Snackbar::warning('$message', \$options);\n";
+    $code .= "        break;\n";
+    $code .= "    case 'success':\n";
+    $code .= "        \$snackbar = MD3Snackbar::success('$message', \$options);\n";
+    $code .= "        break;\n";
+    $code .= "    case 'info':\n";
+    $code .= "    default:\n";
+    $code .= "        \$snackbar = MD3Snackbar::info('$message', \$options);\n";
+    $code .= "        break;\n";
+    $code .= "}\n\n";
+    $code .= "echo \$triggerButton . \$snackbar;\n";
     $code .= "echo '<script>document.getElementById(\"' . \$triggerId . '\").onclick = function() { window.showSnackbar(\"' . \$snackbarId . '\"); };</script>';";
 
     return $code;

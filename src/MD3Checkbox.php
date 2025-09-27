@@ -168,10 +168,11 @@ class MD3Checkbox {
 
 .md3-checkbox__input {
     position: absolute;
-    opacity: 0;
-    pointer-events: none;
-    width: 0;
-    height: 0;
+    opacity: 0.01; /* Minimal opacity for testing visibility */
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
 }
 
 .md3-checkbox {

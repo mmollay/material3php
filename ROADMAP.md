@@ -3,7 +3,12 @@
 ## ✅ **Implementiert (28/33 Komponenten)**
 
 ### 🎯 **Actions (3/4)**
-- ✅ **Button** - Alle Varianten (Filled, Outlined, Text, Elevated, Tonal)
+- ✅ **Button** - Alle Varianten *(v0.1.0)*
+  - `filled()` - Primary Action Button
+  - `outlined()` - Secondary Action Button
+  - `text()` - Low Priority Action Button
+  - `elevated()` - Important Action with Shadow
+  - `tonal()` - Medium Emphasis Action Button
 - ✅ **FAB** - Standard, Small, Large, Extended *(v0.2.3)*
 - ✅ **Icon Button** - Standard, Filled, Outlined, Tonal + Toggle *(v0.2.34)*
 - ❌ **Segmented Button** - Multi-Select Button Groups
