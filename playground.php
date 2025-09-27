@@ -30,6 +30,8 @@
         require_once 'src/MD3Radio.php';
         require_once 'src/MD3Tabs.php';
         require_once 'src/MD3Tooltip.php';
+        require_once 'src/MD3Breadcrumb.php';
+        require_once 'src/MD3Toolbar.php';
         require_once 'src/MD3Theme.php';
 
         // Get theme from URL parameter or default
@@ -52,6 +54,7 @@
         echo MD3Search::getCSS();
         echo MD3List::getCSS();
         echo MD3Card::getCSS();
+        echo MD3Button::getCSS();
         echo MD3Chip::getCSS();
         echo MD3Progress::getCSS();
         echo MD3Slider::getCSS();
@@ -60,6 +63,8 @@
         echo MD3Radio::getCSS();
         echo MD3Tabs::getCSS();
         echo MD3Tooltip::getCSS();
+        echo MD3Breadcrumb::getCSS();
+        echo MD3Toolbar::getCSS();
         echo MD3NavigationRail::getCSS();
         echo MD3Menu::getCSS();
         echo MD3Dialog::getCSS();

@@ -324,54 +324,67 @@ function generateTextFieldPHP($values) {
 function generateCard($values) {
     $type = $values['type'] ?? 'elevated';
     $title = $values['title'] ?? 'Card Title';
-    $content = $values['content'] ?? 'This is the card content area.';
+    $content = $values['content'] ?? 'This is the card content area where you can add descriptive text.';
     $icon = !empty($values['icon']) ? $values['icon'] : null;
 
-    if ($title && $title !== '') {
-        $fullContent = '<h3>' . htmlspecialchars($title) . '</h3><p>' . htmlspecialchars($content) . '</p>';
-    } else {
-        $fullContent = htmlspecialchars($content);
+    // Use proper MD3Card structure with header, content, and optional actions
+    $options = [];
+    if ($icon) {
+        $options['icon'] = $icon;
     }
+
+    // Add some demo actions for better visualization
+    $options['actions'] = [
+        ['type' => 'text', 'text' => 'Action 1', 'onclick' => 'alert("Action 1")'],
+        ['type' => 'outlined', 'text' => 'Action 2', 'onclick' => 'alert("Action 2")']
+    ];
 
     switch ($type) {
         case 'surface':
-            return MD3Card::surface($fullContent);
+            return MD3Card::withHeader($title, $content, array_merge($options, ['variant' => 'surface']));
         case 'filled':
-            return MD3Card::filled($fullContent);
+            return MD3Card::withHeader($title, $content, array_merge($options, ['variant' => 'filled']));
         case 'outlined':
-            return MD3Card::outlined($fullContent);
+            return MD3Card::withHeader($title, $content, array_merge($options, ['variant' => 'outlined']));
         default:
-            return MD3Card::elevated($fullContent);
+            return MD3Card::withHeader($title, $content, array_merge($options, ['variant' => 'elevated']));
     }
 }
 
 function generateCardPHP($values) {
     $type = $values['type'] ?? 'elevated';
     $title = $values['title'] ?? 'Card Title';
-    $content = $values['content'] ?? 'This is the card content area.';
+    $content = $values['content'] ?? 'This is the card content area where you can add descriptive text.';
     $icon = !empty($values['icon']) ? $values['icon'] : null;
 
     $code = "<?php\n";
     $code .= "require_once 'src/MD3Card.php';\n\n";
 
-    if ($title && $title !== '') {
-        $code .= "\$content = '<h3>" . addslashes($title) . "</h3><p>" . addslashes($content) . "</p>';\n";
-    } else {
-        $code .= "\$content = '" . addslashes($content) . "';\n";
+    $code .= "\$title = '" . addslashes($title) . "';\n";
+    $code .= "\$content = '" . addslashes($content) . "';\n\n";
+
+    $code .= "\$options = [];\n";
+    if ($icon) {
+        $code .= "\$options['icon'] = '" . addslashes($icon) . "';\n";
     }
+
+    $code .= "\$options['actions'] = [\n";
+    $code .= "    ['type' => 'text', 'text' => 'Action 1', 'onclick' => 'alert(\"Action 1\")'],\n";
+    $code .= "    ['type' => 'outlined', 'text' => 'Action 2', 'onclick' => 'alert(\"Action 2\")']\n";
+    $code .= "];\n\n";
 
     switch ($type) {
         case 'surface':
-            $code .= "echo MD3Card::surface(\$content);";
+            $code .= "echo MD3Card::withHeader(\$title, \$content, array_merge(\$options, ['variant' => 'surface']));";
             break;
         case 'filled':
-            $code .= "echo MD3Card::filled(\$content);";
+            $code .= "echo MD3Card::withHeader(\$title, \$content, array_merge(\$options, ['variant' => 'filled']));";
             break;
         case 'outlined':
-            $code .= "echo MD3Card::outlined(\$content);";
+            $code .= "echo MD3Card::withHeader(\$title, \$content, array_merge(\$options, ['variant' => 'outlined']));";
             break;
         default:
-            $code .= "echo MD3Card::elevated(\$content);";
+            $code .= "echo MD3Card::withHeader(\$title, \$content, array_merge(\$options, ['variant' => 'elevated']));";
             break;
     }
 
