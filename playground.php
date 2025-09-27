@@ -33,6 +33,11 @@
         require_once 'src/MD3Tooltip.php';
         require_once 'src/MD3Breadcrumb.php';
         require_once 'src/MD3Toolbar.php';
+        require_once 'src/MD3Badge.php';
+        require_once 'src/MD3BottomSheet.php';
+        require_once 'src/MD3DateTimePicker.php';
+        require_once 'src/MD3Header.php';
+        require_once 'src/MD3Snackbar.php';
         require_once 'src/MD3Theme.php';
 
         // Get theme from URL parameter or default
@@ -72,6 +77,13 @@
         echo MD3Dialog::getCSS();
         echo MD3FloatingActionButton::getCSS();
         echo MD3IconButton::getCSS();
+        echo MD3Progress::getCSS();
+        echo MD3Slider::getCSS();
+        echo MD3Badge::getCSS();
+        echo MD3BottomSheet::getCSS();
+        echo MD3DateTimePicker::getCSS();
+        echo MD3Header::getCSS();
+        echo MD3Snackbar::getCSS();
         ?>
         * {
             margin: 0;
@@ -767,6 +779,9 @@
                 <a href="?component=menu&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'menu' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('more_vert'); ?> Menu
                 </a>
+                <a href="?component=tabs&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'tabs' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('tab'); ?> Tabs
+                </a>
             </div>
 
             <div class="nav-section">
@@ -776,6 +791,12 @@
                 </a>
                 <a href="?component=tooltip&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'tooltip' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('help'); ?> Tooltip
+                </a>
+                <a href="?component=bottomsheet&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'bottomsheet' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('vertical_align_bottom'); ?> Bottom Sheet
+                </a>
+                <a href="?component=snackbar&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'snackbar' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('notifications'); ?> Snackbar
                 </a>
             </div>
 
@@ -793,6 +814,15 @@
                 <a href="?component=radio&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'radio' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('radio_button_checked'); ?> Radio
                 </a>
+                <a href="?component=slider&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'slider' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('tune'); ?> Slider
+                </a>
+                <a href="?component=progress&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'progress' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('progress_activity'); ?> Progress
+                </a>
+                <a href="?component=datetimepicker&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'datetimepicker' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('calendar_today'); ?> Date/Time Picker
+                </a>
             </div>
 
             <div class="nav-section">
@@ -802,6 +832,12 @@
                 </a>
                 <a href="?component=chip&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'chip' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('label'); ?> Chip
+                </a>
+                <a href="?component=badge&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'badge' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('circle'); ?> Badge
+                </a>
+                <a href="?component=header&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'header' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('title'); ?> Header
                 </a>
             </div>
 
@@ -1485,6 +1521,212 @@
                         type: 'textarea',
                         label: 'Items (one per line)',
                         default: 'Home\\nProducts\\nCurrent Page'
+                    }
+                }
+            },
+            progress: {
+                name: 'Progress',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Progress Type',
+                        options: {
+                            'linear': 'Linear',
+                            'circular': 'Circular'
+                        },
+                        default: 'linear'
+                    },
+                    value: {
+                        type: 'text',
+                        label: 'Progress Value (0-100)',
+                        default: '65'
+                    },
+                    indeterminate: {
+                        type: 'checkbox',
+                        label: 'Indeterminate',
+                        default: false
+                    }
+                }
+            },
+            slider: {
+                name: 'Slider',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Slider Type',
+                        options: {
+                            'continuous': 'Continuous',
+                            'discrete': 'Discrete'
+                        },
+                        default: 'continuous'
+                    },
+                    min: {
+                        type: 'text',
+                        label: 'Min Value',
+                        default: '0'
+                    },
+                    max: {
+                        type: 'text',
+                        label: 'Max Value',
+                        default: '100'
+                    },
+                    value: {
+                        type: 'text',
+                        label: 'Current Value',
+                        default: '50'
+                    }
+                }
+            },
+            tabs: {
+                name: 'Tabs',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Tab Type',
+                        options: {
+                            'primary': 'Primary',
+                            'secondary': 'Secondary'
+                        },
+                        default: 'primary'
+                    },
+                    tabs: {
+                        type: 'textarea',
+                        label: 'Tab Items (one per line)',
+                        default: 'Home\\nProducts\\nServices\\nContact'
+                    },
+                    activeIndex: {
+                        type: 'text',
+                        label: 'Active Tab (0-based)',
+                        default: '0'
+                    }
+                }
+            },
+            badge: {
+                name: 'Badge',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Badge Type',
+                        options: {
+                            'small': 'Small',
+                            'large': 'Large'
+                        },
+                        default: 'small'
+                    },
+                    content: {
+                        type: 'text',
+                        label: 'Badge Content',
+                        default: '5'
+                    },
+                    color: {
+                        type: 'select',
+                        label: 'Badge Color',
+                        options: {
+                            'error': 'Error',
+                            'primary': 'Primary',
+                            'secondary': 'Secondary'
+                        },
+                        default: 'error'
+                    }
+                }
+            },
+            bottomsheet: {
+                name: 'Bottom Sheet',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Sheet Type',
+                        options: {
+                            'modal': 'Modal',
+                            'standard': 'Standard'
+                        },
+                        default: 'modal'
+                    },
+                    title: {
+                        type: 'text',
+                        label: 'Sheet Title',
+                        default: 'Bottom Sheet Title'
+                    },
+                    content: {
+                        type: 'textarea',
+                        label: 'Sheet Content',
+                        default: 'This is the content of the bottom sheet. You can put any content here.'
+                    }
+                }
+            },
+            datetimepicker: {
+                name: 'Date/Time Picker',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Picker Type',
+                        options: {
+                            'date': 'Date Picker',
+                            'time': 'Time Picker',
+                            'datetime': 'Date & Time'
+                        },
+                        default: 'date'
+                    },
+                    label: {
+                        type: 'text',
+                        label: 'Field Label',
+                        default: 'Select Date'
+                    },
+                    value: {
+                        type: 'text',
+                        label: 'Default Value',
+                        default: ''
+                    }
+                }
+            },
+            header: {
+                name: 'Header',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Header Type',
+                        options: {
+                            'large': 'Large',
+                            'medium': 'Medium',
+                            'small': 'Small'
+                        },
+                        default: 'large'
+                    },
+                    title: {
+                        type: 'text',
+                        label: 'Header Title',
+                        default: 'Page Title'
+                    },
+                    subtitle: {
+                        type: 'text',
+                        label: 'Subtitle (optional)',
+                        default: 'Optional subtitle text'
+                    }
+                }
+            },
+            snackbar: {
+                name: 'Snackbar',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Snackbar Type',
+                        options: {
+                            'info': 'Info',
+                            'success': 'Success',
+                            'warning': 'Warning',
+                            'error': 'Error'
+                        },
+                        default: 'info'
+                    },
+                    message: {
+                        type: 'text',
+                        label: 'Message Text',
+                        default: 'This is a snackbar message'
+                    },
+                    action: {
+                        type: 'text',
+                        label: 'Action Text (optional)',
+                        default: 'UNDO'
                     }
                 }
             }

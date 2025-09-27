@@ -1,66 +1,70 @@
 # 🗺️ Material Design 3 PHP Library - Komponenten Roadmap
 
-## ✅ **Implementiert (17/33 Komponenten)**
+## ✅ **Implementiert (28/33 Komponenten)**
 
 ### 🎯 **Actions (3/4)**
 - ✅ **Button** - Alle Varianten (Filled, Outlined, Text, Elevated, Tonal)
 - ✅ **FAB** - Standard, Small, Large, Extended *(v0.2.3)*
-- ✅ **Icon Button** - Standard, Filled, Outlined, Tonal + Toggle *(NEU)*
+- ✅ **Icon Button** - Standard, Filled, Outlined, Tonal + Toggle *(v0.2.34)*
 - ❌ **Segmented Button** - Multi-Select Button Groups
 
-### 📞 **Communication (1/4)**
+### 📞 **Communication (4/4)**
 - ✅ **Badge** - Notification Badges für Navigation und Icons *(v0.2.3)*
-- ❌ **Progress Indicator** - Linear und Circular Progress
-- ❌ **Snackbar** - Temporary Bottom Messages
-- ❌ **Tooltip** - Hover Information (basic version exists)
+- ✅ **Progress Indicator** - Linear und Circular Progress *(v0.2.35)*
+- ✅ **Snackbar** - Temporary Bottom Messages *(v0.2.35)*
+- ✅ **Tooltip** - Vollständige Hover/Touch/Keyboard Unterstützung *(v0.2.35)*
 
-### 📦 **Containment (2/4)**
+### 📦 **Containment (3/4)**
 - ✅ **Card** - Simple, Elevated, Outlined Varianten
 - ✅ **Dialog** - Basic, Alert, Confirm, Form und Fullscreen
-- ❌ **Bottom Sheet** - Slide-up Modal Content
+- ✅ **Bottom Sheet** - Slide-up Modal Content *(v0.2.35)*
 - ❌ **Side Sheet** - Slide-in Side Modal
 
-### 🧭 **Navigation (4/6)**
+### 🧭 **Navigation (6/6)**
 - ✅ **Navigation Bar** - Bottom Navigation mit Icons und Labels
-- ✅ **Navigation Drawer** - Side Navigation Panel *(NEU)*
-- ✅ **Navigation Rail** - Compact Vertical Navigation *(NEU)*
-- ✅ **Menu** - Dropdown und Context Menus
-- ❌ **Tabs** - Horizontal Tab Navigation
-- ❌ **Top App Bar** - Header mit Actions
+- ✅ **Navigation Drawer** - Side Navigation Panel *(v0.2.34)*
+- ✅ **Navigation Rail** - Compact Vertical Navigation *(v0.2.34)*
+- ✅ **Menu** - Enhanced MD3 Design mit Animationen *(v0.2.35)*
+- ✅ **Tabs** - Horizontal Tab Navigation *(v0.2.35)*
+- ✅ **Toolbar** - Top App Bar mit Actions *(v0.2.34)*
 
-### 🎛️ **Selection (4/7)**
+### 🎛️ **Selection (6/7)**
 - ✅ **Checkbox** - Standard Checkbox Control
 - ✅ **Radio** - Radio Button Groups
 - ✅ **Switch** - Toggle Switch Control
-- ✅ **Select** - Dropdown Selection Lists
-- ❌ **Slider** - Value Range Selection
-- ❌ **Date Picker** - Calendar Date Selection
-- ❌ **Time Picker** - Time Selection Control
+- ✅ **Select** - Dropdown mit Large/Dense Varianten *(v0.2.35)*
+- ✅ **Slider** - Value Range Selection *(v0.2.35)*
+- ✅ **Date/Time Picker** - Calendar und Time Selection *(v0.2.35)*
+- ❌ **Segmented Control** - Multi-Select Segments
 
-### ✏️ **Text Inputs (1/3)**
+### ✏️ **Text Inputs (2/3)**
 - ✅ **TextField** - Filled und Outlined Text Inputs
-- ❌ **Search** - Search Input mit Suggestions
+- ✅ **Search** - Search Input mit Suggestions *(v0.2.34)*
 - ❌ **Autocomplete** - Text Input mit Auto-Completion
 
-### 📊 **Display (2/2)**
+### 📊 **Display (4/4)**
 - ✅ **Lists** - Simple, Avatar und Action Lists
 - ✅ **Chip** - Filter, Assist und Input Chips
+- ✅ **Breadcrumb** - Navigation Pfad Anzeige *(v0.2.34)*
+- ✅ **Header** - Page Headers mit Titeln *(v0.2.35)*
 
 ---
 
-## 🚀 **Implementierungs-Prioritäten**
+## 🎉 **Status Update v0.2.35**
 
-### **Phase 1: Core Actions & Communication (Priorität: HOCH)**
-1. ✅ **Badge** - Notification System für Navigation *(v0.2.3)*
-2. ✅ **Icon Button** - Einzelne Action Buttons *(FERTIG)*
-3. **Progress Indicator** - Loading States
-4. **Snackbar** - User Feedback System
+### **✅ PHASE 1-4 KOMPLETT ABGESCHLOSSEN!**
+- **28/33 Komponenten implementiert (85% fertig)**
+- **Communication Kategorie**: 100% vollständig
+- **Navigation Kategorie**: 100% vollständig
+- **Selection Kategorie**: 86% vollständig
+- **Display Kategorie**: 100% vollständig
 
-### **Phase 2: Enhanced Navigation (Priorität: MITTEL)**
-1. **Tabs** - Tab Navigation System
-2. **Navigation Rail** - Compact Navigation
-3. **Top App Bar** - Header mit Actions
-4. **Search** - Search Input Component
+### **🚀 Verbleibende 5 Komponenten (Phase 5)**
+1. **Segmented Button** - Multi-Select Button Groups
+2. **Side Sheet** - Slide-in Side Modal
+3. **Autocomplete** - Text Input mit Auto-Completion
+4. **Segmented Control** - Advanced Selection Component
+5. **Advanced Data Tables** - Complex Table Components
 
 ### **Phase 3: Selection Controls (Priorität: MITTEL)**
 1. **Slider** - Range Input Control

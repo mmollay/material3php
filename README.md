@@ -7,7 +7,7 @@ Eine umfassende PHP-Library zur Generierung von Material Design 3 UI-Komponenten
 - **Vollständige Material Design 3 Unterstützung** - Implementiert alle wichtigen MD3 Komponenten
 - **Pure CSS Implementation** - Keine CDN-Abhängigkeiten, funktioniert offline
 - **Einfache PHP-API** - Intuitive statische Methoden für jede Komponente
-- **15+ Komponententypen** - Buttons, Cards, Lists, Search, Chips, Tooltips uvm.
+- **28+ Komponententypen** - Buttons, Cards, Lists, Search, Chips, Tooltips, Navigation, Menus uvm.
 - **Produktionsbereit** - Sauberer, dokumentierter Code mit HTML-Escaping
 - **Light/Dark Mode** - Automatische Theme-Unterstützung
 - **Responsive Design** - Mobile-first Ansatz

@@ -1513,4 +1513,312 @@ function generateBreadcrumbPHP($values) {
 
     return $code;
 }
+
+// Progress Functions
+function generateProgress($values) {
+    $type = $values['type'] ?? 'linear';
+    $value = intval($values['value'] ?? 65);
+    $indeterminate = $values['indeterminate'] ?? false;
+
+    if ($type === 'circular') {
+        return $indeterminate
+            ? MD3Progress::circularIndeterminate()
+            : MD3Progress::circular($value);
+    } else {
+        return $indeterminate
+            ? MD3Progress::linearIndeterminate()
+            : MD3Progress::linear($value);
+    }
+}
+
+function generateProgressPHP($values) {
+    $type = $values['type'] ?? 'linear';
+    $value = intval($values['value'] ?? 65);
+    $indeterminate = $values['indeterminate'] ?? false;
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Progress.php';\n\n";
+
+    if ($type === 'circular') {
+        $code .= $indeterminate
+            ? "echo MD3Progress::circularIndeterminate();"
+            : "echo MD3Progress::circular($value);";
+    } else {
+        $code .= $indeterminate
+            ? "echo MD3Progress::linearIndeterminate();"
+            : "echo MD3Progress::linear($value);";
+    }
+
+    return $code;
+}
+
+// Slider Functions
+function generateSlider($values) {
+    $type = $values['type'] ?? 'continuous';
+    $min = intval($values['min'] ?? 0);
+    $max = intval($values['max'] ?? 100);
+    $value = intval($values['value'] ?? 50);
+
+    return $type === 'discrete'
+        ? MD3Slider::discrete('demo_slider', $min, $max, $value)
+        : MD3Slider::continuous('demo_slider', $min, $max, $value);
+}
+
+function generateSliderPHP($values) {
+    $type = $values['type'] ?? 'continuous';
+    $min = intval($values['min'] ?? 0);
+    $max = intval($values['max'] ?? 100);
+    $value = intval($values['value'] ?? 50);
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Slider.php';\n\n";
+    $code .= $type === 'discrete'
+        ? "echo MD3Slider::discrete('demo_slider', $min, $max, $value);"
+        : "echo MD3Slider::continuous('demo_slider', $min, $max, $value);";
+
+    return $code;
+}
+
+// Tabs Functions
+function generateTabs($values) {
+    $type = $values['type'] ?? 'primary';
+    $tabsText = $values['tabs'] ?? 'Home\nProducts\nServices\nContact';
+    $activeIndex = intval($values['activeIndex'] ?? 0);
+
+    $tabs = [];
+    $tabsText = str_replace('\\n', "\n", $tabsText);
+    $lines = explode("\n", trim($tabsText));
+
+    foreach ($lines as $i => $line) {
+        $line = trim($line);
+        if ($line) {
+            $tabs[] = [
+                'label' => $line,
+                'id' => 'tab-' . $i
+            ];
+        }
+    }
+
+    return $type === 'secondary'
+        ? MD3Tabs::secondary($tabs, $activeIndex)
+        : MD3Tabs::primary($tabs, $activeIndex);
+}
+
+function generateTabsPHP($values) {
+    $type = $values['type'] ?? 'primary';
+    $activeIndex = intval($values['activeIndex'] ?? 0);
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Tabs.php';\n\n";
+    $code .= "\$tabs = [\n";
+    $code .= "    ['label' => 'Home', 'id' => 'tab-0'],\n";
+    $code .= "    ['label' => 'Products', 'id' => 'tab-1'],\n";
+    $code .= "    ['label' => 'Services', 'id' => 'tab-2'],\n";
+    $code .= "    ['label' => 'Contact', 'id' => 'tab-3']\n";
+    $code .= "];\n\n";
+    $code .= $type === 'secondary'
+        ? "echo MD3Tabs::secondary(\$tabs, $activeIndex);"
+        : "echo MD3Tabs::primary(\$tabs, $activeIndex);";
+
+    return $code;
+}
+
+// Badge Functions
+function generateBadge($values) {
+    $type = $values['type'] ?? 'small';
+    $content = $values['content'] ?? '5';
+    $color = $values['color'] ?? 'error';
+
+    $targetElement = '<button style="padding: 8px 16px; margin: 20px;">Button with Badge</button>';
+
+    return MD3Badge::attach($targetElement, $content, [
+        'size' => $type,
+        'color' => $color
+    ]);
+}
+
+function generateBadgePHP($values) {
+    $type = $values['type'] ?? 'small';
+    $content = addslashes($values['content'] ?? '5');
+    $color = $values['color'] ?? 'error';
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Badge.php';\n\n";
+    $code .= "\$targetElement = '<button style=\"padding: 8px 16px; margin: 20px;\">Button with Badge</button>';\n";
+    $code .= "echo MD3Badge::attach(\$targetElement, '$content', [\n";
+    $code .= "    'size' => '$type',\n";
+    $code .= "    'color' => '$color'\n";
+    $code .= "]);";
+
+    return $code;
+}
+
+// BottomSheet Functions
+function generateBottomsheet($values) {
+    $type = $values['type'] ?? 'modal';
+    $title = $values['title'] ?? 'Bottom Sheet Title';
+    $content = $values['content'] ?? 'This is the content of the bottom sheet.';
+
+    $triggerId = 'bottomsheet-trigger-' . uniqid();
+    $sheetId = 'bottomsheet-' . uniqid();
+
+    $triggerButton = '<button id="' . $triggerId . '" style="padding: 12px 24px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; border-radius: 8px; cursor: pointer;">Show Bottom Sheet</button>';
+
+    return $triggerButton . MD3BottomSheet::create($title, $content, $sheetId, [
+        'modal' => $type === 'modal',
+        'trigger' => $triggerId
+    ]);
+}
+
+function generateBottomsheetPHP($values) {
+    $type = $values['type'] ?? 'modal';
+    $title = addslashes($values['title'] ?? 'Bottom Sheet Title');
+    $content = addslashes($values['content'] ?? 'This is the content of the bottom sheet.');
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3BottomSheet.php';\n\n";
+    $code .= "\$triggerId = 'bottomsheet-trigger-' . uniqid();\n";
+    $code .= "\$sheetId = 'bottomsheet-' . uniqid();\n";
+    $code .= "\$triggerButton = '<button id=\"' . \$triggerId . '\" style=\"padding: 12px 24px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; border-radius: 8px; cursor: pointer;\">Show Bottom Sheet</button>';\n";
+    $code .= "echo \$triggerButton . MD3BottomSheet::create('$title', '$content', \$sheetId, [\n";
+    $code .= "    'modal' => " . ($type === 'modal' ? 'true' : 'false') . ",\n";
+    $code .= "    'trigger' => \$triggerId\n";
+    $code .= "]);";
+
+    return $code;
+}
+
+// DateTimePicker Functions
+function generateDatetimepicker($values) {
+    $type = $values['type'] ?? 'date';
+    $label = $values['label'] ?? 'Select Date';
+    $value = $values['value'] ?? '';
+
+    switch ($type) {
+        case 'time':
+            return MD3DateTimePicker::timePicker('demo_time', $label, $value);
+        case 'datetime':
+            return MD3DateTimePicker::dateTimePicker('demo_datetime', $label, $value);
+        default:
+            return MD3DateTimePicker::datePicker('demo_date', $label, $value);
+    }
+}
+
+function generateDatetimepickerPHP($values) {
+    $type = $values['type'] ?? 'date';
+    $label = addslashes($values['label'] ?? 'Select Date');
+    $value = addslashes($values['value'] ?? '');
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3DateTimePicker.php';\n\n";
+
+    switch ($type) {
+        case 'time':
+            $code .= "echo MD3DateTimePicker::timePicker('demo_time', '$label', '$value');";
+            break;
+        case 'datetime':
+            $code .= "echo MD3DateTimePicker::dateTimePicker('demo_datetime', '$label', '$value');";
+            break;
+        default:
+            $code .= "echo MD3DateTimePicker::datePicker('demo_date', '$label', '$value');";
+    }
+
+    return $code;
+}
+
+// Header Functions
+function generateHeader($values) {
+    $type = $values['type'] ?? 'large';
+    $title = $values['title'] ?? 'Page Title';
+    $subtitle = $values['subtitle'] ?? 'Optional subtitle text';
+
+    $hasSubtitle = !empty($subtitle) && $subtitle !== 'Optional subtitle text';
+
+    switch ($type) {
+        case 'medium':
+            return $hasSubtitle
+                ? MD3Header::medium($title, $subtitle)
+                : MD3Header::medium($title);
+        case 'small':
+            return $hasSubtitle
+                ? MD3Header::small($title, $subtitle)
+                : MD3Header::small($title);
+        default:
+            return $hasSubtitle
+                ? MD3Header::large($title, $subtitle)
+                : MD3Header::large($title);
+    }
+}
+
+function generateHeaderPHP($values) {
+    $type = $values['type'] ?? 'large';
+    $title = addslashes($values['title'] ?? 'Page Title');
+    $subtitle = addslashes($values['subtitle'] ?? 'Optional subtitle text');
+
+    $hasSubtitle = !empty($subtitle) && $subtitle !== 'Optional subtitle text';
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Header.php';\n\n";
+
+    switch ($type) {
+        case 'medium':
+            $code .= $hasSubtitle
+                ? "echo MD3Header::medium('$title', '$subtitle');"
+                : "echo MD3Header::medium('$title');";
+            break;
+        case 'small':
+            $code .= $hasSubtitle
+                ? "echo MD3Header::small('$title', '$subtitle');"
+                : "echo MD3Header::small('$title');";
+            break;
+        default:
+            $code .= $hasSubtitle
+                ? "echo MD3Header::large('$title', '$subtitle');"
+                : "echo MD3Header::large('$title');";
+    }
+
+    return $code;
+}
+
+// Snackbar Functions
+function generateSnackbar($values) {
+    $type = $values['type'] ?? 'info';
+    $message = $values['message'] ?? 'This is a snackbar message';
+    $action = $values['action'] ?? '';
+
+    $snackbarId = 'snackbar-' . uniqid();
+    $triggerId = 'snackbar-trigger-' . uniqid();
+
+    $triggerButton = '<button id="' . $triggerId . '" style="padding: 12px 24px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; border-radius: 8px; cursor: pointer;">Show Snackbar</button>';
+
+    $options = ['type' => $type];
+    if (!empty($action) && $action !== 'UNDO') {
+        $options['action'] = $action;
+    }
+
+    return $triggerButton . MD3Snackbar::create($message, $snackbarId, $options) .
+           '<script>document.getElementById("' . $triggerId . '").onclick = function() { window.showSnackbar("' . $snackbarId . '"); };</script>';
+}
+
+function generateSnackbarPHP($values) {
+    $type = $values['type'] ?? 'info';
+    $message = addslashes($values['message'] ?? 'This is a snackbar message');
+    $action = addslashes($values['action'] ?? '');
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Snackbar.php';\n\n";
+    $code .= "\$snackbarId = 'snackbar-' . uniqid();\n";
+    $code .= "\$triggerId = 'snackbar-trigger-' . uniqid();\n";
+    $code .= "\$triggerButton = '<button id=\"' . \$triggerId . '\" style=\"padding: 12px 24px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; border-radius: 8px; cursor: pointer;\">Show Snackbar</button>';\n";
+    $code .= "\$options = ['type' => '$type'];\n";
+
+    if (!empty($action) && $action !== 'UNDO') {
+        $code .= "\$options['action'] = '$action';\n";
+    }
+
+    $code .= "echo \$triggerButton . MD3Snackbar::create('$message', \$snackbarId, \$options);\n";
+    $code .= "echo '<script>document.getElementById(\"' . \$triggerId . '\").onclick = function() { window.showSnackbar(\"' . \$snackbarId . '\"); };</script>';";
+
+    return $code;
+}
 ?>
