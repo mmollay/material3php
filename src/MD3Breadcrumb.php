@@ -210,4 +210,64 @@ class MD3Breadcrumb
         $html .= '</nav>';
         return $html;
     }
+
+    /**
+     * Get CSS for Material Design 3 Breadcrumb Navigation
+     */
+    public static function getCSS(): string
+    {
+        return '
+/* MD3 Breadcrumb Navigation CSS */
+nav[aria-label="Breadcrumb"] {
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-body-medium-font-family-name);
+    font-size: var(--md-sys-typescale-body-medium-font-size);
+    font-weight: var(--md-sys-typescale-body-medium-font-weight);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+}
+
+nav[aria-label="Breadcrumb"] md-text-button {
+    --md-text-button-label-text-color: var(--md-sys-color-primary);
+    min-height: auto;
+    padding: 4px 8px;
+}
+
+nav[aria-label="Breadcrumb"] md-text-button:hover {
+    --md-text-button-hover-label-text-color: var(--md-sys-color-primary);
+    --md-text-button-hover-state-layer-color: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+}
+
+nav[aria-label="Breadcrumb"] a {
+    transition: color 0.2s ease;
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+
+nav[aria-label="Breadcrumb"] a:hover {
+    color: var(--md-sys-color-primary) !important;
+    background: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+}
+
+/* Responsive breadcrumb */
+@media (max-width: 768px) {
+    nav[aria-label="Breadcrumb"] {
+        font-size: 0.75rem;
+    }
+
+    nav[aria-label="Breadcrumb"] md-text-button {
+        padding: 2px 4px;
+        font-size: 0.75rem;
+    }
+}
+
+/* Dark Theme Support */
+[data-theme="dark"] nav[aria-label="Breadcrumb"] md-text-button {
+    --md-text-button-label-text-color: var(--md-sys-color-primary);
+}
+
+[data-theme="dark"] nav[aria-label="Breadcrumb"] a {
+    color: var(--md-sys-color-primary);
+}
+';
+    }
 }

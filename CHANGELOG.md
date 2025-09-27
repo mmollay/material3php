@@ -7,6 +7,25 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.29] - 2025-09-27
+
+### 🛠️ Critical Playground Loading Fix
+- **MD3Button::getCSS():** Fehlende getCSS() Methode implementiert für Material Web Components Button styling
+- **MD3Breadcrumb::getCSS():** Fehlende getCSS() Methode hinzugefügt für Breadcrumb Navigation styling
+- **Playground Fatal Error Fix:** Lösung für "Call to undefined method" Fehler die Playground komplett blockiert haben
+- **Complete CSS Integration:** Alle Button- und Breadcrumb-Stile jetzt korrekt in Playground verfügbar
+
+### 🎨 Enhanced Component Styling
+- **Material Web Components Support:** Vollständige CSS Custom Properties für md-filled-button, md-outlined-button, etc.
+- **Button Variants:** Styling für alle Button-Typen (filled, outlined, text, tonal, elevated, icon buttons)
+- **Breadcrumb Navigation:** Responsive Breadcrumb mit Hover-Effekten und Dark Theme Support
+- **Cross-Browser Compatibility:** CSS-Optimierungen für konsistente Darstellung
+
+### ✅ Quality Assurance
+- **Playground Functionality:** Bestätigt dass playground.php?theme=forest wieder vollständig lädt
+- **Component Integration:** Alle neuen Komponenten (Toolbar, Breadcrumb, Button) funktional in Playground
+- **Error Resolution:** Eliminierung aller Fatal Errors die Playground-Nutzung verhindert haben
+
 ## [0.2.28] - 2025-09-27
 
 ### 🎯 Enhanced Card Component & New UI Components Integration

@@ -171,4 +171,81 @@ class MD3Button
         $content = htmlspecialchars($text);
         return '<' . $tag . MD3::escapeAttributes($attributes) . '>' . $content . '</' . $tag . '>';
     }
+
+    /**
+     * Get CSS for Material Design 3 Buttons
+     */
+    public static function getCSS(): string
+    {
+        return '
+/* MD3 Button CSS - Material Web Components */
+md-filled-button {
+    --md-filled-button-container-color: var(--md-sys-color-primary);
+    --md-filled-button-label-text-color: var(--md-sys-color-on-primary);
+}
+
+md-outlined-button {
+    --md-outlined-button-outline-color: var(--md-sys-color-outline);
+    --md-outlined-button-label-text-color: var(--md-sys-color-primary);
+}
+
+md-text-button {
+    --md-text-button-label-text-color: var(--md-sys-color-primary);
+}
+
+md-filled-tonal-button {
+    --md-filled-tonal-button-container-color: var(--md-sys-color-secondary-container);
+    --md-filled-tonal-button-label-text-color: var(--md-sys-color-on-secondary-container);
+}
+
+md-elevated-button {
+    --md-elevated-button-container-color: var(--md-sys-color-surface-container-low);
+    --md-elevated-button-label-text-color: var(--md-sys-color-primary);
+}
+
+/* Icon Buttons */
+md-icon-button {
+    --md-icon-button-icon-color: var(--md-sys-color-on-surface-variant);
+}
+
+md-filled-icon-button {
+    --md-filled-icon-button-container-color: var(--md-sys-color-primary);
+    --md-filled-icon-button-icon-color: var(--md-sys-color-on-primary);
+}
+
+md-filled-tonal-icon-button {
+    --md-filled-tonal-icon-button-container-color: var(--md-sys-color-secondary-container);
+    --md-filled-tonal-icon-button-icon-color: var(--md-sys-color-on-secondary-container);
+}
+
+md-outlined-icon-button {
+    --md-outlined-icon-button-outline-color: var(--md-sys-color-outline);
+    --md-outlined-icon-button-icon-color: var(--md-sys-color-on-surface-variant);
+}
+
+/* Focus and Hover States */
+md-filled-button:hover {
+    --md-filled-button-container-color: color-mix(in srgb, var(--md-sys-color-primary) 92%, var(--md-sys-color-on-primary) 8%);
+}
+
+md-outlined-button:hover {
+    --md-outlined-button-container-color: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+}
+
+md-text-button:hover {
+    --md-text-button-container-color: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+}
+
+/* Dark Theme Support */
+[data-theme="dark"] md-filled-button {
+    --md-filled-button-container-color: var(--md-sys-color-primary);
+    --md-filled-button-label-text-color: var(--md-sys-color-on-primary);
+}
+
+[data-theme="dark"] md-outlined-button {
+    --md-outlined-button-outline-color: var(--md-sys-color-outline);
+    --md-outlined-button-label-text-color: var(--md-sys-color-primary);
+}
+';
+    }
 }
