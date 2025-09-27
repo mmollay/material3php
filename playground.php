@@ -12,6 +12,7 @@
         require_once 'src/MD3.php';
         require_once 'src/MD3Button.php';
         require_once 'src/MD3TextField.php';
+        require_once 'src/MD3Search.php';
         require_once 'src/MD3Card.php';
         require_once 'src/MD3List.php';
         require_once 'src/MD3NavigationBar.php';
@@ -40,6 +41,7 @@
         // Additional component CSS inside style tag
         echo MD3NavigationBar::getCSS();
         echo MD3NavigationDrawer::getCSS();
+        echo MD3Search::getCSS();
         echo MD3NavigationRail::getCSS();
         echo MD3Menu::getCSS();
         echo MD3Dialog::getCSS();
@@ -645,6 +647,9 @@
                 <a href="?component=textfield&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'textfield' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('text_fields'); ?> TextField
                 </a>
+                <a href="?component=search&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'search' ? 'active' : ''; ?>">
+                    <?php echo MD3::icon('search'); ?> Search Bar
+                </a>
                 <a href="?component=card&theme=<?php echo $currentTheme; ?>" class="nav-item <?php echo ($_GET['component'] ?? '') === 'card' ? 'active' : ''; ?>">
                     <?php echo MD3::icon('web_stories'); ?> Card
                 </a>
@@ -823,6 +828,71 @@
                         label: 'Trailing Icon',
                         default: '',
                         placeholder: 'e.g. visibility, clear'
+                    }
+                }
+            },
+            search: {
+                name: 'Search Bar',
+                controls: {
+                    basic_group: {
+                        type: 'group',
+                        label: 'Basic Settings',
+                        controls: {
+                            placeholder: {
+                                type: 'text',
+                                label: 'Placeholder Text',
+                                default: 'Search...',
+                                width: '50%'
+                            },
+                            value: {
+                                type: 'text',
+                                label: 'Initial Value',
+                                default: '',
+                                width: '50%'
+                            }
+                        }
+                    },
+                    features_group: {
+                        type: 'group',
+                        label: 'Features',
+                        controls: {
+                            with_suggestions: {
+                                type: 'checkbox',
+                                label: 'With Suggestions',
+                                default: false,
+                                width: '33%'
+                            },
+                            with_filters: {
+                                type: 'checkbox',
+                                label: 'With Filter Chips',
+                                default: false,
+                                width: '33%'
+                            },
+                            disabled: {
+                                type: 'checkbox',
+                                label: 'Disabled',
+                                default: false,
+                                width: '33%'
+                            }
+                        }
+                    },
+                    content_group: {
+                        type: 'group',
+                        label: 'Content',
+                        controls: {
+                            suggestions: {
+                                type: 'textarea',
+                                label: 'Suggestions (one per line)',
+                                default: 'Material Design\nSearch Bar\nComponents\nThemes',
+                                width: '50%'
+                            },
+                            filters: {
+                                type: 'textarea',
+                                label: 'Filter Options (label:value per line)',
+                                default: 'Documents:docs\nImages:images\nVideos:videos',
+                                width: '50%'
+                            }
+                        }
                     }
                 }
             },
