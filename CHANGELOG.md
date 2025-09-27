@@ -7,6 +7,31 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.25] - 2025-09-27
+
+### 🔧 Critical Playground API Fix
+- **playground-api.php:** Implementiere vollständige MD3Search API-Unterstützung
+- **Search Generator:** Neue generateSearch() und generateSearchPHP() Funktionen
+- **Feature Support:** Vollständige Unterstützung für Suggestions, Filters, und alle Search Bar Varianten
+- **Error Resolution:** Behebt "Unknown component: search" API-Fehler
+
+### 🎮 Playground Functionality Restored
+- **Interactive Search Bar:** Playground Search-Komponente ist jetzt vollständig funktional
+- **Real-time Generation:** Live PHP-Code-Generation für alle Search Bar Konfigurationen
+- **Complete Integration:** Search Bar in playground-api.php vollständig integriert
+- **Feature Parity:** Alle Search Bar Features (basic, suggestions, filters) verfügbar
+
+### 🛠️ API Enhancement
+- **Dynamic Content:** Konfigurierbare Suggestions und Filter über Textarea-Inputs
+- **Code Generation:** Saubere PHP-Code-Ausgabe für alle Search Bar Varianten
+- **Error Handling:** Robuste Verarbeitung von Feature-Toggles und Content-Parsing
+- **Attribute Management:** Vollständige Unterstützung für value, disabled, und weitere Attribute
+
+### 🎯 Developer Experience
+- **Playground Complete:** Search Bar jetzt vollständig im Interactive Playground verfügbar
+- **API Stability:** Alle Playground-Komponenten funktionieren ohne API-Fehler
+- **Live Preview:** Real-time Search Bar Generierung mit instant Feedback
+
 ## [0.2.24] - 2025-09-27
 
 ### 🎮 Playground Integration & Demo Enhancement

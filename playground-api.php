@@ -38,6 +38,7 @@ if (!$input || !isset($input['component'])) {
 require_once 'src/MD3.php';
 require_once 'src/MD3Button.php';
 require_once 'src/MD3TextField.php';
+require_once 'src/MD3Search.php';
 require_once 'src/MD3Card.php';
 require_once 'src/MD3List.php';
 require_once 'src/MD3NavigationBar.php';
@@ -87,6 +88,11 @@ function generateComponent($component, $values) {
         case 'textfield':
             $html = generateTextField($values);
             $php = generateTextFieldPHP($values);
+            break;
+
+        case 'search':
+            $html = generateSearch($values);
+            $php = generateSearchPHP($values);
             break;
 
         case 'card':
@@ -1159,6 +1165,129 @@ function generateNavigationRailPHP($values) {
     }
 
     $code .= "\n?>";
+    return $code;
+}
+
+function generateSearch($values) {
+    $placeholder = $values['placeholder'] ?? 'Search...';
+    $value = $values['value'] ?? '';
+    $disabled = $values['disabled'] ?? false;
+    $withSuggestions = $values['with_suggestions'] ?? false;
+    $withFilters = $values['with_filters'] ?? false;
+
+    $attributes = [];
+    if ($value) $attributes['value'] = $value;
+    if ($disabled) $attributes['disabled'] = true;
+
+    // Basic search field
+    if (!$withSuggestions && !$withFilters) {
+        return MD3Search::field('demo_search', $placeholder, $attributes);
+    }
+
+    // Search with suggestions
+    if ($withSuggestions && !$withFilters) {
+        $suggestions = [];
+        $suggestionsText = $values['suggestions'] ?? 'Material Design\nSearch Bar\nComponents\nThemes';
+        $suggestionsText = str_replace('\\n', "\n", $suggestionsText);
+        $lines = explode("\n", trim($suggestionsText));
+        foreach ($lines as $line) {
+            if (trim($line)) {
+                $suggestions[] = trim($line);
+            }
+        }
+        return MD3Search::withSuggestions('demo_search', $suggestions, $placeholder, $attributes);
+    }
+
+    // Search with filters
+    if ($withFilters) {
+        $filters = [];
+        $filtersText = $values['filters'] ?? 'Documents:docs\nImages:images\nVideos:videos';
+        $filtersText = str_replace('\\n', "\n", $filtersText);
+        $lines = explode("\n", trim($filtersText));
+        foreach ($lines as $line) {
+            if (trim($line) && strpos($line, ':') !== false) {
+                $parts = explode(':', trim($line), 2);
+                $filters[] = [
+                    'label' => trim($parts[0]),
+                    'value' => trim($parts[1])
+                ];
+            }
+        }
+        return MD3Search::withFilters('demo_search', $filters, $placeholder, $attributes);
+    }
+
+    return MD3Search::field('demo_search', $placeholder, $attributes);
+}
+
+function generateSearchPHP($values) {
+    $placeholder = $values['placeholder'] ?? 'Search...';
+    $value = $values['value'] ?? '';
+    $disabled = $values['disabled'] ?? false;
+    $withSuggestions = $values['with_suggestions'] ?? false;
+    $withFilters = $values['with_filters'] ?? false;
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Search.php';\n\n";
+
+    // Build attributes array
+    $attributes = [];
+    if ($value) $attributes['value'] = $value;
+    if ($disabled) $attributes['disabled'] = true;
+
+    $attributesStr = '';
+    if (!empty($attributes)) {
+        $attributesStr = ', [';
+        $attrParts = [];
+        foreach ($attributes as $key => $val) {
+            if (is_bool($val)) {
+                $attrParts[] = "'{$key}' => " . ($val ? 'true' : 'false');
+            } else {
+                $attrParts[] = "'{$key}' => '" . addslashes($val) . "'";
+            }
+        }
+        $attributesStr .= implode(', ', $attrParts) . ']';
+    }
+
+    // Basic search field
+    if (!$withSuggestions && !$withFilters) {
+        $code .= "echo MD3Search::field('demo_search', '" . addslashes($placeholder) . "'" . $attributesStr . ");";
+        return $code;
+    }
+
+    // Search with suggestions
+    if ($withSuggestions && !$withFilters) {
+        $suggestionsText = $values['suggestions'] ?? 'Material Design\nSearch Bar\nComponents\nThemes';
+        $code .= "\$suggestions = [\n";
+        $suggestionsText = str_replace('\\n', "\n", $suggestionsText);
+        $lines = explode("\n", trim($suggestionsText));
+        foreach ($lines as $line) {
+            if (trim($line)) {
+                $code .= "    '" . addslashes(trim($line)) . "',\n";
+            }
+        }
+        $code .= "];\n\n";
+        $code .= "echo MD3Search::withSuggestions('demo_search', \$suggestions, '" . addslashes($placeholder) . "'" . $attributesStr . ");";
+        return $code;
+    }
+
+    // Search with filters
+    if ($withFilters) {
+        $filtersText = $values['filters'] ?? 'Documents:docs\nImages:images\nVideos:videos';
+        $code .= "\$filters = [\n";
+        $filtersText = str_replace('\\n', "\n", $filtersText);
+        $lines = explode("\n", trim($filtersText));
+        foreach ($lines as $line) {
+            if (trim($line) && strpos($line, ':') !== false) {
+                $parts = explode(':', trim($line), 2);
+                $code .= "    ['label' => '" . addslashes(trim($parts[0])) . "', 'value' => '" . addslashes(trim($parts[1])) . "'],\n";
+            }
+        }
+        $code .= "];\n\n";
+        $code .= "echo MD3Search::withFilters('demo_search', \$filters, '" . addslashes($placeholder) . "'" . $attributesStr . ");";
+        return $code;
+    }
+
+    $code .= "echo MD3Search::field('demo_search', '" . addslashes($placeholder) . "'" . $attributesStr . ");";
     return $code;
 }
 ?>
