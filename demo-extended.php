@@ -36,6 +36,7 @@
     echo MD3Header::getCSS();
     echo MD3List::getCSS();
     echo MD3Card::getCSS();
+    echo MD3Search::getCSS();
     echo MD3Chip::getCSS();
     echo MD3Progress::getCSS();
     echo MD3Slider::getCSS();

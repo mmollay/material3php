@@ -10,7 +10,7 @@ require_once 'MD3TextField.php';
 class MD3Search
 {
     /**
-     * Generate a basic search field
+     * Generate a basic search field with correct MD3 search bar anatomy
      *
      * @param string $name Field name attribute
      * @param string $placeholder Search placeholder text
@@ -19,22 +19,197 @@ class MD3Search
      */
     public static function field(string $name, string $placeholder = 'Suche...', array $attributes = []): string
     {
-        $attributes['type'] = 'search';
-        return MD3TextField::withLeadingIcon($name, $placeholder, 'search', false, $attributes);
+        $id = $attributes['id'] ?? 'search-' . $name . '-' . uniqid();
+        $value = $attributes['value'] ?? '';
+        $disabled = $attributes['disabled'] ?? false;
+        $autocomplete = $attributes['autocomplete'] ?? 'off';
+        $list = $attributes['list'] ?? '';
+
+        $inputAttrs = [];
+        foreach ($attributes as $key => $val) {
+            if (!in_array($key, ['id', 'value', 'disabled', 'autocomplete', 'list'])) {
+                $inputAttrs[] = htmlspecialchars($key) . '="' . htmlspecialchars($val) . '"';
+            }
+        }
+
+        $inputAttrsStr = !empty($inputAttrs) ? ' ' . implode(' ', $inputAttrs) : '';
+        $disabledAttr = $disabled ? ' disabled' : '';
+        $listAttr = $list ? ' list="' . htmlspecialchars($list) . '"' : '';
+
+        return '
+        <div class="md3-search-bar' . ($disabled ? ' md3-search-bar--disabled' : '') . '">
+            <div class="md3-search-bar__leading-icon">
+                <span class="material-symbols-outlined">search</span>
+            </div>
+            <input type="search"
+                   name="' . htmlspecialchars($name) . '"
+                   id="' . htmlspecialchars($id) . '"
+                   class="md3-search-bar__input"
+                   placeholder="' . htmlspecialchars($placeholder) . '"
+                   value="' . htmlspecialchars($value) . '"
+                   autocomplete="' . htmlspecialchars($autocomplete) . '"' .
+                   $listAttr . $disabledAttr . $inputAttrsStr . '>
+            <div class="md3-search-bar__trailing-icon" style="display: none;">
+                <button type="button" class="md3-search-bar__clear" aria-label="Clear search">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+        </div>';
     }
 
     /**
-     * Generate an outlined search field
-     *
-     * @param string $name Field name attribute
-     * @param string $placeholder Search placeholder text
-     * @param array $attributes Additional HTML attributes
-     * @return string HTML for outlined search field
+     * Generate CSS for MD3 Search Bar Component
      */
-    public static function fieldOutlined(string $name, string $placeholder = 'Suche...', array $attributes = []): string
+    public static function getCSS(): string
     {
-        $attributes['type'] = 'search';
-        return MD3TextField::withLeadingIcon($name, $placeholder, 'search', true, $attributes);
+        return '
+/* MD3 Search Bar Component */
+.md3-search-bar {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    background: var(--md-sys-color-surface-container-high);
+    border-radius: 28px;
+    padding: 0 16px;
+    gap: 12px;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;
+}
+
+.md3-search-bar:hover {
+    background: var(--md-sys-color-surface-container-high);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+.md3-search-bar:focus-within {
+    background: var(--md-sys-color-surface-container-high);
+    border-color: var(--md-sys-color-primary);
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+.md3-search-bar--disabled {
+    background: var(--md-sys-color-surface-variant);
+    opacity: 0.38;
+    pointer-events: none;
+}
+
+.md3-search-bar__leading-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: var(--md-sys-color-on-surface-variant);
+    flex-shrink: 0;
+}
+
+.md3-search-bar__input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface);
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 0;
+    margin: 0;
+}
+
+.md3-search-bar__input::placeholder {
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.md3-search-bar__input::-webkit-search-cancel-button {
+    display: none;
+}
+
+.md3-search-bar__trailing-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.md3-search-bar__clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    padding: 0;
+}
+
+.md3-search-bar__clear:hover {
+    background: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface);
+}
+
+.md3-search-bar__clear:active {
+    background: var(--md-sys-color-surface-container-highest);
+    transform: scale(0.95);
+}
+
+/* Search with filters container */
+.search-with-filters {
+    width: 100%;
+}
+
+.search-filters {
+    margin-top: 12px;
+}
+
+/* Search results dropdown */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--md-sys-color-surface-container);
+    border-radius: 12px;
+    box-shadow: var(--md-sys-elevation-3);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    margin-top: 8px;
+}
+
+.search-results-list {
+    padding: 8px 0;
+}
+
+/* Dark theme support */
+[data-theme="dark"] .md3-search-bar {
+    background: var(--md-sys-color-surface-container-high);
+}
+
+[data-theme="dark"] .md3-search-bar:hover {
+    background: var(--md-sys-color-surface-container-highest);
+}
+
+[data-theme="dark"] .md3-search-bar:focus-within {
+    background: var(--md-sys-color-surface-container-highest);
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .md3-search-bar {
+        height: 48px;
+        border-radius: 24px;
+        padding: 0 12px;
+        gap: 8px;
+    }
+}
+';
     }
 
     /**
@@ -210,6 +385,45 @@ class MD3Search
     public static function getSearchScript(): string
     {
         return '<script>
+            // MD3 Search Bar Interactions
+            document.addEventListener("DOMContentLoaded", function() {
+                // Handle clear button visibility and functionality
+                const searchBars = document.querySelectorAll(".md3-search-bar");
+
+                searchBars.forEach(searchBar => {
+                    const input = searchBar.querySelector(".md3-search-bar__input");
+                    const trailingIcon = searchBar.querySelector(".md3-search-bar__trailing-icon");
+                    const clearButton = searchBar.querySelector(".md3-search-bar__clear");
+
+                    if (!input || !trailingIcon || !clearButton) return;
+
+                    // Show/hide clear button based on input content
+                    function updateClearButton() {
+                        if (input.value.trim().length > 0) {
+                            trailingIcon.style.display = "flex";
+                        } else {
+                            trailingIcon.style.display = "none";
+                        }
+                    }
+
+                    // Initial check
+                    updateClearButton();
+
+                    // Update on input
+                    input.addEventListener("input", updateClearButton);
+
+                    // Clear functionality
+                    clearButton.addEventListener("click", function() {
+                        input.value = "";
+                        updateClearButton();
+                        input.focus();
+
+                        // Dispatch input event for other listeners
+                        input.dispatchEvent(new Event("input", { bubbles: true }));
+                    });
+                });
+            });
+
             function showSearchResults(searchId, resultsId) {
                 const searchInput = document.getElementById(searchId);
                 const resultsDiv = document.getElementById(resultsId);
@@ -235,6 +449,16 @@ class MD3Search
                 const input = document.querySelector("[name=\"" + inputName + "\"]");
                 if (input) {
                     input.value = "";
+
+                    // Update clear button visibility
+                    const searchBar = input.closest(".md3-search-bar");
+                    if (searchBar) {
+                        const trailingIcon = searchBar.querySelector(".md3-search-bar__trailing-icon");
+                        if (trailingIcon) {
+                            trailingIcon.style.display = "none";
+                        }
+                    }
+
                     input.focus();
                 }
             }
