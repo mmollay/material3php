@@ -22,6 +22,14 @@
         require_once 'src/MD3Dialog.php';
         require_once 'src/MD3FloatingActionButton.php';
         require_once 'src/MD3IconButton.php';
+        require_once 'src/MD3Chip.php';
+        require_once 'src/MD3Progress.php';
+        require_once 'src/MD3Slider.php';
+        require_once 'src/MD3Switch.php';
+        require_once 'src/MD3Checkbox.php';
+        require_once 'src/MD3Radio.php';
+        require_once 'src/MD3Tabs.php';
+        require_once 'src/MD3Tooltip.php';
         require_once 'src/MD3Theme.php';
 
         // Get theme from URL parameter or default
@@ -42,6 +50,16 @@
         echo MD3NavigationBar::getCSS();
         echo MD3NavigationDrawer::getCSS();
         echo MD3Search::getCSS();
+        echo MD3List::getCSS();
+        echo MD3Card::getCSS();
+        echo MD3Chip::getCSS();
+        echo MD3Progress::getCSS();
+        echo MD3Slider::getCSS();
+        echo MD3Switch::getCSS();
+        echo MD3Checkbox::getCSS();
+        echo MD3Radio::getCSS();
+        echo MD3Tabs::getCSS();
+        echo MD3Tooltip::getCSS();
         echo MD3NavigationRail::getCSS();
         echo MD3Menu::getCSS();
         echo MD3Dialog::getCSS();
@@ -443,17 +461,18 @@
             margin-bottom: 16px;
         }
 
-        /* Group Styling */
+        /* Group Styling - Optimized Layout */
         .control-group-container {
             margin-bottom: 24px;
             border: 1px solid var(--md-sys-color-outline-variant);
             border-radius: 12px;
             padding: 16px;
             background: var(--md-sys-color-surface-container-lowest);
+            width: 100%;
         }
 
         .control-group-label {
-            margin: 0 0 12px 0;
+            margin: 0 0 16px 0;
             font-size: 14px;
             font-weight: 600;
             color: var(--md-sys-color-primary);
@@ -462,14 +481,68 @@
         }
 
         .control-group-content {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            width: 100%;
         }
 
+        /* Force grid items to use full available space */
         .control-group-content .control-group {
-            margin-bottom: 12px;
+            margin-bottom: 0;
             box-sizing: border-box;
+            width: 100%;
+            min-width: 0; /* Allow flex items to shrink */
+        }
+
+        /* Special handling for checkbox groups - better grid layout */
+        .control-group-content:has(.control-group input[type="checkbox"]) {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        /* Ensure textarea and text inputs use full available width */
+        .control-group-content .control-group textarea,
+        .control-group-content .control-group input[type="text"],
+        .control-group-content .control-group input[type="number"],
+        .control-group-content .control-group select {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Override width settings for full utilization */
+        .control-group-content .control-group[style*="width: 50%"] {
+            grid-column: span 1;
+            width: 100% !important;
+        }
+
+        .control-group-content .control-group[style*="width: 33%"] {
+            grid-column: span 1;
+            width: 100% !important;
+        }
+
+        .control-group-content .control-group[style*="width: 70%"] {
+            grid-column: span 2;
+            width: 100% !important;
+        }
+
+        .control-group-content .control-group[style*="width: 30%"] {
+            grid-column: span 1;
+            width: 100% !important;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .control-group-content {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .control-group-content .control-group[style*="width: 70%"],
+            .control-group-content .control-group[style*="width: 30%"] {
+                grid-column: span 1;
+            }
         }
 
         .control-group-content .control-group:has(input[type="checkbox"]) {
@@ -841,14 +914,12 @@
                             placeholder: {
                                 type: 'text',
                                 label: 'Placeholder Text',
-                                default: 'Search...',
-                                width: '50%'
+                                default: 'Search...'
                             },
                             value: {
                                 type: 'text',
                                 label: 'Initial Value',
-                                default: '',
-                                width: '50%'
+                                default: ''
                             }
                         }
                     },
@@ -859,38 +930,33 @@
                             with_suggestions: {
                                 type: 'checkbox',
                                 label: 'With Suggestions',
-                                default: false,
-                                width: '33%'
+                                default: false
                             },
                             with_filters: {
                                 type: 'checkbox',
                                 label: 'With Filter Chips',
-                                default: false,
-                                width: '33%'
+                                default: false
                             },
                             disabled: {
                                 type: 'checkbox',
                                 label: 'Disabled',
-                                default: false,
-                                width: '33%'
+                                default: false
                             }
                         }
                     },
                     content_group: {
                         type: 'group',
-                        label: 'Content',
+                        label: 'Content Configuration',
                         controls: {
                             suggestions: {
                                 type: 'textarea',
                                 label: 'Suggestions (one per line)',
-                                default: 'Material Design\nSearch Bar\nComponents\nThemes',
-                                width: '50%'
+                                default: 'Material Design\nSearch Bar\nComponents\nThemes'
                             },
                             filters: {
                                 type: 'textarea',
                                 label: 'Filter Options (label:value per line)',
-                                default: 'Documents:docs\nImages:images\nVideos:videos',
-                                width: '50%'
+                                default: 'Documents:docs\nImages:images\nVideos:videos'
                             }
                         }
                     }
