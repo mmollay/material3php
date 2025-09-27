@@ -809,7 +809,7 @@
                 <h3>Info</h3>
                 <div style="padding: 8px; font-size: 10px; color: var(--md-sys-color-on-surface-variant); line-height: 1.3;">
                     <div><strong>v<?php echo MD3::getVersion(); ?></strong></div>
-                    <div><?php echo count(MD3::getVersionInfo()['components']); ?> Components</div>
+                    <div>17 Components</div>
                     <div><?php echo ucfirst($currentTheme); ?> Theme</div>
                 </div>
             </div>
@@ -1401,6 +1401,106 @@
                         type: 'text',
                         label: 'Cancel Button (if applicable)',
                         default: 'Cancel'
+                    }
+                }
+            },
+            select: {
+                name: 'Select',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Select Type',
+                        options: {
+                            'filled': 'Filled',
+                            'outlined': 'Outlined'
+                        },
+                        default: 'filled'
+                    },
+                    label: {
+                        type: 'text',
+                        label: 'Label',
+                        default: 'Choose option'
+                    },
+                    options: {
+                        type: 'textarea',
+                        label: 'Options (one per line)',
+                        default: 'Option 1\\nOption 2\\nOption 3\\nOption 4'
+                    }
+                }
+            },
+            toolbar: {
+                name: 'Toolbar',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Toolbar Type',
+                        options: {
+                            'top': 'Top App Bar',
+                            'bottom': 'Bottom App Bar',
+                            'navigation': 'Navigation'
+                        },
+                        default: 'top'
+                    },
+                    title: {
+                        type: 'text',
+                        label: 'Title',
+                        default: 'Toolbar Title'
+                    },
+                    leading_icon: {
+                        type: 'text',
+                        label: 'Leading Icon',
+                        default: 'menu'
+                    },
+                    actions: {
+                        type: 'textarea',
+                        label: 'Actions (icon:label per line)',
+                        default: 'search:Search\\nmore_vert:More'
+                    }
+                }
+            },
+            tooltip: {
+                name: 'Tooltip',
+                controls: {
+                    text: {
+                        type: 'text',
+                        label: 'Tooltip Text',
+                        default: 'This is a tooltip'
+                    },
+                    trigger: {
+                        type: 'text',
+                        label: 'Trigger Text',
+                        default: 'Hover me'
+                    },
+                    position: {
+                        type: 'select',
+                        label: 'Position',
+                        options: {
+                            'top': 'Top',
+                            'bottom': 'Bottom',
+                            'left': 'Left',
+                            'right': 'Right'
+                        },
+                        default: 'top'
+                    }
+                }
+            },
+            breadcrumb: {
+                name: 'Breadcrumb',
+                controls: {
+                    type: {
+                        type: 'select',
+                        label: 'Breadcrumb Type',
+                        options: {
+                            'simple': 'Simple',
+                            'icons': 'With Icons',
+                            'separator': 'Custom Separator'
+                        },
+                        default: 'simple'
+                    },
+                    items: {
+                        type: 'textarea',
+                        label: 'Items (one per line)',
+                        default: 'Home\\nProducts\\nCurrent Page'
                     }
                 }
             }

@@ -7,6 +7,26 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.33] - 2025-09-27
+
+### 🔧 Complete Playground JavaScript Configuration
+- **Select Component Configuration:** Vollständige JavaScript-Konfiguration für filled/outlined Select-Varianten
+- **Toolbar Component Configuration:** Komplette Konfiguration für Top App Bar, Bottom App Bar und Navigation
+- **Tooltip Component Configuration:** Vollständige Konfiguration mit positionierbaren Tooltips
+- **Breadcrumb Component Configuration:** Komplette Konfiguration für simple, icon und separator Varianten
+
+### ✅ Playground Functionality Fixes
+- **All Components Loading:** Select, Toolbar, Tooltip und Breadcrumb laden jetzt fehlerfrei im Playground
+- **Interactive Controls:** Vollständige Konfigurationspanels für alle neuen Komponenten
+- **Component Count Correction:** Info-Panel zeigt korrekte Anzahl von 17 Komponenten
+- **User Experience:** Alle Komponenten-Links in Sidebar funktional und zugänglich
+
+### 🎯 Component Configuration Details
+- **Select:** Type (filled/outlined), Label, Options (textarea input)
+- **Toolbar:** Type (top/bottom/navigation), Title, Leading Icon, Actions configuration
+- **Tooltip:** Text, Trigger Text, Position (top/bottom/left/right)
+- **Breadcrumb:** Type (simple/icons/separator), Items (line-separated input)
+
 ## [0.2.32] - 2025-09-27
 
 ### 🔄 Major MD3Select Architecture Overhaul
