@@ -78,21 +78,23 @@ class MD3Select
     }
 
     /**
-     * Generate a country select field
+     * Generate a country select field with flags
      */
     public static function country(string $name, string $label = 'Land', string $selected = 'DE', bool $outlined = false, array $attributes = []): string
     {
         $countries = [
-            'DE' => 'Deutschland',
-            'AT' => 'Österreich',
-            'CH' => 'Schweiz',
-            'US' => 'USA',
-            'GB' => 'Vereinigtes Königreich',
-            'FR' => 'Frankreich',
-            'IT' => 'Italien',
-            'ES' => 'Spanien',
-            'NL' => 'Niederlande',
-            'BE' => 'Belgien'
+            'DE' => '🇩🇪 Deutschland',
+            'AT' => '🇦🇹 Österreich',
+            'CH' => '🇨🇭 Schweiz',
+            'US' => '🇺🇸 United States',
+            'GB' => '🇬🇧 United Kingdom',
+            'FR' => '🇫🇷 France',
+            'IT' => '🇮🇹 Italy',
+            'ES' => '🇪🇸 Spain',
+            'NL' => '🇳🇱 Netherlands',
+            'BE' => '🇧🇪 Belgium',
+            'PL' => '🇵🇱 Poland',
+            'CZ' => '🇨🇿 Czech Republic'
         ];
 
         $variant = $outlined ? 'outlined' : 'filled';
@@ -107,50 +109,69 @@ class MD3Select
         $selectId = 'select-' . str_replace(['[', ']'], '', $name) . '-' . uniqid();
         $isMultiple = isset($attributes['multiple']);
         $disabled = $attributes['disabled'] ?? false;
+        $required = $attributes['required'] ?? false;
 
-        // Remove our custom attributes from select element
-        unset($attributes['disabled']);
+        // Remove our custom attributes
+        unset($attributes['disabled'], $attributes['required'], $attributes['data-size']);
 
-        $classes = ['md3-select', "md3-select--{$variant}"];
-        if ($disabled) $classes[] = 'md3-select--disabled';
+        // Build classes for container (TextField-style)
+        $classes = ['md3-textfield', "md3-textfield--{$variant}", 'md3-select-container'];
+        if ($disabled) $classes[] = 'md3-textfield--disabled';
+        if ($required) $classes[] = 'md3-textfield--required';
 
         // Add size variant classes
-        if (isset($attributes['data-size'])) {
-            $classes[] = 'md3-select--' . $attributes['data-size'];
+        $size = $attributes['data-size'] ?? 'standard';
+        if ($size !== 'standard') {
+            $classes[] = 'md3-textfield--' . $size;
         }
 
-        $containerAttrs = [
-            'class' => implode(' ', $classes),
-            'data-variant' => $variant
-        ];
+        // Get selected option label for display
+        $selectedLabel = '';
+        if (!empty($selected) && isset($options[$selected])) {
+            $selectedLabel = is_array($options[$selected]) ? $options[$selected]['label'] : $options[$selected];
+        }
 
+        // Add has-value class if there's a selection
+        if (!empty($selectedLabel)) {
+            $classes[] = 'md3-select--has-value';
+        }
+
+        $html = '<div class="' . implode(' ', $classes) . '">';
+
+        if ($variant === 'outlined') {
+            // Outlined TextField style
+            $html .= '<div class="md3-textfield__outline">';
+            $html .= '<div class="md3-textfield__outline-start"></div>';
+            $html .= '<div class="md3-textfield__outline-notch">';
+            $html .= '<label class="md3-textfield__label" for="' . $selectId . '">' . htmlspecialchars($label) . '</label>';
+            $html .= '</div>';
+            $html .= '<div class="md3-textfield__outline-end"></div>';
+            $html .= '</div>';
+        } else {
+            // Filled TextField style
+            $html .= '<label class="md3-textfield__label" for="' . $selectId . '">' . htmlspecialchars($label) . '</label>';
+        }
+
+        // Hidden select element for functionality
         $selectAttrs = array_merge([
             'id' => $selectId,
-            'name' => $name
+            'name' => $name,
+            'class' => 'md3-select__native'
         ], $attributes);
 
         if ($disabled) {
             $selectAttrs['disabled'] = 'disabled';
         }
 
-        $html = '<div' . self::attributesToString($containerAttrs) . '>';
-
-        // Label (for filled variant it will be positioned absolutely)
-        $html .= '<label for="' . htmlspecialchars($selectId) . '" class="md3-select__label">' . htmlspecialchars($label) . '</label>';
-
-        // Select element
-        $html .= '<select' . self::attributesToString($selectAttrs) . '>';
+        $html .= '<select' . self::attributesToString($selectAttrs) . ' style="opacity: 0; position: absolute; pointer-events: none;">';
 
         foreach ($options as $value => $optionLabel) {
-            // Handle both simple array and complex array formats
             if (is_array($optionLabel)) {
                 $value = $optionLabel['value'] ?? '';
                 $optionLabel = $optionLabel['label'] ?? $value;
             }
 
-            $isSelected = $isMultiple
-                ? in_array($value, $multiSelected)
-                : ($value == $selected);
+            $isSelected = $isMultiple ? in_array($value, $multiSelected) : ($value == $selected);
             $selectedAttr = $isSelected ? ' selected' : '';
 
             $html .= '<option value="' . htmlspecialchars($value) . '"' . $selectedAttr . '>';
@@ -160,10 +181,20 @@ class MD3Select
 
         $html .= '</select>';
 
+        // TextField-style input display
+        $html .= '<div class="md3-textfield__input md3-select__display" data-select-id="' . $selectId . '">';
+        $html .= htmlspecialchars($selectedLabel);
+        $html .= '</div>';
+
         // Dropdown arrow
         $html .= '<div class="md3-select__arrow">';
         $html .= '<span class="material-symbols-outlined">arrow_drop_down</span>';
         $html .= '</div>';
+
+        // Supporting text line for filled variant
+        if ($variant === 'filled') {
+            $html .= '<div class="md3-textfield__active-indicator"></div>';
+        }
 
         $html .= '</div>';
 
@@ -192,47 +223,36 @@ class MD3Select
     public static function getCSS(): string
     {
         return '
-/* MD3 Select Base Styles */
-.md3-select {
+/* MD3 Select - TextField Style */
+.md3-select-container {
     position: relative;
-    display: inline-block;
-    width: 100%;
-    min-width: 200px;
-    font-family: inherit;
+    cursor: pointer;
 }
 
-.md3-select__label {
-    position: absolute;
-    pointer-events: none;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 16px;
-    color: var(--md-sys-color-on-surface-variant);
-    z-index: 1;
-    white-space: nowrap;
+.md3-select-container .md3-textfield__input {
+    cursor: pointer;
     user-select: none;
+    padding-right: 48px !important; /* Space for dropdown arrow */
 }
 
-.md3-select select {
-    width: 100%;
-    height: 56px;
-    padding: 16px 48px 16px 16px;
-    font-family: inherit;
-    font-size: 16px;
-    line-height: 24px;
-    color: var(--md-sys-color-on-surface);
+.md3-select__native {
+    opacity: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+}
+
+.md3-select__display {
+    position: relative;
     background: transparent;
     border: none;
     outline: none;
+    font-family: inherit;
+    color: var(--md-sys-color-on-surface);
     cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    box-sizing: border-box;
-}
-
-.md3-select select:disabled {
-    cursor: not-allowed;
-    opacity: 0.38;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .md3-select__arrow {
@@ -241,196 +261,89 @@ class MD3Select
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
+    z-index: 2;
     color: var(--md-sys-color-on-surface-variant);
-    transition: transform 0.2s, color 0.2s;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.md3-select select:focus + .md3-select__arrow,
-.md3-select:hover .md3-select__arrow {
-    color: var(--md-sys-color-primary);
+.md3-select-container:hover .md3-select__arrow {
+    color: var(--md-sys-color-on-surface);
 }
 
-/* Filled Select */
-.md3-select--filled {
-    background: var(--md-sys-color-surface-container-highest);
-    border-radius: 4px 4px 0 0;
-    border-bottom: 1px solid var(--md-sys-color-on-surface-variant);
-    transition: border-bottom-color 0.2s;
+.md3-select__arrow .material-symbols-outlined {
+    font-size: 24px;
+    line-height: 1;
 }
 
-.md3-select--filled:hover {
-    border-bottom-color: var(--md-sys-color-on-surface);
+/* Filled variant specific styles */
+.md3-select-container.md3-textfield--filled {
+    cursor: pointer;
 }
 
-.md3-select--filled:focus-within {
-    border-bottom: 2px solid var(--md-sys-color-primary);
-}
-
-.md3-select--filled .md3-select__label {
-    left: 16px;
-    top: 8px;
-    font-size: 12px;
-    color: var(--md-sys-color-primary);
-    background: none;
-    font-weight: 500;
-}
-
-/* Outlined Select */
-.md3-select--outlined {
-    border: 1px solid var(--md-sys-color-outline);
-    border-radius: 4px;
-    background: var(--md-sys-color-surface);
-    transition: border-color 0.2s;
-}
-
-.md3-select--outlined:hover {
-    border-color: var(--md-sys-color-on-surface);
-}
-
-.md3-select--outlined:focus-within {
-    border: 2px solid var(--md-sys-color-primary);
-}
-
-.md3-select--outlined:focus-within select {
-    padding: 15px 47px 15px 15px;
-}
-
-.md3-select--outlined .md3-select__label {
-    left: 12px;
-    top: -8px;
-    font-size: 12px;
-    color: var(--md-sys-color-primary);
-    background: var(--md-sys-color-surface);
-    padding: 0 4px;
-}
-
-/* Error State */
-.md3-select--error {
-    border-color: var(--md-sys-color-error) !important;
-}
-
-.md3-select--error .md3-select__label {
-    color: var(--md-sys-color-error) !important;
-}
-
-.md3-select--error .md3-select__arrow {
-    color: var(--md-sys-color-error) !important;
-}
-
-/* Disabled State */
-.md3-select--disabled {
-    opacity: 0.38;
+.md3-select-container.md3-textfield--filled .md3-textfield__label {
     pointer-events: none;
 }
 
-.md3-select--disabled.md3-select--filled {
-    background: var(--md-sys-color-on-surface);
-    background: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent);
-    border-bottom-color: var(--md-sys-color-on-surface);
-    border-bottom-color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+/* Outlined variant specific styles */
+.md3-select-container.md3-textfield--outlined {
+    cursor: pointer;
 }
 
-.md3-select--disabled.md3-select--outlined {
+.md3-select-container.md3-textfield--outlined .md3-textfield__label {
+    pointer-events: none;
+}
+
+/* Disabled state */
+.md3-select-container.md3-textfield--disabled {
+    cursor: not-allowed;
+}
+
+.md3-select-container.md3-textfield--disabled .md3-select__display {
+    cursor: not-allowed;
+    opacity: 0.38;
+}
+
+.md3-select-container.md3-textfield--disabled .md3-select__arrow {
+    opacity: 0.38;
+}
+
+/* Focus states */
+.md3-select-container:focus-within .md3-textfield__label,
+.md3-select-container.md3-select--has-value .md3-textfield__label {
+    transform: translateY(-50%) scale(0.75);
+}
+
+.md3-select-container.md3-textfield--filled:focus-within .md3-textfield__label,
+.md3-select-container.md3-textfield--filled.md3-select--has-value .md3-textfield__label {
+    transform: translateY(-106%) scale(0.75);
+}
+
+/* Has value state */
+.md3-select-container.md3-select--has-value .md3-textfield__label {
+    color: var(--md-sys-color-primary);
+}
+
+/* Hover effects */
+.md3-select-container:hover:not(.md3-textfield--disabled) .md3-textfield__outline .md3-textfield__outline-start,
+.md3-select-container:hover:not(.md3-textfield--disabled) .md3-textfield__outline .md3-textfield__outline-end {
     border-color: var(--md-sys-color-on-surface);
-    border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
 }
 
-/* Multiple Select */
-.md3-select select[multiple] {
-    height: auto;
-    min-height: 120px;
-    padding: 8px 16px;
+.md3-select-container:hover:not(.md3-textfield--disabled) .md3-textfield__active-indicator {
+    background-color: var(--md-sys-color-on-surface);
 }
 
-/* Size Variants */
-.md3-select--large select {
-    height: 72px;
-    padding: 24px 56px 24px 24px;
-    font-size: 18px;
+/* Size variants */
+.md3-select-container.md3-textfield--large .md3-textfield__input {
+    height: 64px;
+    padding: 20px 48px 8px 16px;
 }
 
-.md3-select--large .md3-select__label {
-    font-size: 14px;
+.md3-select-container.md3-textfield--dense .md3-textfield__input {
+    height: 48px;
+    padding: 12px 48px 12px 16px;
 }
-
-.md3-select--large.md3-select--filled .md3-select__label {
-    left: 24px;
-    top: 12px;
-}
-
-.md3-select--large.md3-select--outlined .md3-select__label {
-    left: 16px;
-    top: -10px;
-    font-size: 14px;
-}
-
-.md3-select--large .md3-select__arrow {
-    right: 16px;
-}
-
-.md3-select--dense select {
-    height: 40px;
-    padding: 8px 40px 8px 12px;
-    font-size: 14px;
-}
-
-.md3-select--dense .md3-select__label {
-    font-size: 10px;
-}
-
-.md3-select--dense.md3-select--filled .md3-select__label {
-    left: 12px;
-    top: 4px;
-}
-
-.md3-select--dense.md3-select--outlined .md3-select__label {
-    left: 8px;
-    top: -6px;
-    font-size: 10px;
-}
-
-.md3-select--dense .md3-select__arrow {
-    right: 8px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .md3-select {
-        min-width: 0;
-    }
-
-    .md3-select select {
-        height: 48px;
-        padding: 12px 40px 12px 12px;
-        font-size: 14px;
-    }
-
-    .md3-select--filled .md3-select__label {
-        left: 12px;
-        top: 6px;
-        font-size: 11px;
-    }
-
-    .md3-select--outlined .md3-select__label {
-        left: 8px;
-        font-size: 11px;
-    }
-
-    .md3-select__arrow {
-        right: 8px;
-    }
-}
-
-/* Dark Theme Support */
-[data-theme="dark"] .md3-select--filled {
-    background: var(--md-sys-color-surface-container-highest);
-}
-
-[data-theme="dark"] .md3-select--outlined {
-    background: var(--md-sys-color-surface);
-    border-color: var(--md-sys-color-outline);
-}
-';
+        ';
     }
 
     /**
@@ -439,44 +352,44 @@ class MD3Select
     public static function getSelectScript(): string
     {
         return '<script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const selectFields = document.querySelectorAll(".md3-select");
+// Enhanced Select Field Functionality
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize all select containers
+    document.querySelectorAll(".md3-select-container").forEach(function(container) {
+        const nativeSelect = container.querySelector(".md3-select__native");
+        const display = container.querySelector(".md3-select__display");
 
-            selectFields.forEach(function(selectField) {
-                const select = selectField.querySelector("select");
-                if (!select) return;
+        if (!nativeSelect || !display) return;
 
-                // Handle focus/blur for better visual feedback
-                select.addEventListener("focus", function() {
-                    selectField.classList.add("md3-select--focused");
-                });
+        // Update display when selection changes
+        nativeSelect.addEventListener("change", function() {
+            const selectedOption = nativeSelect.options[nativeSelect.selectedIndex];
+            display.textContent = selectedOption ? selectedOption.text : "";
 
-                select.addEventListener("blur", function() {
-                    selectField.classList.remove("md3-select--focused");
-                });
-
-                // Custom change event
-                select.addEventListener("change", function() {
-                    selectField.dispatchEvent(new CustomEvent("md-select-change", {
-                        detail: { value: this.value, name: this.name }
-                    }));
-                });
-            });
+            // Update has-value class
+            if (nativeSelect.value) {
+                container.classList.add("md3-select--has-value");
+            } else {
+                container.classList.remove("md3-select--has-value");
+            }
         });
 
-        // Utility functions
-        function getSelectValue(selectName) {
-            const select = document.querySelector("select[name=\"" + selectName + "\"]");
-            return select ? select.value : null;
-        }
-
-        function setSelectValue(selectName, value) {
-            const select = document.querySelector("select[name=\"" + selectName + "\"]");
-            if (select) {
-                select.value = value;
-                select.dispatchEvent(new Event("change"));
+        // Click on container opens native select
+        container.addEventListener("click", function(e) {
+            if (!container.classList.contains("md3-textfield--disabled")) {
+                nativeSelect.focus();
+                nativeSelect.click();
             }
+        });
+
+        // Initial state check
+        if (nativeSelect.value) {
+            container.classList.add("md3-select--has-value");
         }
-        </script>';
+    });
+});
+</script>';
     }
 }
+
+?>

@@ -7,6 +7,33 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.40] - 2025-09-27
+
+### 🎨 MAJOR SELECT REDESIGN - TextField Style Implementation
+- **Complete MD3Select Overhaul:** Redesigned to match TextField appearance exactly
+- **TextField Integration:** Uses md3-textfield classes for consistent styling
+- **Both Variants Supported:** Filled and Outlined styles with proper labels
+- **Dropdown Arrow:** Material Design 3 compliant arrow_drop_down icon
+
+### 🔧 Technical Implementation
+- **Hidden Native Select:** Maintains functionality while using custom display
+- **Label Animation:** Proper floating label behavior like TextFields
+- **Focus States:** Complete hover and focus state implementation
+- **Size Variants:** Large, dense, and standard sizes supported
+- **JavaScript Integration:** Enhanced click handling and value management
+
+### 🐛 Critical Fixes
+- **500 Server Error:** Fixed PHP syntax errors in MD3Select.php
+- **CSS Syntax:** Cleaned up malformed CSS causing parse errors
+- **Playground Integration:** Added MD3Select::getSelectScript() to playground.php
+- **JSON API:** Restored clean JSON responses from playground-api.php
+
+### ⚡ Enhanced Features
+- **Accessibility:** Proper ARIA labels and keyboard navigation
+- **Visual Consistency:** Perfect match with TextField design language
+- **Interactive States:** Disabled, hover, focus, and has-value states
+- **Country Select:** Added emoji flag support for country selection
+
 ## [0.2.39] - 2025-09-27
 
 ### 🐛 CRITICAL JAVASCRIPT FIXES

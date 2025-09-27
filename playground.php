@@ -896,6 +896,7 @@
     <?php echo MD3Menu::getScript(); ?>
     <?php echo MD3Dialog::getScript(); ?>
     <?php echo MD3FloatingActionButton::getScript(); ?>
+    <?php echo MD3Select::getSelectScript(); ?>
     <?php echo MD3Theme::getThemeScript(); ?>
 
     <script>
