@@ -7,6 +7,26 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.39] - 2025-09-27
+
+### 🐛 CRITICAL JAVASCRIPT FIXES
+- **JSON Parse Error:** Fixed playground-api.php error reporting for clean JSON output
+- **Snackbar Container:** Added MD3Snackbar::container() to playground.php for proper initialization
+- **Tooltip Re-initialization:** Enhanced AJAX loading with proper tooltip reinitialisation
+- **Script Execution:** Added inline script execution for dynamic snackbar functionality
+
+### ⚡ Enhanced Component Loading
+- **Post-AJAX Initialization:** Complete re-initialization of tooltips after component loading
+- **Multiple Selector Support:** Enhanced tooltip detection with class and data attribute selectors
+- **Error Handling:** Improved script execution error handling with try-catch blocks
+- **Snackbar Integration:** Proper snackbar manager integration for dynamic content
+
+### 🔧 Technical Improvements
+- **Clean JSON Response:** Disabled PHP error output in API for proper JSON parsing
+- **Component Container:** Added required snackbar container element
+- **Tooltip Triggers:** Multiple initialization patterns for maximum compatibility
+- **JavaScript Safety:** Protected script execution with error handling
+
 ## [0.2.38] - 2025-09-27
 
 ### 🔧 Critical Functionality Fixes

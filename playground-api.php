@@ -4,9 +4,9 @@
  * Generates components dynamically for the interactive playground
  */
 
-// Error reporting enabled for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Error reporting disabled for clean JSON output
+error_reporting(0);
+ini_set('display_errors', 0);
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');

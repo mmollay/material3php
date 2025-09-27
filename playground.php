@@ -1899,8 +1899,32 @@
 
                 // Re-initialize tooltips
                 document.querySelectorAll(".md3-tooltip").forEach(function(tooltip) {
-                    if (typeof initTooltip === 'function') {
-                        initTooltip(tooltip);
+                    if (typeof window.initTooltip === 'function') {
+                        window.initTooltip(tooltip);
+                    }
+                });
+
+                // Re-initialize tooltip triggers by data attribute
+                document.querySelectorAll("[data-tooltip]").forEach(function(element) {
+                    if (typeof window.initTooltip === 'function') {
+                        window.initTooltip(element);
+                    }
+                });
+
+                // Alternative tooltip initialization by class
+                document.querySelectorAll(".md3-tooltip-trigger").forEach(function(element) {
+                    if (typeof window.initTooltip === 'function') {
+                        window.initTooltip(element);
+                    }
+                });
+
+                // Execute any inline scripts for snackbars
+                const scripts = document.getElementById('preview-area').querySelectorAll('script');
+                scripts.forEach(script => {
+                    try {
+                        eval(script.textContent);
+                    } catch (e) {
+                        console.warn('Script execution error:', e);
                     }
                 });
             })
@@ -2011,5 +2035,9 @@
             }
         });
     </script>
+
+    <!-- Snackbar Container -->
+    <?php echo MD3Snackbar::container(); ?>
+
 </body>
 </html>
