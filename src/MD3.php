@@ -766,7 +766,7 @@ class MD3
      */
     public static function getVersionCSS(): string
     {
-        return '<style>
+        return '
             .md3-version-info {
                 background: var(--md-sys-color-surface-container);
                 border: 1px solid var(--md-sys-color-outline-variant);
@@ -842,6 +842,6 @@ class MD3
             .changelog-section li {
                 margin-bottom: 4px;
             }
-        </style>';
+        ';
     }
 }

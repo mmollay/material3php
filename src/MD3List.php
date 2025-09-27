@@ -738,7 +738,7 @@ class MD3List
                 background: var(--md-sys-color-outline-variant);
                 margin: 0;
             }
-';
+        ';
     }
 
     /**
@@ -803,23 +803,22 @@ document.addEventListener("DOMContentLoaded", function() {
                         setTimeout(() => ripple.remove(), 600);
                     });
                 });
-            });
 
-            // CSS Animation for ripple effect
-            if (!document.querySelector("#md3-list-animations")) {
-                const style = document.createElement("style");
-                style.id = "md3-list-animations";
-                style.textContent = `
-                    @keyframes md3-ripple {
-                        to {
-                            transform: scale(4);
-                            opacity: 0;
+                // CSS Animation for ripple effect
+                if (!document.querySelector("#md3-list-animations")) {
+                    const style = document.createElement("style");
+                    style.id = "md3-list-animations";
+                    style.textContent = `
+                        @keyframes md3-ripple {
+                            to {
+                                transform: scale(4);
+                                opacity: 0;
+                            }
                         }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-});
+                    `;
+                    document.head.appendChild(style);
+                }
+            });
 ';
     }
 }

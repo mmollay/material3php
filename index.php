@@ -16,11 +16,13 @@
     $currentTheme = $_GET['theme'] ?? 'default';
 
     echo MD3::init(true, true, $currentTheme);
+    ?>
+    <style>
+    <?php
     echo MD3Theme::getThemeCSS();
     echo MD3Header::getCSS();
     echo MD3::getVersionCSS();
     ?>
-    <style>
         body {
             margin: 0;
             padding: 0;

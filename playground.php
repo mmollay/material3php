@@ -27,16 +27,16 @@
         $currentTheme = $_GET['theme'] ?? 'default';
 
         echo MD3::init(true, true, $currentTheme);
-        if (class_exists('MD3Theme')) {
-            echo MD3Theme::getThemeCSS();
-        }
-        echo MD3::getVersionCSS();
     } catch (Exception $e) {
         echo "<!-- Error: " . htmlspecialchars($e->getMessage()) . " -->";
     }
     ?>
     <style>
         <?php
+        if (class_exists('MD3Theme')) {
+            echo MD3Theme::getThemeCSS();
+        }
+        echo MD3::getVersionCSS();
         // Additional component CSS inside style tag
         echo MD3NavigationBar::getCSS();
         echo MD3NavigationDrawer::getCSS();
@@ -378,28 +378,53 @@
             cursor: pointer;
         }
 
-        /* Enhanced checkbox styling */
+        /* Enhanced checkbox styling - MD3 Style */
         .control-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--md-sys-color-primary);
-            margin-right: 12px;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--md-sys-color-outline);
+            border-radius: 2px;
+            background-color: transparent;
             cursor: pointer;
+            position: relative;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .control-group input[type="checkbox"]:checked {
+            background-color: var(--md-sys-color-primary);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .control-group input[type="checkbox"]:checked::before {
+            content: "✓";
+            position: absolute;
+            color: var(--md-sys-color-on-primary);
+            font-size: 10px;
+            font-weight: bold;
+            top: -2px;
+            left: 1px;
+        }
+
+        .control-group input[type="checkbox"]:hover {
+            border-color: var(--md-sys-color-primary);
         }
 
         /* Special styling for checkbox containers */
         .control-group:has(input[type="checkbox"]) {
-            padding: 12px 16px;
-            border: 1px solid var(--md-sys-color-outline);
-            border-radius: 12px;
-            background: var(--md-sys-color-surface);
+            padding: 8px 12px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 8px;
+            background: var(--md-sys-color-surface-container-lowest);
             cursor: pointer;
             transition: all 0.2s;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .control-group:has(input[type="checkbox"]):hover {
-            background: var(--md-sys-color-surface-container-high);
+            background: var(--md-sys-color-surface-container);
             border-color: var(--md-sys-color-primary);
         }
 
@@ -408,11 +433,62 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            font-weight: 500;
+            font-weight: 400;
+            font-size: 14px;
         }
 
         .control-item {
             margin-bottom: 16px;
+        }
+
+        /* Group Styling */
+        .control-group-container {
+            margin-bottom: 24px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 12px;
+            padding: 16px;
+            background: var(--md-sys-color-surface-container-lowest);
+        }
+
+        .control-group-label {
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--md-sys-color-primary);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+            padding-bottom: 8px;
+        }
+
+        .control-group-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .control-group-content .control-group {
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        .control-group-content .control-group:has(input[type="checkbox"]) {
+            padding: 6px 10px;
+            margin-bottom: 6px;
+            background: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .control-group-content .control-group:has(input[type="checkbox"]):hover {
+            background: var(--md-sys-color-surface-container-high);
+        }
+
+        /* Textarea styling in groups */
+        .control-group-content textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .control-group-content input[type="number"] {
+            text-align: center;
         }
 
         .control-item label {
@@ -644,7 +720,7 @@
                     <h4><?php echo MD3::icon('code'); ?> PHP Code</h4>
                     <pre id="php-code">
                         <button class="copy-button" onclick="copyCode('php', this)">Copy</button>
-                        <code id="php-code-content">// PHP code will appear here</code>
+<code id="php-code-content">// PHP code will appear here</code>
                     </pre>
                 </div>
 
@@ -652,7 +728,7 @@
                     <h4><?php echo MD3::icon('html'); ?> Generated HTML</h4>
                     <pre id="html-code">
                         <button class="copy-button" onclick="copyCode('html', this)">Copy</button>
-                        <code id="html-code-content"><!-- HTML output will appear here --></code>
+<code id="html-code-content"><!-- HTML output will appear here --></code>
                     </pre>
                 </div>
             </div>
@@ -808,15 +884,23 @@
             switch: {
                 name: 'Switch',
                 controls: {
-                    label: {
-                        type: 'text',
-                        label: 'Label Text',
-                        default: 'Enable notifications'
-                    },
-                    checked: {
-                        type: 'checkbox',
-                        label: 'Initially Checked',
-                        default: false
+                    settings_group: {
+                        type: 'group',
+                        label: 'Settings',
+                        controls: {
+                            label: {
+                                type: 'text',
+                                label: 'Label Text',
+                                default: 'Enable notifications',
+                                width: '70%'
+                            },
+                            checked: {
+                                type: 'checkbox',
+                                label: 'Initially Checked',
+                                default: false,
+                                width: '30%'
+                            }
+                        }
                     }
                 }
             },
@@ -838,15 +922,23 @@
             radio: {
                 name: 'Radio',
                 controls: {
-                    options: {
-                        type: 'textarea',
-                        label: 'Options (one per line)',
-                        default: 'Option A\nOption B\nOption C'
-                    },
-                    selected: {
-                        type: 'number',
-                        label: 'Selected Option (0-based)',
-                        default: 0
+                    options_group: {
+                        type: 'group',
+                        label: 'Configuration',
+                        controls: {
+                            options: {
+                                type: 'textarea',
+                                label: 'Options (one per line)',
+                                default: 'Option A\nOption B\nOption C',
+                                width: '70%'
+                            },
+                            selected: {
+                                type: 'number',
+                                label: 'Selected Option (0-based)',
+                                default: 0,
+                                width: '30%'
+                            }
+                        }
                     }
                 }
             },
@@ -1012,46 +1104,71 @@
             iconbutton: {
                 name: 'Icon Button',
                 controls: {
-                    type: {
-                        type: 'select',
-                        label: 'Type',
-                        options: {
-                            'standard': 'Standard',
-                            'filled': 'Filled',
-                            'outlined': 'Outlined',
-                            'tonal': 'Tonal'
-                        },
-                        default: 'standard'
+                    basic_group: {
+                        type: 'group',
+                        label: 'Basic Settings',
+                        controls: {
+                            type: {
+                                type: 'select',
+                                label: 'Type',
+                                options: {
+                                    'standard': 'Standard',
+                                    'filled': 'Filled',
+                                    'outlined': 'Outlined',
+                                    'tonal': 'Tonal'
+                                },
+                                default: 'standard',
+                                width: '50%'
+                            },
+                            icon: {
+                                type: 'text',
+                                label: 'Icon',
+                                default: 'star',
+                                width: '50%'
+                            }
+                        }
                     },
-                    icon: {
-                        type: 'text',
-                        label: 'Icon',
-                        default: 'star'
+                    toggle_group: {
+                        type: 'group',
+                        label: 'Toggle Settings',
+                        controls: {
+                            toggle: {
+                                type: 'checkbox',
+                                label: 'Toggle Button',
+                                default: false,
+                                width: '33%'
+                            },
+                            selected: {
+                                type: 'checkbox',
+                                label: 'Selected',
+                                default: false,
+                                width: '33%'
+                            },
+                            disabled: {
+                                type: 'checkbox',
+                                label: 'Disabled',
+                                default: false,
+                                width: '33%'
+                            }
+                        }
                     },
-                    toggle: {
-                        type: 'checkbox',
-                        label: 'Toggle Button',
-                        default: false
-                    },
-                    selected_icon: {
-                        type: 'text',
-                        label: 'Selected Icon (Toggle only)',
-                        default: 'star'
-                    },
-                    selected: {
-                        type: 'checkbox',
-                        label: 'Selected',
-                        default: false
-                    },
-                    disabled: {
-                        type: 'checkbox',
-                        label: 'Disabled',
-                        default: false
-                    },
-                    aria_label: {
-                        type: 'text',
-                        label: 'ARIA Label',
-                        default: 'Icon Button'
+                    advanced_group: {
+                        type: 'group',
+                        label: 'Advanced',
+                        controls: {
+                            selected_icon: {
+                                type: 'text',
+                                label: 'Selected Icon',
+                                default: 'star',
+                                width: '50%'
+                            },
+                            aria_label: {
+                                type: 'text',
+                                label: 'ARIA Label',
+                                default: 'Icon Button',
+                                width: '50%'
+                            }
+                        }
                     }
                 }
             },
@@ -1156,65 +1273,109 @@
 
             Object.keys(controls).forEach(key => {
                 const control = controls[key];
-                currentValues[key] = control.default;
 
-                const controlGroup = document.createElement('div');
-                controlGroup.className = 'control-group';
+                if (control.type === 'group') {
+                    // Create group container
+                    const groupContainer = document.createElement('div');
+                    groupContainer.className = 'control-group-container';
 
-                const label = document.createElement('label');
-                label.textContent = control.label;
-                controlGroup.appendChild(label);
+                    const groupLabel = document.createElement('h4');
+                    groupLabel.textContent = control.label;
+                    groupLabel.className = 'control-group-label';
+                    groupContainer.appendChild(groupLabel);
 
-                let input;
+                    const groupContent = document.createElement('div');
+                    groupContent.className = 'control-group-content';
 
-                switch (control.type) {
-                    case 'select':
-                        input = document.createElement('select');
-                        Object.keys(control.options).forEach(optionKey => {
-                            const option = document.createElement('option');
-                            option.value = optionKey;
-                            option.textContent = control.options[optionKey];
-                            if (optionKey === control.default) option.selected = true;
-                            input.appendChild(option);
-                        });
-                        break;
+                    // Process controls within group
+                    Object.keys(control.controls).forEach(groupKey => {
+                        const groupControl = control.controls[groupKey];
+                        currentValues[groupKey] = groupControl.default;
 
-                    case 'textarea':
-                        input = document.createElement('textarea');
-                        input.value = control.default;
-                        input.rows = 4;
-                        break;
-
-                    case 'checkbox':
-                        input = document.createElement('input');
-                        input.type = 'checkbox';
-                        input.checked = control.default;
-                        break;
-
-                    case 'number':
-                        input = document.createElement('input');
-                        input.type = 'number';
-                        input.value = control.default;
-                        input.min = 0;
-                        break;
-
-                    default:
-                        input = document.createElement('input');
-                        input.type = 'text';
-                        input.value = control.default;
-                        if (control.placeholder) {
-                            input.placeholder = control.placeholder;
+                        const controlGroup = document.createElement('div');
+                        controlGroup.className = 'control-group';
+                        if (groupControl.width) {
+                            controlGroup.style.width = groupControl.width;
+                            controlGroup.style.display = 'inline-block';
+                            controlGroup.style.marginRight = '8px';
                         }
+
+                        const label = document.createElement('label');
+                        label.textContent = groupControl.label;
+                        controlGroup.appendChild(label);
+
+                        let input = createInput(groupControl, groupKey);
+                        controlGroup.appendChild(input);
+                        groupContent.appendChild(controlGroup);
+                    });
+
+                    groupContainer.appendChild(groupContent);
+                    container.appendChild(groupContainer);
+                } else {
+                    currentValues[key] = control.default;
+                    const controlGroup = document.createElement('div');
+                    controlGroup.className = 'control-group';
+
+                    const label = document.createElement('label');
+                    label.textContent = control.label;
+                    controlGroup.appendChild(label);
+
+                    let input = createInput(control, key);
+                    controlGroup.appendChild(input);
+                    container.appendChild(controlGroup);
                 }
-
-                input.addEventListener('change', function() {
-                    currentValues[key] = input.type === 'checkbox' ? input.checked : input.value;
-                    updatePreview();
-                });
-
-                controlGroup.appendChild(input);
-                container.appendChild(controlGroup);
             });
+        }
+
+        function createInput(control, key) {
+            let input;
+
+            switch (control.type) {
+                case 'select':
+                    input = document.createElement('select');
+                    Object.keys(control.options).forEach(optionKey => {
+                        const option = document.createElement('option');
+                        option.value = optionKey;
+                        option.textContent = control.options[optionKey];
+                        if (optionKey === control.default) option.selected = true;
+                        input.appendChild(option);
+                    });
+                    break;
+
+                case 'textarea':
+                    input = document.createElement('textarea');
+                    input.value = control.default;
+                    input.rows = 4;
+                    break;
+
+                case 'checkbox':
+                    input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.checked = control.default;
+                    break;
+
+                case 'number':
+                    input = document.createElement('input');
+                    input.type = 'number';
+                    input.value = control.default;
+                    input.min = 0;
+                    break;
+
+                default:
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = control.default;
+                    if (control.placeholder) {
+                        input.placeholder = control.placeholder;
+                    }
+            }
+
+            input.addEventListener('change', function() {
+                currentValues[key] = input.type === 'checkbox' ? input.checked : input.value;
+                updatePreview();
+            });
+
+            return input;
         }
 
         function updatePreview() {

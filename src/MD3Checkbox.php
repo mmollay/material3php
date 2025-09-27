@@ -117,8 +117,8 @@ class MD3Checkbox {
         $html .= '<div class="md3-checkbox__background">';
         $html .= '<div class="md3-checkbox__frame"></div>';
         $html .= '<div class="md3-checkbox__checkmark">
-                    <svg class="md3-checkbox__checkmark-path" viewBox="0 0 24 24">
-                        <path class="md3-checkbox__checkmark-check" d="M4.1,12.7 9,17.6 20.3,6.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg class="md3-checkbox__checkmark-path" viewBox="0 0 18 18">
+                        <path class="md3-checkbox__checkmark-check" d="M5,9 L7.5,11.5 L13,6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </div>';
         $html .= '<div class="md3-checkbox__mixedmark"></div>';
@@ -161,8 +161,8 @@ class MD3Checkbox {
 /* Material Design 3 Checkbox Component */
 .md3-checkbox-container {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: center;
+    gap: 8px;
     position: relative;
 }
 
@@ -235,14 +235,14 @@ class MD3Checkbox {
 }
 
 .md3-checkbox__checkmark-path {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     color: var(--md-sys-color-on-primary);
 }
 
 .md3-checkbox__checkmark-check {
-    stroke-dasharray: 22;
-    stroke-dashoffset: 22;
+    stroke-dasharray: 10;
+    stroke-dashoffset: 10;
     animation: none;
 }
 
@@ -318,7 +318,9 @@ class MD3Checkbox {
     color: var(--md-sys-color-on-surface);
     cursor: pointer;
     user-select: none;
-    line-height: 20px;
+    line-height: 18px;
+    margin: 0;
+    flex: 1;
 }
 
 .md3-checkbox--disabled .md3-checkbox__label {

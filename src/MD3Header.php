@@ -188,7 +188,7 @@ class MD3Header
      */
     public static function getCSS(): string
     {
-        return '<style>
+        return '
         /* Material Design 3 Header Component */
         .md3-header {
             background: var(--md-sys-color-surface);
@@ -414,7 +414,7 @@ class MD3Header
                 min-width: 180px;
             }
         }
-        </style>';
+        ';
     }
 
     /**

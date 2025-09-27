@@ -487,7 +487,7 @@ class MD3Theme
      */
     public static function getThemeCSS(): string
     {
-        return '<style>
+        return '
             .theme-selector {
                 display: flex;
                 align-items: center;
@@ -621,6 +621,6 @@ class MD3Theme
             .theme-toggle-chips .chip-icon {
                 font-size: 18px;
             }
-        </style>';
+        ';
     }
 }

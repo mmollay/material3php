@@ -508,6 +508,9 @@
     // Include JavaScript for interactive components
     echo MD3Header::getScript();
     echo MD3Search::getSearchScript();
+    ?>
+    <script>
+    <?php
     echo MD3Chip::getJS();
     echo MD3Progress::getJS();
     echo MD3Slider::getJS();
@@ -517,6 +520,9 @@
     echo MD3Tabs::getJS();
     echo MD3Tooltip::getJS();
     echo MD3List::getJS();
+    ?>
+    </script>
+    <?php
     echo MD3Theme::getThemeScript();
     ?>
 </body>

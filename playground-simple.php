@@ -21,14 +21,16 @@
     // Initialize with error handling
     try {
         echo MD3::init(true, true, $currentTheme);
-        if (class_exists('MD3Theme')) {
-            echo MD3Theme::getThemeCSS();
-        }
     } catch (Exception $e) {
         echo "<!-- Error: " . $e->getMessage() . " -->";
     }
     ?>
     <style>
+    <?php
+    if (class_exists('MD3Theme')) {
+        echo MD3Theme::getThemeCSS();
+    }
+    ?>
         body {
             font-family: 'Roboto', system-ui, sans-serif;
             background: var(--md-sys-color-background);
