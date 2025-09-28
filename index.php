@@ -207,7 +207,7 @@
         <a href="minimal-demo.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
             <span class="material-symbols-outlined icon">flash_on</span>
             <h3>Quick Demo</h3>
-            <p>Minimal demo showing Material3PHP's simplicity</p>
+            <p>See what you get with just 2 lines - buttons, forms, lists & more!</p>
         </a>
         <a href="playground.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
             <span class="material-symbols-outlined icon">science</span>

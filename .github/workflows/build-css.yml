@@ -1,0 +1,84 @@
+name: Material3PHP CSS Build
+
+on:
+  push:
+    paths:
+      - 'src/MD3*.php'
+      - 'src/MD3.php'
+      - 'build-css.php'
+      - 'VERSION'
+  pull_request:
+    paths:
+      - 'src/MD3*.php'
+      - 'src/MD3.php'
+      - 'build-css.php'
+
+jobs:
+  build-css:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
+    - name: Build CSS Framework
+      run: |
+        echo "🔨 Building Material3PHP CSS Framework..."
+        php build-css.php
+
+        # Check if files were actually built
+        if [ ! -f "dist/material3php.css" ]; then
+          echo "❌ CSS build failed - no output file"
+          exit 1
+        fi
+
+        echo "✅ CSS build successful"
+        ls -la dist/
+
+    - name: Check for changes
+      id: changes
+      run: |
+        if [ -n "$(git status --porcelain dist/)" ]; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+          echo "📝 CSS files have changes"
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "ℹ️ No changes in CSS files"
+        fi
+
+    - name: Commit updated CSS
+      if: steps.changes.outputs.changes == 'true' && github.event_name == 'push'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+        git add dist/material3php.css
+        git add dist/material3php.min.css
+        git add dist/build-info.json
+
+        git commit -m "🤖 Auto-rebuild CSS after component changes
+
+        - Updated dist/material3php.css
+        - Updated dist/material3php.min.css
+        - Rebuilt from commit ${{ github.sha }}
+
+        [skip ci]"
+
+        git push
+
+    - name: Upload CSS artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: material3php-css
+        path: |
+          dist/material3php.css
+          dist/material3php.min.css
+          dist/build-info.json
+        retention-days: 30
