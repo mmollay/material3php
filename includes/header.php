@@ -156,9 +156,8 @@ $navMenuItems = [
                                 // Build URL with current page context
                                 $url = $currentScript;
                                 $params = [];
-                                if ($key !== 'default') {
-                                    $params['theme'] = $key;
-                                }
+                                // Always include theme parameter to prevent localStorage fallback
+                                $params['theme'] = $key;
                                 if ($currentComponent && $currentScript === 'playground.php') {
                                     $params['component'] = $currentComponent;
                                 }
