@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -452,11 +452,6 @@
         </div>
     </div>
 
-        <footer style="text-align: center; padding: 24px 0; color: var(--md-sys-color-on-surface-variant); border-top: 1px solid var(--md-sys-color-outline-variant); margin-top: 32px;">
-            <p>Material Design 3 PHP Library Erweiterte Demo<br>
-            <small>Alle neuen Komponenten: Lists, Search, Chips, Tooltips, Form Controls</small>
-            </p>
-        </footer>
     </div>
 
     <?php include 'includes/footer.php'; ?>
