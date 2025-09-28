@@ -8,6 +8,7 @@ class MD3
 {
     private static $initialized = false;
     private static $version = null;
+    private static $componentCount = null;
 
     /**
      * Initialize Material Design 3 resources
@@ -628,6 +629,25 @@ class MD3
     }
 
     /**
+     * Get number of available components dynamically
+     *
+     * @return int Number of MD3 components
+     */
+    public static function getComponentCount(): int
+    {
+        if (self::$componentCount === null) {
+            $srcDir = dirname(__FILE__);
+            $files = glob($srcDir . '/MD3*.php');
+            // Exclude MD3.php itself
+            $componentFiles = array_filter($files, function($file) {
+                return basename($file) !== 'MD3.php';
+            });
+            self::$componentCount = count($componentFiles);
+        }
+        return self::$componentCount;
+    }
+
+    /**
      * Get version info with additional metadata
      *
      * @return array Version information
@@ -642,15 +662,31 @@ class MD3
             'material_web_components' => false, // We don't use the official components
             'css_only' => true,
             'offline_ready' => true,
-            'components' => [
-                'MD3Badge', 'MD3BottomSheet', 'MD3Breadcrumb', 'MD3Button', 'MD3Card',
-                'MD3Checkbox', 'MD3Chip', 'MD3DateTimePicker', 'MD3Dialog', 'MD3FloatingActionButton',
-                'MD3Header', 'MD3IconButton', 'MD3List', 'MD3Menu', 'MD3NavigationBar',
-                'MD3NavigationDrawer', 'MD3NavigationRail', 'MD3Progress', 'MD3Radio', 'MD3Search',
-                'MD3Select', 'MD3Slider', 'MD3Snackbar', 'MD3Switch', 'MD3Tabs',
-                'MD3TextField', 'MD3Toolbar', 'MD3Tooltip'
-            ]
+            'component_count' => self::getComponentCount(),
+            'components' => self::getAvailableComponents()
         ];
+    }
+
+    /**
+     * Get list of available components dynamically
+     *
+     * @return array List of component class names
+     */
+    public static function getAvailableComponents(): array
+    {
+        $srcDir = dirname(__FILE__);
+        $files = glob($srcDir . '/MD3*.php');
+        $components = [];
+
+        foreach ($files as $file) {
+            $className = basename($file, '.php');
+            if ($className !== 'MD3') {
+                $components[] = $className;
+            }
+        }
+
+        sort($components);
+        return $components;
     }
 
     /**

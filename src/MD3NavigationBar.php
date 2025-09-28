@@ -51,394 +51,182 @@ class MD3NavigationBar
     }
 
     /**
-     * Generate Floating Navigation Bar (elevated)
-     */
-    public static function floating(array $items, array $options = []): string
-    {
-        $options['class'] = ($options['class'] ?? '') . ' md3-navigation-bar--floating';
-        return self::create($items, $options);
-    }
-
-    /**
-     * Generate Navigation Bar with only icons (no labels)
-     */
-    public static function iconsOnly(array $items, array $options = []): string
-    {
-        $options['class'] = ($options['class'] ?? '') . ' md3-navigation-bar--icons-only';
-        return self::create($items, $options);
-    }
-
-    /**
-     * Render individual navigation item
+     * Render a single navigation item
      */
     private static function renderNavigationItem(array $item): string
     {
-        $icon = $item['icon'] ?? 'circle';
+        $icon = $item['icon'] ?? '';
         $label = $item['label'] ?? '';
         $href = $item['href'] ?? '#';
         $active = $item['active'] ?? false;
         $badge = $item['badge'] ?? null;
-        $disabled = $item['disabled'] ?? false;
 
-        $classes = ['md3-navigation-bar__item'];
-        if ($active) $classes[] = 'md3-navigation-bar__item--active';
-        if ($disabled) $classes[] = 'md3-navigation-bar__item--disabled';
-
-        $attributes = [
-            'class' => implode(' ', $classes),
-            'href' => $href,
-            'role' => 'tab',
-            'aria-selected' => $active ? 'true' : 'false'
-        ];
-
-        if ($disabled) {
-            $attributes['aria-disabled'] = 'true';
-            $attributes['tabindex'] = '-1';
+        $classes = ['md3-nav-item'];
+        if ($active) {
+            $classes[] = 'active';
         }
 
-        if ($label) {
-            $attributes['aria-label'] = $label;
-        }
-
-        $attributesStr = '';
-        foreach ($attributes as $key => $value) {
-            $attributesStr .= sprintf(' %s="%s"', $key, htmlspecialchars($value));
-        }
-
-        // Build badge HTML if present
         $badgeHtml = '';
-        if ($badge !== null && $badge > 0) {
-            $badgeText = $badge > 99 ? '99+' : (string)$badge;
-            $badgeHtml = sprintf(
-                '<span class="md3-navigation-bar__badge" aria-label="%d new notifications">%s</span>',
-                $badge,
-                $badgeText
-            );
+        if ($badge !== null) {
+            require_once 'MD3Badge.php';
+            $badgeHtml = MD3Badge::create((string)$badge, ['size' => 'small']);
         }
 
-        // Build item content
-        $iconHtml = sprintf(
-            '<span class="md3-navigation-bar__icon"><span class="material-symbols-outlined">%s</span>%s</span>',
-            $icon,
-            $badgeHtml
-        );
+        $iconHtml = '';
+        if ($icon) {
+            require_once 'MD3.php';
+            $iconHtml = MD3::icon($icon);
+        }
 
-        $labelHtml = $label ? sprintf(
-            '<span class="md3-navigation-bar__label">%s</span>',
-            htmlspecialchars($label)
-        ) : '';
-
-        return sprintf(
-            '<a%s>%s%s<span class="md3-navigation-bar__indicator"></span></a>',
-            $attributesStr,
+        $html = sprintf(
+            '<a href="%s" class="%s">
+                <div class="md3-nav-item-content">
+                    <div class="md3-nav-item-icon">%s%s</div>
+                    <div class="md3-nav-item-label">%s</div>
+                </div>
+            </a>',
+            htmlspecialchars($href),
+            implode(' ', $classes),
             $iconHtml,
-            $labelHtml
+            $badgeHtml,
+            htmlspecialchars($label)
         );
+
+        return $html;
     }
 
     /**
-     * Generate CSS for Navigation Bar
+     * Generate CSS for Navigation Bar Component
      */
     public static function getCSS(): string
     {
         return '
         /* Material Design 3 Navigation Bar */
         .md3-navigation-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 64px;
-            background: var(--md-sys-color-surface);
-            border-top: 1px solid var(--md-sys-color-outline-variant);
             display: flex;
-            align-items: stretch;
-            justify-content: space-around;
-            padding: 0;
-            box-sizing: border-box;
-            z-index: 100;
-        }
-
-        .md3-navigation-bar--floating {
-            position: fixed;
-            bottom: 16px;
-            left: 16px;
-            right: 16px;
-            height: 64px;
-            border-radius: 16px;
-            border: none;
+            align-items: center;
             background: var(--md-sys-color-surface-container);
-            box-shadow: var(--md-sys-elevation-3);
+            border-radius: 16px;
+            padding: 8px;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
-        .md3-navigation-bar--icons-only {
-            height: 48px;
-        }
-
-        .md3-navigation-bar__item {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            height: 100%;
-            padding: 8px 4px 4px;
-            text-decoration: none;
-            color: var(--md-sys-color-on-surface-variant);
-            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
-            cursor: pointer;
-            user-select: none;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        .md3-navigation-bar__item:hover {
-            background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 8%, transparent);
-        }
-
-        .md3-navigation-bar__item:focus-visible {
-            background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 12%, transparent);
-            outline: 2px solid var(--md-sys-color-primary);
-            outline-offset: 2px;
-        }
-
-        .md3-navigation-bar__item--active {
-            color: var(--md-sys-color-on-surface);
-        }
-
-        .md3-navigation-bar__item--active .md3-navigation-bar__indicator {
-            opacity: 1;
-            transform: scaleX(1);
-        }
-
-        .md3-navigation-bar__item--disabled {
-            color: var(--md-sys-color-on-surface);
-            opacity: 0.38;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .md3-navigation-bar__icon {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            margin-bottom: 2px;
-            font-size: 24px;
-            line-height: 1;
-            z-index: 1;
-        }
-
-        .md3-navigation-bar__label {
-            position: relative;
-            font-size: 10px;
-            font-weight: 500;
-            line-height: 12px;
-            letter-spacing: 0.5px;
-            text-align: center;
-            min-height: 12px;
-            max-width: 64px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            z-index: 1;
-        }
-
-        .md3-navigation-bar--icons-only .md3-navigation-bar__label {
+        .md3-navigation-bar::-webkit-scrollbar {
             display: none;
         }
 
-        .md3-navigation-bar--icons-only .md3-navigation-bar__icon {
-            margin-bottom: 0;
+        .md3-navigation-bar.horizontal {
+            flex-direction: row;
         }
 
-        .md3-navigation-bar__indicator {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%) scaleX(0);
-            width: 32px;
-            height: 3px;
-            background: var(--md-sys-color-on-surface);
-            border-radius: 2px 2px 0 0;
-            opacity: 0;
-            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
-            z-index: 1;
-        }
-
-        .md3-navigation-bar__badge {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            min-width: 16px;
-            height: 16px;
-            padding: 0 4px;
-            background: var(--md-sys-color-error);
-            color: var(--md-sys-color-on-error);
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 500;
-            line-height: 16px;
-            text-align: center;
+        .md3-nav-item {
             display: flex;
             align-items: center;
             justify-content: center;
-            box-sizing: border-box;
+            min-height: 64px;
+            padding: 8px 12px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--md-sys-color-on-surface-variant);
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            flex: 1;
+            min-width: 64px;
+        }
+
+        .md3-nav-item:hover {
+            background: var(--md-sys-color-surface-container-high);
+        }
+
+        .md3-nav-item.active {
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .md3-nav-item-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .md3-nav-item-icon {
+            position: relative;
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .md3-nav-item-label {
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        /* Horizontal layout adjustments */
+        .md3-navigation-bar.horizontal .md3-nav-item {
+            min-height: 48px;
+            flex: 0 0 auto;
+        }
+
+        .md3-navigation-bar.horizontal .md3-nav-item-content {
+            flex-direction: row;
+            gap: 8px;
+        }
+
+        .md3-navigation-bar.horizontal .md3-nav-item-icon {
+            font-size: 20px;
+        }
+
+        .md3-navigation-bar.horizontal .md3-nav-item-label {
+            font-size: 14px;
+        }
+
+        /* Badge positioning */
+        .md3-nav-item-icon .md3-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
         }
 
         /* Responsive design */
-        @media (max-width: 480px) {
-            .md3-navigation-bar {
-                padding: 0 4px;
+        @media (max-width: 768px) {
+            .md3-nav-item {
+                min-width: 56px;
+                padding: 6px 8px;
             }
 
-            .md3-navigation-bar__item {
-                min-width: 48px;
-                padding: 4px 8px 8px;
-            }
-
-            .md3-navigation-bar__label {
+            .md3-nav-item-label {
                 font-size: 11px;
             }
-        }
 
-        /* Dark theme adjustments */
-        @media (prefers-color-scheme: dark) {
-            .md3-navigation-bar--floating {
-                box-shadow: var(--md-sys-elevation-3);
+            .md3-navigation-bar.horizontal .md3-nav-item-label {
+                font-size: 13px;
             }
         }
 
-        /* Tablet and desktop adaptations */
-        @media (min-width: 840px) {
+        @media (max-width: 480px) {
             .md3-navigation-bar {
-                position: static;
-                width: 80px;
-                height: auto;
-                flex-direction: column;
-                border-top: none;
-                border-right: 1px solid var(--md-sys-color-outline-variant);
-                padding: 24px 0;
+                padding: 4px;
             }
 
-            .md3-navigation-bar--floating {
-                position: static;
-                width: 80px;
-                border-radius: 0;
-                box-shadow: none;
-                background: var(--md-sys-color-surface);
+            .md3-nav-item {
+                min-width: 48px;
+                padding: 4px 6px;
             }
 
-            .md3-navigation-bar__item {
-                width: 56px;
-                height: 56px;
-                margin: 4px 0;
+            .md3-nav-item-icon {
+                font-size: 20px;
+            }
+
+            .md3-navigation-bar.horizontal .md3-nav-item-icon {
+                font-size: 18px;
             }
         }
         ';
-    }
-
-    /**
-     * Generate JavaScript for Navigation Bar interactions
-     */
-    public static function getScript(): string
-    {
-        return "
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle navigation bar interactions
-            const navBars = document.querySelectorAll('.md3-navigation-bar');
-
-            navBars.forEach(navBar => {
-                const items = navBar.querySelectorAll('.md3-navigation-bar__item');
-
-                items.forEach(item => {
-                    item.addEventListener('click', function(e) {
-                        if (this.classList.contains('md3-navigation-bar__item--disabled')) {
-                            e.preventDefault();
-                            return;
-                        }
-
-                        // Remove active state from siblings
-                        items.forEach(sibling => {
-                            sibling.classList.remove('md3-navigation-bar__item--active');
-                            sibling.setAttribute('aria-selected', 'false');
-                        });
-
-                        // Add active state to clicked item
-                        this.classList.add('md3-navigation-bar__item--active');
-                        this.setAttribute('aria-selected', 'true');
-
-                        // Emit custom event
-                        const event = new CustomEvent('md3-navigation-change', {
-                            detail: {
-                                item: this,
-                                href: this.href,
-                                label: this.querySelector('.md3-navigation-bar__label')?.textContent || ''
-                            }
-                        });
-                        navBar.dispatchEvent(event);
-                    });
-
-                    // Ripple effect on touch/click
-                    item.addEventListener('pointerdown', function(e) {
-                        if (this.classList.contains('md3-navigation-bar__item--disabled')) {
-                            return;
-                        }
-
-                        const rect = this.getBoundingClientRect();
-                        const size = Math.max(rect.width, rect.height);
-                        const x = e.clientX - rect.left - size / 2;
-                        const y = e.clientY - rect.top - size / 2;
-
-                        const ripple = document.createElement('span');
-                        ripple.className = 'md3-ripple';
-                        ripple.style.cssText =
-                            'position: absolute;' +
-                            'border-radius: 50%;' +
-                            'background: currentColor;' +
-                            'opacity: 0.1;' +
-                            'pointer-events: none;' +
-                            'transform: scale(0);' +
-                            'animation: md3-ripple-animation 0.6s ease-out;' +
-                            'width: ' + size + 'px;' +
-                            'height: ' + size + 'px;' +
-                            'left: ' + x + 'px;' +
-                            'top: ' + y + 'px;';
-
-                        this.style.position = 'relative';
-                        this.style.overflow = 'hidden';
-                        this.appendChild(ripple);
-
-                        setTimeout(() => {
-                            if (ripple.parentNode) {
-                                ripple.parentNode.removeChild(ripple);
-                            }
-                        }, 600);
-                    });
-                });
-            });
-        });
-
-        // Add ripple animation CSS
-        if (!document.querySelector('#md3-ripple-styles')) {
-            const style = document.createElement('style');
-            style.id = 'md3-ripple-styles';
-            style.textContent = `
-                @keyframes md3-ripple-animation {
-                    to {
-                        transform: scale(2);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-        </script>
-        ";
     }
 }
 

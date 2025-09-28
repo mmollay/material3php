@@ -78,6 +78,60 @@ class MD3Header
     }
 
     /**
+     * Generate unified navigation header with breadcrumbs and main navigation
+     */
+    public static function withNavigation(string $pageTitle, string $icon = 'dashboard', string $currentTheme = 'default', array $breadcrumbs = [], array $navItems = []): string
+    {
+        require_once 'MD3Breadcrumb.php';
+        require_once 'MD3NavigationBar.php';
+
+        $id = 'md3-header-nav-' . uniqid();
+
+        // Build main header
+        $iconHtml = MD3::icon($icon);
+        $titleHtml = sprintf('<h1>%s %s</h1>', $iconHtml, htmlspecialchars($pageTitle));
+
+        // Build header actions
+        $actionsHtml = self::renderHeaderActions($currentTheme, 'demo');
+
+        // Build breadcrumb navigation if provided
+        $breadcrumbHtml = '';
+        if (!empty($breadcrumbs)) {
+            $breadcrumbHtml = '<div class="md3-header-breadcrumb">' .
+                MD3Breadcrumb::fromArray($breadcrumbs) .
+                '</div>';
+        }
+
+        // Build main navigation if provided
+        $mainNavHtml = '';
+        if (!empty($navItems)) {
+            $mainNavHtml = '<div class="md3-header-navigation">' .
+                MD3NavigationBar::create($navItems, ['class' => 'horizontal']) .
+                '</div>';
+        }
+
+        $html = sprintf(
+            '<header class="md3-header md3-header-with-nav" id="%s">
+                <div class="md3-header-main">
+                    %s
+                    <div class="md3-header-actions">
+                        %s
+                    </div>
+                </div>
+                %s
+                %s
+            </header>',
+            $id,
+            $titleHtml,
+            $actionsHtml,
+            $breadcrumbHtml,
+            $mainNavHtml
+        );
+
+        return $html;
+    }
+
+    /**
      * Render header actions (theme selector + mode toggle)
      */
     private static function renderHeaderActions(string $currentTheme, string $currentPage): string
@@ -96,7 +150,7 @@ class MD3Header
         if ($currentPage === 'playground') {
             $themeParam = $currentTheme !== 'default' ? '?theme=' . $currentTheme : '';
             $backLink = sprintf(
-                '<a href="index.php%s" class="md3-back-link">%s← Demo</a>',
+                '<a href="index.php%s" class="md3-back-link">%s← Home</a>',
                 $themeParam,
                 MD3::icon('arrow_back')
             );
@@ -367,6 +421,31 @@ class MD3Header
             grid-area: header;
         }
 
+        /* Header with Navigation */
+        .md3-header-with-nav {
+            border-bottom: none;
+        }
+
+        .md3-header-breadcrumb {
+            padding: 8px 24px 0;
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .md3-header-navigation {
+            background: var(--md-sys-color-surface-container-lowest);
+            border-bottom: 1px solid var(--md-sys-color-outline-variant);
+        }
+
+        .md3-header-navigation .md3-navigation-bar.horizontal {
+            justify-content: center;
+            padding: 0 24px;
+        }
+
+        .md3-header-navigation .md3-navigation-bar.horizontal .md3-nav-item {
+            min-width: 120px;
+            padding: 12px 16px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .md3-header {
@@ -398,6 +477,20 @@ class MD3Header
             .md3-back-link span {
                 display: none;
             }
+
+            .md3-header-breadcrumb {
+                padding: 8px 16px 0;
+            }
+
+            .md3-header-navigation .md3-navigation-bar.horizontal {
+                padding: 0 16px;
+            }
+
+            .md3-header-navigation .md3-navigation-bar.horizontal .md3-nav-item {
+                min-width: 80px;
+                padding: 10px 12px;
+                font-size: 12px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -412,6 +505,16 @@ class MD3Header
             .md3-theme-dropdown {
                 right: -50px;
                 min-width: 180px;
+            }
+
+            .md3-header-navigation .md3-navigation-bar.horizontal {
+                overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .md3-header-navigation .md3-navigation-bar.horizontal::-webkit-scrollbar {
+                display: none;
             }
         }
         ';

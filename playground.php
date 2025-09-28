@@ -102,11 +102,9 @@
         .playground-container {
             display: grid;
             grid-template-areas:
-                "header header"
                 "sidebar content";
-            grid-template-columns: 200px 1fr;
-            grid-template-rows: 64px 1fr;
-            min-height: 100vh;
+            grid-template-columns: 280px 1fr;
+            height: calc(100vh - 65px); /* Account for fixed header height */
         }
 
         .playground-header {
@@ -683,59 +681,9 @@
     </style>
 </head>
 <body>
-    <div class="playground-container">
-        <!-- Header -->
-        <header class="playground-header">
-            <div class="header-main">
-                <h1>
-                    <?php echo MD3::icon('play_arrow'); ?> MD3 Playground
-                </h1>
-                <div class="header-actions">
-                    <!-- Light/Dark Mode Toggle -->
-                    <button class="mode-toggle" onclick="toggleMode()" id="mode-toggle">
-                        <?php echo MD3::icon('light_mode'); ?>
-                    </button>
+    <?php include 'includes/header.php'; ?>
 
-                    <div class="theme-selector-compact">
-                        <button class="theme-toggle" onclick="toggleThemeSelector()">
-                            <?php echo MD3::icon('palette'); ?>
-                            <span class="theme-current"><?php
-                                if (class_exists('MD3Theme')) {
-                                    $themes = MD3Theme::getAvailableThemes();
-                                    echo $themes[$currentTheme]['name'] ?? ucfirst($currentTheme);
-                                } else {
-                                    echo ucfirst($currentTheme);
-                                }
-                            ?></span>
-                            <?php echo MD3::icon('expand_more'); ?>
-                        </button>
-                        <div class="theme-dropdown" id="theme-dropdown">
-                            <?php
-                            try {
-                                if (class_exists('MD3Theme')) {
-                                    $themes = MD3Theme::getAvailableThemes();
-                                    foreach ($themes as $key => $theme) {
-                                        $isActive = $key === $currentTheme;
-                                        $url = 'playground.php?theme=' . $key . '&component=' . ($_GET['component'] ?? 'button');
-                                        echo '<a href="' . $url . '" class="theme-option' . ($isActive ? ' active' : '') . '">';
-                                        echo '<span class="theme-icon">' . MD3::icon($theme['icon']) . '</span>';
-                                        echo '<span class="theme-name">' . $theme['name'] . '</span>';
-                                        if ($isActive) echo '<span class="theme-check">' . MD3::icon('check') . '</span>';
-                                        echo '</a>';
-                                    }
-                                }
-                            } catch (Exception $e) {
-                                echo '<!-- Theme error: ' . htmlspecialchars($e->getMessage()) . ' -->';
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <a href="index.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="back-link">
-                        <?php echo MD3Button::text('← Demo'); ?>
-                    </a>
-                </div>
-            </div>
-        </header>
+    <div class="playground-container">
 
         <!-- Sidebar Navigation -->
         <nav class="playground-sidebar">
@@ -892,10 +840,6 @@
     <script><?php echo MD3List::getJS(); ?></script>
     <script><?php echo MD3Tooltip::getJS(); ?></script>
     <script><?php echo MD3Snackbar::getJS(); ?></script>
-    <?php echo MD3NavigationBar::getScript(); ?>
-    <?php echo MD3Menu::getScript(); ?>
-    <?php echo MD3Dialog::getScript(); ?>
-    <?php echo MD3FloatingActionButton::getScript(); ?>
     <?php echo MD3Select::getSelectScript(); ?>
     <?php echo MD3Theme::getThemeScript(); ?>
 

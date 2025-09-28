@@ -24,6 +24,8 @@
     require_once 'src/MD3Theme.php';
     require_once 'src/MD3Select.php';
     require_once 'src/MD3Header.php';
+    require_once 'src/MD3NavigationBar.php';
+    require_once 'src/MD3Breadcrumb.php';
     require_once 'src/MD3Badge.php';
     require_once 'src/MD3Snackbar.php';
     require_once 'src/MD3BottomSheet.php';
@@ -45,6 +47,7 @@
     <?php
     echo MD3Theme::getThemeCSS();
     echo MD3Header::getCSS();
+    echo MD3NavigationBar::getCSS();
     echo MD3List::getCSS();
     echo MD3Card::getCSS();
     echo MD3Search::getCSS();
@@ -152,26 +155,9 @@
     </style>
 </head>
 <body>
-    <?php echo MD3Header::demo('Material Design 3 PHP Library - Erweiterte Demo', 'dashboard', $currentTheme); ?>
+    <?php include 'includes/header.php'; ?>
 
     <div class="content-wrapper">
-        <!-- Demo Navigation -->
-    <div class="demo-navigation">
-        <h3><?php echo MD3::icon('explore'); ?> Demo-Seiten Navigation</h3>
-        <div class="nav-buttons">
-            <?php
-            $themeParam = $currentTheme !== 'default' ? '?theme=' . $currentTheme : '';
-            echo '<a href="index.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::outlined('🏠 Basis Demo') . '</a>';
-            echo '<a href="demo-extended.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::filled('🚀 Erweiterte Demo') . '</a>';
-            echo '<a href="demo-functional.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::elevated('⚡ Funktionale Demo') . '</a>';
-            echo '<a href="playground.php' . $themeParam . '" style="text-decoration: none;">' . MD3Button::tonal('🎮 Interactive Playground') . '</a>';
-            echo '<a href="test.html" style="text-decoration: none;">' . MD3Button::text('🧪 Test Seite') . '</a>';
-            ?>
-        </div>
-        <p style="margin: 12px 0 0 0; font-size: 14px; color: var(--md-sys-color-on-primary-container);">
-            <strong>Aktuelle Seite:</strong> Erweiterte Demo - Alle neuen Komponenten (Lists, Search, Chips, Tooltips, Forms)
-        </p>
-    </div>
 
     <!-- Lists Demo -->
     <div class="demo-section">
@@ -550,11 +536,6 @@
     <?php
     echo MD3Theme::getThemeScript();
     echo MD3Menu::getScript();
-    echo MD3BottomSheet::getScript();
-    echo MD3DateTimePicker::getScript();
-    echo MD3FloatingActionButton::getScript();
-    echo MD3NavigationBar::getScript();
-    echo MD3NavigationDrawer::getScript();
     ?>
 </body>
 </html>

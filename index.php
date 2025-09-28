@@ -11,6 +11,8 @@
     require_once 'src/MD3Card.php';
     require_once 'src/MD3Theme.php';
     require_once 'src/MD3Header.php';
+    require_once 'src/MD3NavigationBar.php';
+    require_once 'src/MD3Breadcrumb.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
@@ -21,6 +23,7 @@
     <?php
     echo MD3Theme::getThemeCSS();
     echo MD3Header::getCSS();
+    echo MD3NavigationBar::getCSS();
     echo MD3::getVersionCSS();
     ?>
         body {
@@ -193,18 +196,18 @@
 
 </head>
 <body>
-    <?php echo MD3Header::demo('Material Design 3 PHP Library', 'home', $currentTheme); ?>
+    <?php include 'includes/header.php'; ?>
 
     <div class="content-wrapper">
         <div class="hero-section">
-            <p class="subtitle">Pure PHP Implementation • 17 Components • MD3 Compliant</p>
+            <p class="subtitle">Pure PHP Implementation • <?php echo MD3::getComponentCount(); ?> Components • MD3 Compliant</p>
             <span class="version-badge">v<?php echo file_get_contents('VERSION'); ?></span>
         </div>
 
     <!-- Statistics -->
     <div class="stats-grid">
         <div class="stat-card">
-            <div class="stat-number">17</div>
+            <div class="stat-number"><?php echo MD3::getComponentCount(); ?></div>
             <div class="stat-label">Komponenten</div>
         </div>
         <div class="stat-card">
@@ -232,11 +235,6 @@
             <span class="material-symbols-outlined icon">dashboard</span>
             <h3>Component Gallery</h3>
             <p>Alle implementierten Komponenten in einer Übersicht</p>
-        </a>
-        <a href="demo-functional.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
-            <span class="material-symbols-outlined icon">integration_instructions</span>
-            <h3>Form Integration</h3>
-            <p>Funktionale Demos mit echten Form-Elementen</p>
         </a>
     </div>
 
@@ -266,7 +264,7 @@
             <div class="component-demo">
                 <h3>Cards</h3>
                 <div class="demo-items">
-                    <?php echo MD3Card::simple('Card Title', 'Card content example with Material Design 3 styling.'); ?>
+                    <?php echo MD3Card::elevated('Card content example with Material Design 3 styling.'); ?>
                 </div>
             </div>
 
