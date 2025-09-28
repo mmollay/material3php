@@ -1,363 +1,243 @@
 # Material Design 3 PHP Library
 
-Eine umfassende PHP-Library zur Generierung von Material Design 3 UI-Komponenten mit reinem CSS - ohne externe CDN-Abhängigkeiten.
+![Material Design 3](https://img.shields.io/badge/Material%20Design-3-blue)
+![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.0-777BB4)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Version](https://img.shields.io/badge/Version-0.2.43-orange)
 
-## 🚀 Features
+A **pure PHP implementation** of Google's Material Design 3 system. No JavaScript dependencies, no build tools required - just include and use!
 
-- **Vollständige Material Design 3 Unterstützung** - Implementiert alle wichtigen MD3 Komponenten
-- **Pure CSS Implementation** - Keine CDN-Abhängigkeiten, funktioniert offline
-- **Einfache PHP-API** - Intuitive statische Methoden für jede Komponente
-- **28+ Komponententypen** - Buttons, Cards, Lists, Search, Chips, Tooltips, Navigation, Menus uvm.
-- **Produktionsbereit** - Sauberer, dokumentierter Code mit HTML-Escaping
-- **Light/Dark Mode** - Automatische Theme-Unterstützung
-- **Responsive Design** - Mobile-first Ansatz
+## ✨ Features
 
-## 📦 Installation
+- 🎨 **31+ Material Design 3 Components**
+- 🎭 **5 Built-in Themes** (Default, Ocean, Forest, Sunset, Monochrome)
+- 📱 **Fully Responsive** - Mobile-first design
+- 🌙 **Dark/Light Mode** - Automatic theme switching
+- 🚀 **Zero Dependencies** - Pure PHP & CSS
+- 🎯 **Easy Integration** - Drop-in components
+- ♿ **Accessible** - ARIA compliant
+- 🌐 **i18n Ready** - Multi-language support
 
-1. Klone das Repository oder lade die Dateien herunter
-2. Kopiere den `src/` Ordner in dein PHP-Projekt
-3. Binde die benötigten Klassen ein:
+## 🚀 Quick Start
+
+### Composer Installation (Recommended)
+
+```bash
+composer require mmollay/material3php
+```
+
+### Manual Installation
+
+```bash
+git clone https://github.com/mmollay/material3php.git
+```
+
+### Basic Usage
 
 ```php
 <?php
-require_once 'src/MD3.php';
-require_once 'src/MD3Button.php';
-// weitere Komponenten nach Bedarf
+require_once 'vendor/autoload.php'; // or manual include
+use Material3PHP\MD3;
+
+// Initialize Material Design 3
+echo MD3::init();
+
+// Create components
+echo MD3Button::filled('Click Me');
+echo MD3TextField::filled('name', 'Your Name');
+echo MD3Card::elevated('Card Content');
 ?>
 ```
 
-## 🎯 Schnellstart
+## 📦 Available Components
 
-### Grundlegendes Setup
+### Buttons & Actions
+- `MD3Button` - Filled, Outlined, Text, Tonal buttons
+- `MD3FloatingActionButton` - Primary, Secondary, Tertiary FABs
+- `MD3IconButton` - Standard, Filled, Outlined icon buttons
+
+### Input & Forms
+- `MD3TextField` - Filled, Outlined text fields
+- `MD3Select` - Dropdown selections
+- `MD3Checkbox` - Material checkboxes
+- `MD3Switch` - Toggle switches
+- `MD3Slider` - Range sliders
+- `MD3RadioButton` - Radio button groups
+
+### Layout & Containers
+- `MD3Card` - Elevated, Filled, Outlined cards
+- `MD3List` - Single, Multi-line lists
+- `MD3NavigationBar` - Bottom navigation
+- `MD3NavigationDrawer` - Side navigation
+- `MD3NavigationRail` - Rail navigation
+- `MD3Divider` - Full-width, Inset dividers
+
+### Feedback & Information
+- `MD3Snackbar` - Toast notifications
+- `MD3Dialog` - Modal dialogs
+- `MD3Tooltip` - Contextual tooltips
+- `MD3Progress` - Linear, Circular progress
+- `MD3Badge` - Notification badges
+
+### Advanced Components
+- `MD3BottomSheet` - Modal bottom sheets
+- `MD3Breadcrumb` - Navigation breadcrumbs
+- `MD3Header` - App headers
+- `MD3Theme` - Theme management
+
+## 🎨 Theming
+
+```php
+// Initialize with theme
+echo MD3::init(true, true, 'ocean');
+
+// Available themes
+$themes = MD3Theme::getAvailableThemes();
+// 'default', 'ocean', 'forest', 'sunset', 'monochrome'
+
+// Get theme CSS
+echo MD3Theme::getThemeCSS();
+```
+
+## 🌙 Dark/Light Mode
+
+```php
+// Auto-detect system preference
+echo MD3::init(true, true, 'default'); // Enables dark mode support
+
+// JavaScript toggle (included)
+echo MD3Theme::getThemeScript();
+```
+
+## 📱 Responsive Design
+
+All components are mobile-first and responsive:
+
+```php
+// Responsive breakpoints automatically applied
+echo MD3Card::elevated('
+    <h3>Responsive Card</h3>
+    <p>Adapts to all screen sizes</p>
+');
+```
+
+## 🎯 Integration Examples
+
+### Laravel Integration
+
+```php
+// In your Blade template
+@php
+    echo MD3::init(true, true, 'ocean');
+@endphp
+
+<div class="container">
+    @php
+        echo MD3Button::filled('Laravel + MD3');
+        echo MD3TextField::filled('email', 'Email Address');
+    @endphp
+</div>
+```
+
+### WordPress Integration
+
+```php
+// In your theme functions.php
+function enqueue_material3_php() {
+    require_once get_template_directory() . '/vendor/autoload.php';
+    echo MD3::init();
+}
+add_action('wp_head', 'enqueue_material3_php');
+
+// In your templates
+echo MD3Card::elevated(get_the_content());
+```
+
+### Vanilla PHP
 
 ```php
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine App</title>
     <?php
-    require_once 'src/MD3.php';
-    echo MD3::init(); // Lädt CSS und JS
+    require_once 'vendor/autoload.php';
+    echo MD3::init(true, true, 'ocean');
     ?>
 </head>
 <body>
-    <!-- Deine Komponenten hier -->
+    <?php
+    echo MD3Button::filled('Hello World');
+    echo MD3TextField::filled('name', 'Your Name');
+    ?>
 </body>
 </html>
 ```
 
-### Buttons
+## 🔧 Advanced Configuration
+
+### Custom Themes
 
 ```php
-<?php
-require_once 'src/MD3Button.php';
-
-// Verschiedene Button-Typen
-echo MD3Button::filled('Speichern');
-echo MD3Button::outlined('Abbrechen');
-echo MD3Button::text('Mehr erfahren');
-echo MD3Button::elevated('Erhöht');
-echo MD3Button::tonal('Tonal');
-
-// Buttons mit Links
-echo MD3Button::filled('Zum Dashboard', '/dashboard');
-
-// Icon-Buttons
-echo MD3Button::icon('favorite');
-echo MD3Button::fab('add', 'Hinzufügen');
-?>
-```
-
-### Text Fields
-
-```php
-<?php
-require_once 'src/MD3TextField.php';
-
-// Basic Fields
-echo MD3TextField::filled('name', 'Name');
-echo MD3TextField::outlined('email', 'E-Mail');
-
-// Spezielle Field-Typen
-echo MD3TextField::password('password', 'Passwort');
-echo MD3TextField::email('email', 'E-Mail');
-echo MD3TextField::number('age', 'Alter');
-echo MD3TextField::textarea('message', 'Nachricht');
-
-// Fields mit Icons
-echo MD3TextField::withLeadingIcon('search', 'Suche', 'search');
-echo MD3TextField::withTrailingIcon('phone', 'Telefon', 'phone');
-?>
-```
-
-### Cards
-
-```php
-<?php
-require_once 'src/MD3Card.php';
-
-// Einfache Card
-echo MD3Card::simple('Titel', 'Inhalt der Card');
-
-// Card mit Actions
-$actions = [
-    MD3Button::text('Abbrechen'),
-    MD3Button::filled('OK')
+// Create custom theme colors
+$customTheme = [
+    'primary' => '#6750A4',
+    'secondary' => '#625B71',
+    'tertiary' => '#7D5260'
 ];
-echo MD3Card::withActions('Titel', 'Inhalt', $actions);
 
-// Card mit Icon
-echo MD3Card::withIcon('settings', 'Einstellungen', 'Konfiguration');
-
-// Media Card
-echo MD3Card::media('/path/to/image.jpg', 'Titel', 'Beschreibung');
-?>
+echo MD3Theme::generateCustomCSS($customTheme);
 ```
 
-### Breadcrumb Navigation
+### Component Customization
 
 ```php
-<?php
-require_once 'src/MD3Breadcrumb.php';
-
-// Aus Array
-$items = [
-    ['label' => 'Start', 'href' => '/'],
-    ['label' => 'Produkte', 'href' => '/products'],
-    ['label' => 'Details']
-];
-echo MD3Breadcrumb::fromArray($items);
-
-// Automatisch aus aktueller Route
-echo MD3Breadcrumb::fromCurrentRoute('/dashboard/users/edit', '', [
-    'dashboard' => 'Dashboard',
-    'users' => 'Benutzer',
-    'edit' => 'Bearbeiten'
-]);
-
-// Mit Icons
-$itemsWithIcons = [
-    ['label' => 'Start', 'href' => '/', 'icon' => 'home'],
-    ['label' => 'Einstellungen', 'icon' => 'settings']
-];
-echo MD3Breadcrumb::withIcons($itemsWithIcons);
-?>
-```
-
-### Dialogs
-
-```php
-<?php
-require_once 'src/MD3Dialog.php';
-
-// Alert Dialog
-echo MD3Dialog::alert('alert-id', 'Hinweis', 'Operation erfolgreich!');
-
-// Confirmation Dialog
-echo MD3Dialog::confirm('confirm-id', 'Bestätigung', 'Wirklich löschen?');
-
-// Dialog mit Trigger-Button
-echo MD3Dialog::trigger('confirm-id', 'Löschen', 'outlined');
-
-// Form Dialog
-$formContent = MD3TextField::filled('name', 'Name') .
-               MD3TextField::email('email', 'E-Mail');
-echo MD3Dialog::form('form-id', 'Kontakt', $formContent);
-?>
-```
-
-## 📁 Projektstruktur
-
-```
-material3php/
-├── src/
-│   ├── MD3.php              # Kern-Klasse und Ressourcen-Management
-│   ├── MD3Button.php        # Button-Komponenten
-│   ├── MD3TextField.php     # Text-Input-Felder
-│   ├── MD3Card.php          # Card-Komponenten
-│   ├── MD3Breadcrumb.php    # Breadcrumb-Navigation
-│   └── MD3Dialog.php        # Dialog-Komponenten
-├── index.php                # Demo-Seite
-└── README.md                # Diese Dokumentation
-```
-
-## 🛠 Verfügbare Komponenten
-
-### MD3 (Kern)
-- `MD3::init()` - Lädt CSS/JS-Ressourcen
-- `MD3::icon($icon)` - Material Icons
-- `MD3::getVersion()` - Library-Version
-
-### MD3Button
-- `filled()`, `outlined()`, `text()`, `elevated()`, `tonal()`
-- `icon()`, `iconFilled()`, `iconTonal()`, `iconOutlined()`
-- `fab()` - Floating Action Button
-
-### MD3TextField
-- `filled()`, `outlined()` - Standard-Felder
-- `password()`, `email()`, `number()`, `search()` - Typisierte Felder
-- `textarea()` - Mehrzeilige Felder
-- `withLeadingIcon()`, `withTrailingIcon()` - Felder mit Icons
-
-### MD3Card
-- `filled()`, `elevated()`, `outlined()` - Card-Typen
-- `simple()` - Card mit Titel/Inhalt
-- `withActions()` - Card mit Action-Buttons
-- `media()` - Card mit Bild
-- `withIcon()` - Card mit Icon
-
-### MD3List
-- `simple()` - Einfache Listen
-- `withDividers()` - Listen mit Trennlinien
-- `withIcons()` - Listen mit Icons
-- `twoLine()`, `threeLine()` - Mehrzeilige Listen
-- `selectable()` - Auswählbare Listen
-
-### MD3Search
-- `field()`, `fieldOutlined()` - Suchfelder
-- `withSuggestions()` - Suche mit Vorschlägen
-- `withFilters()` - Suche mit Filter-Chips
-- `withResults()` - Suche mit Ergebnis-Dropdown
-- `overlay()` - Vollbild-Suchoverlay
-
-### MD3Chip
-- `assist()` - Assist Chips
-- `filter()` - Filter Chips (auswählbar)
-- `input()` - Input Chips (entfernbar)
-- `suggestion()` - Vorschlags-Chips
-- `filterSet()`, `assistSet()` - Chip-Gruppen
-
-### MD3Tooltip
-- `basic()` - Einfache Tooltips
-- `rich()` - Tooltips mit Titel/Beschreibung
-- `withIcon()` - Tooltips mit Icons
-- `positioned()` - Positionierte Tooltips
-- `help()` - Hilfe-Tooltips mit Icon
-
-### MD3Switch
-- `basic()` - Basis Switch
-- `withLabel()` - Switch mit Label
-- `disabled()` - Deaktivierte Switches
-
-### MD3Checkbox
-- `basic()` - Basis Checkbox
-- `withLabel()` - Checkbox mit Label
-
-### MD3Radio
-- `basic()` - Basis Radio Button
-- `withLabel()` - Radio mit Label
-- `group()` - Radio Button Gruppe
-
-### MD3Breadcrumb
-- `fromArray()` - Aus Array generieren
-- `fromCurrentRoute()` - Automatisch aus URL
-- `withIcons()` - Mit Icons
-- `withSeparator()` - Custom Trennzeichen
-- `simple()` - Einfache Text-Navigation
-
-### MD3Dialog
-- `basic()`, `alert()`, `confirm()` - Standard-Dialogs
-- `form()` - Dialog mit Formular
-- `withActions()` - Dialog mit Custom Actions
-- `trigger()` - Button zum Öffnen
-- `openScript()`, `closeScript()` - JavaScript-Helper
-
-## 🎨 Anpassung
-
-### Custom Styling
-Nutze CSS-Variablen für Theming:
-
-```css
-:root {
-  --md-sys-color-primary: #6750A4;
-  --md-sys-color-on-primary: #FFFFFF;
-  /* weitere Material Design Token */
-}
-```
-
-### Erweiterte Attribute
-Jede Komponente akzeptiert zusätzliche HTML-Attribute:
-
-```php
-echo MD3Button::filled('Button', '/link', [
+// Add custom attributes
+echo MD3Button::filled('Submit', [
+    'onclick' => 'submitForm()',
     'class' => 'custom-class',
-    'data-action' => 'save',
-    'disabled' => true
+    'id' => 'submit-btn'
+]);
+
+// Custom styling
+echo MD3Card::elevated('Content', [
+    'style' => 'max-width: 400px; margin: 0 auto;'
 ]);
 ```
 
-## 📋 Beispiele
+## 📋 Requirements
 
-- **Basis Demo**: `index.php` - Zeigt die grundlegenden Komponenten
-- **Erweiterte Demo**: `demo-extended.php` - Alle neuen Komponenten (Lists, Search, Chips, etc.)
-- **Test Seite**: `test.html` - Einfache HTML-Test-Seite für Custom Elements
+- **PHP 8.0+**
+- **No JavaScript dependencies**
+- **No build process required**
+- **Works with any PHP framework**
 
-### Neue Komponenten Beispiele
+## 🤝 Contributing
 
-```php
-// Listen
-echo MD3List::twoLine([
-    ['title' => 'E-Mail', 'subtitle' => 'Neue Nachricht von...', 'icon' => 'mail'],
-    ['title' => 'Kalender', 'subtitle' => 'Meeting um 15:00', 'icon' => 'event']
-]);
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-// Suchfeld mit Vorschlägen
-echo MD3Search::withSuggestions('search', [
-    'Material Design', 'PHP Library', 'Web Components'
-]);
+## 📄 License
 
-// Filter Chips
-echo MD3Chip::filterSet([
-    ['label' => 'Alle', 'value' => 'all', 'selected' => true],
-    ['label' => 'Wichtig', 'value' => 'important', 'icon' => 'star']
-], 'filters');
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-// Tooltip mit Hilfe
-echo MD3Tooltip::help(
-    'Dies ist ein Hilfe-Tooltip für komplexe Einstellungen.',
-    'help-tooltip-1'
-);
+## 🙏 Acknowledgments
 
-// Switch mit Label
-echo MD3Switch::withLabel('notifications', 'Benachrichtigungen', '1', true);
-```
+- **Google Material Design Team** - For the amazing Material Design 3 specifications
+- **Claude Code** - Development assistance and code generation
+- **PHP Community** - For continuous inspiration and support
 
-## 🔧 Systemanforderungen
+## 📞 Support
 
-- **PHP**: 7.4 oder höher
-- **Browser**: Moderne Browser mit ES6-Unterstützung
-- **Internet**: CDN-Zugriff für Material Web Components
-
-## 🚀 Erweiterung
-
-Um neue Komponenten hinzuzufügen:
-
-1. Erstelle eine neue Datei in `src/MD3ComponentName.php`
-2. Folge dem bestehenden Muster mit statischen Methoden
-3. Nutze `MD3::escapeAttributes()` für sichere HTML-Ausgabe
-4. Dokumentiere alle öffentlichen Methoden
-
-## 📝 Lizenz
-
-Diese Library ist Open Source. Material Design ist ein Trademark von Google.
-
-## 🤝 Beitragen
-
-Contributions sind willkommen! Bitte:
-
-1. Folge den bestehenden Code-Konventionen
-2. Teste deine Änderungen gründlich
-3. Dokumentiere neue Features
-4. Stelle sicher, dass HTML sicher escaped wird
-
-## 🔗 Ressourcen
-
-- [Material Design 3](https://m3.material.io)
-- [Material Web Components](https://github.com/material-components/material-web)
-- [Material Design Guidelines](https://material.io/design)
+- 📧 **Email**: office@ssi.at
+- 🐛 **Issues**: [GitHub Issues](https://github.com/mmollay/material3php/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/mmollay/material3php/discussions)
+- 🌐 **Website**: [www.ssi.at](https://www.ssi.at)
 
 ---
 
-**Check!!** - *DEVELOPMENT-GUIDELINES.md anpassen und erweitern für Web/Mobile Versionen*
+**Built with ❤️ by [SSI - Service Support Internet](https://www.ssi.at)**
+
+🤖 *Developed with [Claude Code](https://claude.ai/code)*
