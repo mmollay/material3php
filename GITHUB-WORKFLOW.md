@@ -59,7 +59,7 @@ material3php-website/
 ├── playground.php        # Interactive Playground
 ├── contact.php           # Contact Page
 ├── impressum.php         # Legal Notice
-├── datenschutz.php       # Privacy Policy
+├── privacy-policy.php    # Privacy Policy
 ├── autoload.php          # Autoloader
 └── assets/               # Website assets
 ```

@@ -31,7 +31,7 @@ $pageConfigs = [
         'title' => 'Legal Notice',
         'icon' => 'info'
     ],
-    'datenschutz.php' => [
+    'privacy-policy.php' => [
         'title' => 'Privacy Policy',
         'icon' => 'privacy_tip'
     ],

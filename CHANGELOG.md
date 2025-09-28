@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **MAJOR**: Converted entire website to English for international accessibility
 - **BREAKING**: All content now in English (Datenschutz → Privacy Policy, Impressum → Legal Notice, Kontakt → Contact)
 - **Autoloader System**: Complete migration from manual require_once to PSR-4 autoloader
-- **Error Fixes**: Resolved 500 errors in datenschutz.php and demo-extended.php
+- **Error Fixes**: Resolved 500 errors in privacy-policy.php and demo-extended.php
 - **CSS/JS Optimization**: Removed problematic MD3 method calls, using only safe methods
 
 ### 🔧 Technical Improvements
@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🗂️ File Changes
 - All `.php` files: Language attribute changed from `de` to `en`
-- `datenschutz.php`: Complete translation to English, removed problematic MD3Header::getScript()
+- `privacy-policy.php`: Complete translation to English, removed problematic MD3Header::getScript()
 - `contact.php`: Full English translation, form validation messages updated
 - `impressum.php`: Legal Notice translation, removed problematic getScript() calls
 - `demo-extended.php`: Autoloader implementation, removed all problematic CSS/JS method calls
