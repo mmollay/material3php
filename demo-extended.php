@@ -533,6 +533,8 @@
     echo MD3Badge::getScript();
     ?>
     </script>
+    <?php include 'includes/footer.php'; ?>
+
     <?php
     echo MD3Theme::getThemeScript();
     echo MD3Menu::getScript();

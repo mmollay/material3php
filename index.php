@@ -175,23 +175,6 @@
             align-items: center;
         }
 
-        .footer {
-            text-align: center;
-            padding: 24px 0;
-            color: var(--md-sys-color-on-surface-variant);
-            border-top: 1px solid var(--md-sys-color-outline-variant);
-            margin-top: 32px;
-            font-size: 13px;
-        }
-
-        .footer a {
-            color: var(--md-sys-color-primary);
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
     </style>
 
 </head>
@@ -285,14 +268,9 @@
         </div>
     </div>
 
-    <div class="footer">
-        <p>Material Design 3 PHP Library •
-        <a href="https://m3.material.io" target="_blank">Material Design 3</a> •
-        <a href="playground.php" target="_blank">Interactive Playground</a> •
-        Made with ❤️ for pure PHP implementations
-        </p>
     </div>
-    </div>
+
+    <?php include 'includes/footer.php'; ?>
 
     <?php
     echo MD3Header::getScript();

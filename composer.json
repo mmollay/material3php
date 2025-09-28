@@ -1,0 +1,76 @@
+{
+    "name": "mmollay/material3php",
+    "description": "Pure PHP implementation of Google's Material Design 3 system - lightweight, themeable, and easy to integrate",
+    "type": "library",
+    "keywords": ["php", "material-design", "material-design-3", "md3", "ui", "components", "design-system", "css", "responsive"],
+    "homepage": "https://github.com/mmollay/material3php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Mollay",
+            "email": "office@ssi.at",
+            "homepage": "https://www.ssi.at",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/mmollay/material3php/issues",
+        "source": "https://github.com/mmollay/material3php",
+        "docs": "https://github.com/mmollay/material3php#readme"
+    },
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0|^10.0",
+        "phpstan/phpstan": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Material3PHP\\": "src/"
+        },
+        "files": [
+            "src/MD3.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Material3PHP\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "phpstan": "phpstan analyse src",
+        "test-all": [
+            "@test",
+            "@phpstan"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "classmap-authoritative": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "archive": {
+        "exclude": [
+            "/.github",
+            "/tests",
+            "/docs",
+            "/.gitignore",
+            "/.gitattributes",
+            "/phpunit.xml",
+            "/phpstan.neon",
+            "*.php",
+            "!/src",
+            "/includes",
+            "/screenshots"
+        ]
+    }
+}

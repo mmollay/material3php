@@ -23,6 +23,18 @@ $pageConfigs = [
         'title' => 'MD3 Playground',
         'icon' => 'science'
     ],
+    'contact.php' => [
+        'title' => 'Kontakt',
+        'icon' => 'contact_phone'
+    ],
+    'impressum.php' => [
+        'title' => 'Impressum',
+        'icon' => 'info'
+    ],
+    'datenschutz.php' => [
+        'title' => 'Datenschutz',
+        'icon' => 'privacy_tip'
+    ],
 ];
 
 $currentPage = $pageConfigs[$currentScript] ?? [
@@ -50,6 +62,21 @@ $navMenuItems = [
         'label' => 'Playground',
         'active' => $currentScript === 'playground.php'
     ],
+    [
+        'type' => 'divider'
+    ],
+    [
+        'href' => 'contact.php',
+        'icon' => 'contact_phone',
+        'label' => 'Kontakt',
+        'active' => $currentScript === 'contact.php'
+    ],
+    [
+        'href' => 'impressum.php',
+        'icon' => 'info',
+        'label' => 'Impressum',
+        'active' => $currentScript === 'impressum.php'
+    ],
 ];
 ?>
 
@@ -65,26 +92,30 @@ $navMenuItems = [
                 </button>
                 <div class="nav-menu-dropdown" id="nav-menu-dropdown">
                     <?php foreach ($navMenuItems as $item): ?>
-                        <?php
-                        $href = $item['href'];
-                        if ($currentTheme !== 'default') {
-                            $separator = strpos($href, '?') !== false ? '&' : '?';
-                            $href .= $separator . 'theme=' . $currentTheme;
-                        }
-                        if ($currentScript === 'playground.php' && $currentComponent) {
-                            if (strpos($href, 'playground.php') !== false) {
+                        <?php if (isset($item['type']) && $item['type'] === 'divider'): ?>
+                            <div class="nav-menu-divider"></div>
+                        <?php else: ?>
+                            <?php
+                            $href = $item['href'];
+                            if ($currentTheme !== 'default') {
                                 $separator = strpos($href, '?') !== false ? '&' : '?';
-                                $href .= $separator . 'component=' . $currentComponent;
+                                $href .= $separator . 'theme=' . $currentTheme;
                             }
-                        }
-                        ?>
-                        <a href="<?php echo $href; ?>" class="nav-menu-item<?php echo $item['active'] ? ' active' : ''; ?>">
-                            <span class="nav-menu-icon"><?php echo MD3::icon($item['icon']); ?></span>
-                            <span class="nav-menu-text"><?php echo htmlspecialchars($item['label']); ?></span>
-                            <?php if ($item['active']): ?>
-                                <span class="nav-menu-check"><?php echo MD3::icon('check'); ?></span>
-                            <?php endif; ?>
-                        </a>
+                            if ($currentScript === 'playground.php' && $currentComponent) {
+                                if (strpos($href, 'playground.php') !== false) {
+                                    $separator = strpos($href, '?') !== false ? '&' : '?';
+                                    $href .= $separator . 'component=' . $currentComponent;
+                                }
+                            }
+                            ?>
+                            <a href="<?php echo $href; ?>" class="nav-menu-item<?php echo $item['active'] ? ' active' : ''; ?>">
+                                <span class="nav-menu-icon"><?php echo MD3::icon($item['icon']); ?></span>
+                                <span class="nav-menu-text"><?php echo htmlspecialchars($item['label']); ?></span>
+                                <?php if ($item['active']): ?>
+                                    <span class="nav-menu-check"><?php echo MD3::icon('check'); ?></span>
+                                <?php endif; ?>
+                            </a>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -281,6 +312,12 @@ $navMenuItems = [
 .nav-menu-check {
     font-size: 16px;
     color: var(--md-sys-color-primary);
+}
+
+.nav-menu-divider {
+    height: 1px;
+    background: var(--md-sys-color-outline-variant);
+    margin: 8px 16px;
 }
 
 /* Mode Toggle */

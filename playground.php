@@ -1984,5 +1984,7 @@
     <!-- Snackbar Container -->
     <?php echo MD3Snackbar::container(); ?>
 
+    <?php include 'includes/footer.php'; ?>
+
 </body>
 </html>

@@ -7,6 +7,58 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.43] - 2025-09-28
+
+### ✨ Neue Features
+- **Vollständige Website-Infrastruktur**: Demo-Library zu professioneller Website ausgebaut
+- **Rechtliche Compliance**: Impressum, Datenschutzerklärung und Kontaktseite hinzugefügt
+- **Professionelles Kontaktformular**: Vollwertiges Kontaktformular mit MD3-Komponenten und JavaScript-Validierung
+- **Erweiterte Navigation**: Rechtliche Seiten in Header-Navigation mit Trennlinie integriert
+- **Aktualisierter Footer**: "Rechtliches"-Sektion mit Links zu allen rechtlichen Seiten
+
+### 🎨 Website-Features
+- **Impressum**: Vollständige österreichische Rechtskonformität mit SSI-Unternehmensdaten
+- **Datenschutzerklärung**: Umfassende DSGVO-konforme Datenschutzinformationen
+- **Kontaktseite**: Professionelle Kontaktseite mit Geschäftsinformationen und Support-Details
+- **Repository-Strategie**: Vorbereitung für Zwei-Repository-Ansatz (Core Library vs. Demo Website)
+
+### 🔧 Technische Verbesserungen
+- **Responsive Footer**: Grid-Layout für 5 Sektionen aktualisiert
+- **Navigation Enhancement**: Trennlinien-Support in Header-Navigationsmenü
+- **Formular-Validierung**: Client-seitige Validierung mit MD3-styled Benachrichtigungen
+- **Theme-Konsistenz**: Alle neuen Seiten unterstützen alle verfügbaren Themes
+
+### 📋 Inhaltliche Updates
+- **Firmendaten-Integration**: Echte Unternehmensdaten von www.ssi.at abgerufen und integriert
+- **Rechtliche Compliance**: Alle erforderlichen österreichischen Geschäftsinformationen (UID, Steuernummern, etc.)
+- **Kontaktinformationen**: Vollständige Geschäftskontaktdaten mit anklickbaren Telefon-/E-Mail-Links
+- **Open Source Attribution**: Korrekte GitHub-Repository-Links und Claude Code Credits
+
+## [0.2.42] - 2025-09-28
+
+### 🎯 Hinzugefügt
+- **Central Footer System**: Einheitlicher Footer für alle Seiten mit Version, Links und Credits
+- **Version Integration**: Dynamische Versionsnummer in Footer und Header-Badge
+- **GitHub & Changelog Links**: Direkte Links zu Repository und Versionshistorie
+- **Component Statistics**: Live-Anzeige der Komponentenanzahl (31 Components)
+- **Resource Links**: Schnellzugriff auf Material Design 3 Dokumentation
+- **Back-to-Top Button**: Smooth-Scroll Navigation zurück zum Seitenanfang
+- **Responsive Footer**: Mobile-optimiertes 4-Spalten Layout
+
+### 🎨 UI/UX Verbesserungen
+- **Professional Layout**: 4-Spalten Footer (Info, Links, Resources, Version)
+- **Version Badge**: Prominent platzierte Versionsinformation mit Icon
+- **Build Information**: PHP Version, Component Count, Implementation Details
+- **Claude Code Credits**: Entwicklungs-Credits und Tool-Links
+- **Consistent Theming**: Footer nutzt Material Design 3 Farbsystem
+
+### ✅ Technische Details
+- **includes/footer.php**: Zentraler Footer für Wiederverwendbarkeit
+- **Smart Version Detection**: Automatisches Lesen der VERSION-Datei
+- **Error Handling**: Fallback-Werte für Component Count und Version
+- **Theme Integration**: Footer-Links behalten Theme-Parameter bei
+- **Responsive Grid**: Adaptive Spaltenaufteilung für verschiedene Bildschirmgrößen
+
 ## [0.2.41] - 2025-09-28
 
 ### 🚀 MAJOR FIXES - Demo-Functional.php Complete Restoration
