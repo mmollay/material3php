@@ -219,6 +219,11 @@
             <h3>Component Gallery</h3>
             <p>Complete overview of all implemented components</p>
         </a>
+        <a href="global-demo.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
+            <span class="material-symbols-outlined icon">css</span>
+            <h3>Global CSS Demo</h3>
+            <p>Like Fomantic-UI: Single CSS file approach - no PHP required!</p>
+        </a>
     </div>
 
     <!-- Component Showcase -->
@@ -265,6 +270,44 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Setup Options -->
+    <div class="demo-section">
+        <h2><span class="material-symbols-outlined">settings</span> Two Ways to Use Material3PHP</h2>
+
+        <div class="component-grid">
+            <div class="component-demo">
+                <h3><span class="material-symbols-outlined" style="font-size: 20px; vertical-align: middle;">code</span> PHP Approach</h3>
+                <div style="background: var(--md-sys-color-surface-container); padding: 16px; border-radius: 8px; font-family: monospace; font-size: 13px; margin: 12px 0;">
+                    &lt;?php require_once 'autoload.php'; ?&gt;<br>
+                    &lt;?php echo MD3::init(); ?&gt;<br><br>
+                    &lt;?php echo MD3Button::filled('Hello'); ?&gt;
+                </div>
+                <p style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">
+                    <strong>Features:</strong> Dynamic themes, server-side rendering, component methods
+                </p>
+            </div>
+
+            <div class="component-demo">
+                <h3><span class="material-symbols-outlined" style="font-size: 20px; vertical-align: middle;">css</span> Global CSS Approach</h3>
+                <div style="background: var(--md-sys-color-surface-container); padding: 16px; border-radius: 8px; font-family: monospace; font-size: 13px; margin: 12px 0;">
+                    &lt;link rel="stylesheet" href="dist/material3php.css"&gt;<br><br>
+                    &lt;md-filled-button&gt;Hello&lt;/md-filled-button&gt;
+                </div>
+                <p style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">
+                    <strong>Features:</strong> No PHP required, CDN-ready, like Fomantic-UI
+                </p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 24px; padding: 16px; background: var(--md-sys-color-primary-container); border-radius: 8px;">
+            <p style="margin: 0; color: var(--md-sys-color-on-primary-container);">
+                <span class="material-symbols-outlined" style="vertical-align: middle;">info</span>
+                <strong>Both approaches provide the same Material Design 3 components!</strong>
+                Choose what fits your project best.
+            </p>
         </div>
     </div>
 

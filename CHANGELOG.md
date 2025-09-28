@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.6] - 2025-09-28
+
+### 🔧 Build System & Documentation
+- **Automated CSS Builder**: `build-css.php` automatically collects all component CSS into single file
+- **Build Script**: `./build.sh` for easy rebuilding with XAMPP PHP detection
+- **Build Documentation**: Complete BUILD.md with usage instructions and file sizes
+- **Website Integration**: Added "Global CSS Demo" to main navigation and setup comparison
+- **Minification**: Automatic minified version generation (28% size reduction)
+- **Build Metadata**: JSON file with build info and component statistics
+
+### 🌐 Website Enhancements
+- **Setup Comparison**: Visual comparison of PHP vs Global CSS approaches on homepage
+- **Navigation**: Added global-demo.php link to main navigation
+- **Documentation**: Clear instructions for both usage methods
+
 ## [0.3.5] - 2025-09-28
 
 ### 🚀 Global CSS Framework (Like Fomantic-UI!)
