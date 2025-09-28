@@ -8,17 +8,7 @@
     <meta name="robots" content="noindex, nofollow">
 
     <?php
-    require_once 'src/MD3.php';
-    require_once 'src/MD3Button.php';
-    require_once 'src/MD3Card.php';
-    require_once 'src/MD3TextField.php';
-    require_once 'src/MD3Theme.php';
-    require_once 'src/MD3Header.php';
-    require_once 'src/MD3NavigationBar.php';
-    require_once 'src/MD3Breadcrumb.php';
-    require_once 'src/MD3List.php';
-    require_once 'src/MD3Divider.php';
-    require_once 'src/MD3Snackbar.php';
+    require_once 'autoload.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
@@ -28,12 +18,7 @@
     <style>
     <?php
     echo MD3Theme::getThemeCSS();
-    echo MD3Header::getCSS();
-    echo MD3NavigationBar::getCSS();
     echo MD3Card::getCSS();
-    echo MD3TextField::getCSS();
-    echo MD3Snackbar::getCSS();
-    echo MD3::getVersionCSS();
     ?>
         body {
             margin: 0;
