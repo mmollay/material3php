@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] - 2025-09-28
+
+### 🚀 Global CSS Framework (Like Fomantic-UI!)
+- **Single CSS File**: Created `dist/material3php.css` - complete Material Design 3 framework in one file
+- **Fomantic-UI Style**: Just include one CSS link: `<link rel="stylesheet" href="dist/material3php.css">`
+- **Zero Dependencies**: No need for PHP includes, autoloaders, or complex setup
+- **Complete Framework**: All MD3 components, tokens, and responsive design in one optimized file
+- **Global Demo**: Added `global-demo.php` showcasing single-file approach
+
+### 🔧 Demo Fixes
+- **List CSS Loading**: Fixed missing MD3List CSS in demo-extended.php
+- **Component Gallery**: All Material Design 3 lists now display correctly
+- **Performance**: Reduced CSS loading complexity with targeted fixes
+
 ## [0.3.4] - 2025-09-28
 
 ### 🔧 Critical Playground Fixes

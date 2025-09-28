@@ -13,12 +13,12 @@
     echo MD3::init(true, true, $currentTheme);
     ?>
     <style>
+    /* Demo Gallery CSS - Using existing MD3::init() infrastructure */
     <?php
-    echo MD3Theme::getThemeCSS();
-    echo MD3Card::getCSS();
-
-    // Add safe demo gallery CSS
-    echo "/* Demo Gallery CSS - Safe Implementation */";
+    // Add critical missing CSS for demo
+    if (class_exists('MD3List')) {
+        echo MD3List::getCSS();
+    }
     ?>
     </style>
     <style>

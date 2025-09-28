@@ -1,0 +1,556 @@
+/*!
+ * Material3PHP - Complete CSS Framework
+ * Version: 0.3.4
+ * Like Fomantic-UI but for Material Design 3
+ *
+ * Usage: <link rel="stylesheet" href="dist/material3php.css">
+ */
+
+/* ==========================================================================
+   Material Design 3 Design System Tokens
+   ========================================================================== */
+
+:root {
+  color-scheme: light dark;
+  /* Default theme tokens - can be overridden */
+  --md-sys-color-primary: #6750A4;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #EADDFF;
+  --md-sys-color-on-primary-container: #21005D;
+  --md-sys-color-secondary: #625B71;
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #E8DEF8;
+  --md-sys-color-on-secondary-container: #1D192B;
+  --md-sys-color-tertiary: #7D5260;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-surface: #FEF7FF;
+  --md-sys-color-on-surface: #1C1B1F;
+  --md-sys-color-surface-variant: #E7E0EC;
+  --md-sys-color-on-surface-variant: #49454F;
+  --md-sys-color-background: #FEF7FF;
+  --md-sys-color-on-background: #1C1B1F;
+  --md-sys-color-surface-container-lowest: #FFFFFF;
+  --md-sys-color-surface-container: #F3EDF7;
+  --md-sys-color-surface-container-high: #ECE6F0;
+  --md-sys-color-outline: #79747E;
+  --md-sys-color-outline-variant: #CAC4D0;
+  --md-sys-color-error: #B3261E;
+  --md-sys-color-on-error: #FFFFFF;
+}
+
+[data-theme="dark"] {
+  --md-sys-color-primary: #D0BCFF;
+  --md-sys-color-on-primary: #381E72;
+  --md-sys-color-primary-container: #4F378B;
+  --md-sys-color-on-primary-container: #EADDFF;
+  --md-sys-color-secondary: #CCC2DC;
+  --md-sys-color-on-secondary: #332D41;
+  --md-sys-color-secondary-container: #4A4458;
+  --md-sys-color-on-secondary-container: #E8DEF8;
+  --md-sys-color-tertiary: #EFB8C8;
+  --md-sys-color-on-tertiary: #492532;
+  --md-sys-color-surface: #141218;
+  --md-sys-color-on-surface: #E6E0E9;
+  --md-sys-color-surface-variant: #49454F;
+  --md-sys-color-on-surface-variant: #CAC4D0;
+  --md-sys-color-background: #141218;
+  --md-sys-color-on-background: #E6E0E9;
+  --md-sys-color-surface-container-lowest: #0F0D13;
+  --md-sys-color-surface-container: #211F26;
+  --md-sys-color-surface-container-high: #2B2930;
+  --md-sys-color-outline: #938F99;
+  --md-sys-color-outline-variant: #49454F;
+  --md-sys-color-error: #F2B8B5;
+  --md-sys-color-on-error: #601410;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --md-sys-color-primary: #D0BCFF;
+    --md-sys-color-on-primary: #381E72;
+    --md-sys-color-primary-container: #4F378B;
+    --md-sys-color-on-primary-container: #EADDFF;
+    --md-sys-color-secondary: #CCC2DC;
+    --md-sys-color-on-secondary: #332D41;
+    --md-sys-color-secondary-container: #4A4458;
+    --md-sys-color-on-secondary-container: #E8DEF8;
+    --md-sys-color-tertiary: #EFB8C8;
+    --md-sys-color-on-tertiary: #492532;
+    --md-sys-color-surface: #141218;
+    --md-sys-color-on-surface: #E6E0E9;
+    --md-sys-color-surface-variant: #49454F;
+    --md-sys-color-on-surface-variant: #CAC4D0;
+    --md-sys-color-background: #141218;
+    --md-sys-color-on-background: #E6E0E9;
+    --md-sys-color-surface-container-lowest: #0F0D13;
+    --md-sys-color-surface-container: #211F26;
+    --md-sys-color-surface-container-high: #2B2930;
+    --md-sys-color-outline: #938F99;
+    --md-sys-color-outline-variant: #49454F;
+    --md-sys-color-error: #F2B8B5;
+    --md-sys-color-on-error: #601410;
+  }
+}
+
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+
+body {
+  font-family: "Roboto", system-ui, sans-serif;
+  margin: 0;
+  padding: 16px;
+  background-color: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Material Design 3 Custom Elements Reset */
+md-filled-button, md-outlined-button, md-text-button, md-elevated-button, md-filled-tonal-button,
+md-icon-button, md-filled-icon-button, md-filled-tonal-icon-button, md-outlined-icon-button,
+md-fab, md-filled-text-field, md-outlined-text-field, md-elevated-card, md-filled-card, md-outlined-card,
+md-list, md-list-item, md-divider, md-chip-set, md-assist-chip, md-filter-chip, md-input-chip, md-suggestion-chip,
+md-tooltip, md-switch, md-checkbox, md-radio, md-filled-select, md-outlined-select {
+  display: block;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+/* Button Base Styles */
+md-filled-button, md-outlined-button, md-text-button, md-elevated-button, md-filled-tonal-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Filled Button */
+md-filled-button {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+md-filled-button:hover {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+/* Outlined Button */
+md-outlined-button {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline);
+}
+md-outlined-button:hover {
+  background-color: rgba(103, 80, 164, 0.08);
+}
+
+/* Text Button */
+md-text-button {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+  padding: 0 12px;
+}
+md-text-button:hover {
+  background-color: rgba(103, 80, 164, 0.08);
+}
+
+/* Elevated Button */
+md-elevated-button {
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-primary);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+md-elevated-button:hover {
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Tonal Button */
+md-filled-tonal-button {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+md-filled-tonal-button:hover {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   Icon Buttons
+   ========================================================================== */
+
+md-icon-button, md-filled-icon-button, md-filled-tonal-icon-button, md-outlined-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+md-icon-button {
+  background-color: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+}
+md-icon-button:hover {
+  background-color: rgba(73, 69, 79, 0.08);
+}
+
+md-filled-icon-button {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+md-filled-tonal-icon-button {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+md-outlined-icon-button {
+  background-color: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  border: 1px solid var(--md-sys-color-outline);
+}
+
+/* ==========================================================================
+   FAB (Floating Action Button)
+   ========================================================================== */
+
+md-fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+md-fab:hover {
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 4px 12px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   Text Fields
+   ========================================================================== */
+
+md-filled-text-field, md-outlined-text-field {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  min-width: 200px;
+}
+
+md-filled-text-field input, md-filled-text-field textarea,
+md-outlined-text-field input, md-outlined-text-field textarea {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 16px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--md-sys-color-on-surface);
+}
+
+md-filled-text-field {
+  background-color: var(--md-sys-color-surface-container);
+  border-radius: 4px 4px 0 0;
+  border-bottom: 2px solid var(--md-sys-color-outline);
+}
+md-filled-text-field:focus-within {
+  border-bottom-color: var(--md-sys-color-primary);
+}
+
+md-outlined-text-field {
+  border: 2px solid var(--md-sys-color-outline);
+  border-radius: 4px;
+}
+md-outlined-text-field:focus-within {
+  border-color: var(--md-sys-color-primary);
+}
+
+/* ==========================================================================
+   Select Fields
+   ========================================================================== */
+
+md-filled-select,
+md-outlined-select {
+  width: 100%;
+  margin: 8px 0;
+}
+
+md-filled-select {
+  --md-filled-select-text-field-container-color: var(--md-sys-color-surface-container-highest);
+  --md-filled-select-text-field-focus-label-text-color: var(--md-sys-color-primary);
+  --md-filled-select-text-field-label-text-color: var(--md-sys-color-on-surface-variant);
+  --md-filled-select-text-field-input-text-color: var(--md-sys-color-on-surface);
+}
+
+md-outlined-select {
+  --md-outlined-select-text-field-focus-outline-color: var(--md-sys-color-primary);
+  --md-outlined-select-text-field-focus-label-text-color: var(--md-sys-color-primary);
+  --md-outlined-select-text-field-label-text-color: var(--md-sys-color-on-surface-variant);
+  --md-outlined-select-text-field-outline-color: var(--md-sys-color-outline);
+  --md-outlined-select-text-field-input-text-color: var(--md-sys-color-on-surface);
+}
+
+md-select-option {
+  --md-menu-item-label-text-color: var(--md-sys-color-on-surface);
+  --md-menu-item-selected-container-color: var(--md-sys-color-secondary-container);
+}
+
+/* ==========================================================================
+   Lists
+   ========================================================================== */
+
+.md3-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--md-sys-color-surface);
+  border-radius: 8px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.md3-list-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  min-height: 48px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  color: var(--md-sys-color-on-surface);
+}
+
+.md3-list-item:last-child {
+  border-bottom: none;
+}
+
+.md3-list-item-clickable:hover {
+  background-color: var(--md-sys-color-surface-container-high);
+}
+
+.md3-list-item-start {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.md3-list-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.md3-list-item-end {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+  flex-shrink: 0;
+}
+
+.md3-list-item-text {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--md-sys-color-on-surface);
+}
+
+.md3-list-item-subtext {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: 4px;
+}
+
+.md3-list-icon {
+  font-size: 24px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.md3-list-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.md3-list-badge {
+  background: var(--md-sys-color-error);
+  color: var(--md-sys-color-on-error);
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 12px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.md3-list-meta {
+  font-size: 12px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* Navigation List */
+.md3-list-nav {
+  border: none;
+  background: transparent;
+}
+
+.md3-list-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.md3-list-nav-item {
+  color: var(--md-sys-color-on-surface);
+  text-decoration: none;
+}
+
+.md3-list-nav-active {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+md-elevated-card, md-filled-card, md-outlined-card {
+  display: block;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 8px 0;
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+}
+
+md-elevated-card {
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+md-outlined-card {
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* ==========================================================================
+   Chips
+   ========================================================================== */
+
+md-chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+md-assist-chip, md-filter-chip, md-input-chip, md-suggestion-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+md-assist-chip {
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline);
+}
+
+md-filter-chip {
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline);
+}
+
+md-filter-chip[selected] {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+/* ==========================================================================
+   Dividers
+   ========================================================================== */
+
+md-divider {
+  height: 1px;
+  background-color: var(--md-sys-color-outline-variant);
+  margin: 8px 16px;
+}
+
+/* ==========================================================================
+   Material Icons
+   ========================================================================== */
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  body {
+    padding: 8px;
+  }
+
+  md-filled-button, md-outlined-button, md-text-button, md-elevated-button, md-filled-tonal-button {
+    height: 36px;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+
+  .md3-list-item {
+    padding: 8px 12px;
+  }
+}
+
+/* ==========================================================================
+   Dark Theme Utilities
+   ========================================================================== */
+
+[data-theme="dark"] md-filled-select {
+  --md-filled-select-text-field-container-color: var(--md-sys-color-surface-container-highest);
+}
+
+[data-theme="dark"] md-outlined-select {
+  --md-outlined-select-text-field-outline-color: var(--md-sys-color-outline);
+}
+
+/* ==========================================================================
+   End of Material3PHP CSS Framework
+   ========================================================================== */
