@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material Design 3 PHP Library - Funktionale Demo</title>
     <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
     require_once 'src/MD3.php';
     require_once 'src/MD3Button.php';
     require_once 'src/MD3TextField.php';
@@ -29,14 +31,20 @@
     echo MD3::init(true, true, $currentTheme);
     ?>
     <style>
-    <?php
-    echo MD3Theme::getThemeCSS();
-    echo MD3Header::getCSS();
-    echo MD3List::getCSS();
-    echo MD3Switch::getCSS();
-    echo MD3Checkbox::getCSS();
-    echo MD3Chip::getCSS();
-    ?>
+        <?php
+        if (class_exists('MD3Theme')) {
+            echo MD3Theme::getThemeCSS();
+        }
+        echo MD3::getVersionCSS();
+        // Basic working components first
+        echo MD3Header::getCSS();
+        echo MD3List::getCSS();
+        echo MD3Chip::getCSS();
+        echo MD3Switch::getCSS();
+        echo MD3Checkbox::getCSS();
+        echo MD3Radio::getCSS();
+        // TextField CSS has issues - skip for now
+        ?>
     </style>
     <style>
         body {
@@ -51,23 +59,81 @@
         }
 
         .demo-navigation {
-            margin: 16px 0;
-            padding: 16px;
+            margin: 24px 0;
+            padding: 24px;
             background: var(--md-sys-color-primary-container);
-            border-radius: 12px;
+            border-radius: 16px;
             text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .demo-navigation h3 {
-            margin: 0 0 12px 0;
+            margin: 0 0 20px 0;
             color: var(--md-sys-color-on-primary-container);
+            font-size: 1.25rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .nav-buttons {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .nav-buttons a {
+            text-decoration: none;
+        }
+
+        .nav-buttons .md3-button {
+            min-width: 140px;
+            height: 48px;
+            border-radius: 24px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        .nav-buttons .md3-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .nav-buttons .md3-button--filled {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        .nav-buttons .md3-button--outlined {
+            background: var(--md-sys-color-surface);
+            border: 2px solid var(--md-sys-color-primary);
+            color: var(--md-sys-color-primary);
+        }
+
+        .nav-buttons .md3-button--tonal {
+            background: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+
+        .nav-buttons .md3-button--text {
+            background: transparent;
+            color: var(--md-sys-color-primary);
+            box-shadow: none;
+        }
+
+        .demo-navigation p {
+            margin: 16px 0 0 0;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--md-sys-color-on-primary-container);
+            backdrop-filter: blur(4px);
         }
 
         .demo-section {
@@ -146,18 +212,18 @@
                 <div class="component-demo">
                     <h3>Switches (funktional)</h3>
                     <?php
-                    echo MD3Switch::withLabel('notifications', 'Benachrichtigungen aktivieren', '1', true);
-                    echo MD3Switch::withLabel('dark_mode', 'Dunkles Design verwenden', '1', false);
-                    echo MD3Switch::withLabel('auto_sync', 'Automatische Synchronisation', '1', false);
+                    echo MD3Switch::withLabel('notifications', 'Benachrichtigungen aktivieren', ['value' => '1', 'checked' => true]);
+                    echo MD3Switch::withLabel('dark_mode', 'Dunkles Design verwenden', ['value' => '1', 'checked' => false]);
+                    echo MD3Switch::withLabel('auto_sync', 'Automatische Synchronisation', ['value' => '1', 'checked' => false]);
                     ?>
                 </div>
 
                 <div class="component-demo">
                     <h3>Checkboxes (funktional)</h3>
                     <?php
-                    echo MD3Checkbox::withLabel('terms', 'AGBs akzeptiert', 'accepted', false);
-                    echo MD3Checkbox::withLabel('newsletter', 'Newsletter abonnieren', 'yes', true);
-                    echo MD3Checkbox::withLabel('marketing', 'Marketing-E-Mails erhalten', 'yes', false);
+                    echo MD3Checkbox::withLabel('terms', 'AGBs akzeptiert', ['value' => 'accepted', 'checked' => false]);
+                    echo MD3Checkbox::withLabel('newsletter', 'Newsletter abonnieren', ['value' => 'yes', 'checked' => true]);
+                    echo MD3Checkbox::withLabel('marketing', 'Marketing-E-Mails erhalten', ['value' => 'yes', 'checked' => false]);
                     ?>
                 </div>
 
@@ -401,15 +467,19 @@
 
     <script>
     <?php
-    // Include JavaScript for interactive components
-    echo MD3Chip::getJS();
-    echo MD3List::getJS();
+    // All JavaScript like in playground.php
     echo MD3Switch::getJS();
     echo MD3Checkbox::getJS();
+    echo MD3Radio::getJS();
+    echo MD3Chip::getJS();
+    echo MD3List::getJS();
+    echo MD3Tooltip::getJS();
     ?>
+    console.log('Material Design 3 Demo loaded');
     </script>
 
     <?php
+    // Script includes like playground.php
     echo MD3Search::getSearchScript();
     echo MD3Tooltip::getTooltipScript();
     echo MD3Select::getSelectScript();

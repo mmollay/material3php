@@ -4,9 +4,9 @@
  * Generates components dynamically for the interactive playground
  */
 
-// Error reporting disabled for clean JSON output
-error_reporting(0);
-ini_set('display_errors', 0);
+// Error reporting enabled for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -66,6 +66,8 @@ require_once 'src/MD3BottomSheet.php';
 require_once 'src/MD3DateTimePicker.php';
 require_once 'src/MD3Header.php';
 require_once 'src/MD3Badge.php';
+require_once 'src/MD3Divider.php';
+require_once 'src/MD3Carousel.php';
 
 $component = $input['component'];
 $values = $input['values'] ?? [];
@@ -224,6 +226,21 @@ function generateComponent($component, $values) {
         case 'snackbar':
             $html = generateSnackbar($values);
             $php = generateSnackbarPHP($values);
+            break;
+
+        case 'navigationbar':
+            $html = generateNavigationbar($values);
+            $php = generateNavigationbarPHP($values);
+            break;
+
+        case 'divider':
+            $html = generateDivider($values);
+            $php = generateDividerPHP($values);
+            break;
+
+        case 'carousel':
+            $html = generateCarousel($values);
+            $php = generateCarouselPHP($values);
             break;
 
         default:
@@ -1601,9 +1618,15 @@ function generateSlider($values) {
     $max = intval($values['max'] ?? 100);
     $value = intval($values['value'] ?? 50);
 
+    $options = [
+        'min' => $min,
+        'max' => $max,
+        'value' => $value
+    ];
+
     return $type === 'discrete'
-        ? MD3Slider::discrete('demo_slider', $min, $max, $value)
-        : MD3Slider::continuous('demo_slider', $min, $max, $value);
+        ? MD3Slider::discrete('demo_slider', $options)
+        : MD3Slider::continuous('demo_slider', $options);
 }
 
 function generateSliderPHP($values) {
@@ -1614,9 +1637,10 @@ function generateSliderPHP($values) {
 
     $code = "<?php\n";
     $code .= "require_once 'src/MD3Slider.php';\n\n";
+    $code .= "\$options = ['min' => $min, 'max' => $max, 'value' => $value];\n";
     $code .= $type === 'discrete'
-        ? "echo MD3Slider::discrete('demo_slider', $min, $max, $value);"
-        : "echo MD3Slider::continuous('demo_slider', $min, $max, $value);";
+        ? "echo MD3Slider::discrete('demo_slider', \$options);"
+        : "echo MD3Slider::continuous('demo_slider', \$options);";
 
     return $code;
 }
@@ -1706,10 +1730,32 @@ function generateBottomsheet($values) {
 
     $triggerButton = '<button id="' . $triggerId . '" style="padding: 12px 24px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; border-radius: 8px; cursor: pointer;">Show Bottom Sheet</button>';
 
-    return $triggerButton . MD3BottomSheet::create($title, $content, $sheetId, [
-        'modal' => $type === 'modal',
+    $options = [
+        'id' => $sheetId,
         'trigger' => $triggerId
-    ]);
+    ];
+
+    switch($type) {
+        case 'modal':
+            $bottomSheet = MD3BottomSheet::modal($content, $options);
+            break;
+        case 'standard':
+            $bottomSheet = MD3BottomSheet::standard($content, $options);
+            break;
+        case 'withHandle':
+            $bottomSheet = MD3BottomSheet::withHandle($content, $options);
+            break;
+        case 'fullScreen':
+            $bottomSheet = MD3BottomSheet::fullScreen($content, $options);
+            break;
+        case 'withHeader':
+            $bottomSheet = MD3BottomSheet::withHeader($title, $content, $options);
+            break;
+        default:
+            $bottomSheet = MD3BottomSheet::modal($content, $options);
+    }
+
+    return $triggerButton . $bottomSheet;
 }
 
 function generateBottomsheetPHP($values) {
@@ -1722,10 +1768,27 @@ function generateBottomsheetPHP($values) {
     $code .= "\$triggerId = 'bottomsheet-trigger-' . uniqid();\n";
     $code .= "\$sheetId = 'bottomsheet-' . uniqid();\n";
     $code .= "\$triggerButton = '<button id=\"' . \$triggerId . '\" style=\"padding: 12px 24px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; border-radius: 8px; cursor: pointer;\">Show Bottom Sheet</button>';\n";
-    $code .= "echo \$triggerButton . MD3BottomSheet::create('$title', '$content', \$sheetId, [\n";
-    $code .= "    'modal' => " . ($type === 'modal' ? 'true' : 'false') . ",\n";
-    $code .= "    'trigger' => \$triggerId\n";
-    $code .= "]);";
+    $code .= "\$options = ['id' => \$sheetId, 'trigger' => \$triggerId];\n";
+
+    switch($type) {
+        case 'modal':
+            $code .= "echo \$triggerButton . MD3BottomSheet::modal('$content', \$options);";
+            break;
+        case 'standard':
+            $code .= "echo \$triggerButton . MD3BottomSheet::standard('$content', \$options);";
+            break;
+        case 'withHandle':
+            $code .= "echo \$triggerButton . MD3BottomSheet::withHandle('$content', \$options);";
+            break;
+        case 'fullScreen':
+            $code .= "echo \$triggerButton . MD3BottomSheet::fullScreen('$content', \$options);";
+            break;
+        case 'withHeader':
+            $code .= "echo \$triggerButton . MD3BottomSheet::withHeader('$title', '$content', \$options);";
+            break;
+        default:
+            $code .= "echo \$triggerButton . MD3BottomSheet::modal('$content', \$options);";
+    }
 
     return $code;
 }
@@ -1736,13 +1799,18 @@ function generateDatetimepicker($values) {
     $label = $values['label'] ?? 'Select Date';
     $value = $values['value'] ?? '';
 
+    $options = [
+        'label' => $label,
+        'value' => $value
+    ];
+
     switch ($type) {
         case 'time':
-            return MD3DateTimePicker::timePicker('demo_time', $label, $value);
+            return MD3DateTimePicker::time('demo_time', $options);
         case 'datetime':
-            return MD3DateTimePicker::dateTimePicker('demo_datetime', $label, $value);
+            return MD3DateTimePicker::dateTime('demo_datetime', $options);
         default:
-            return MD3DateTimePicker::datePicker('demo_date', $label, $value);
+            return MD3DateTimePicker::date('demo_date', $options);
     }
 }
 
@@ -1754,15 +1822,17 @@ function generateDatetimepickerPHP($values) {
     $code = "<?php\n";
     $code .= "require_once 'src/MD3DateTimePicker.php';\n\n";
 
+    $code .= "\$options = ['label' => '$label', 'value' => '$value'];\n";
+
     switch ($type) {
         case 'time':
-            $code .= "echo MD3DateTimePicker::timePicker('demo_time', '$label', '$value');";
+            $code .= "echo MD3DateTimePicker::time('demo_time', \$options);";
             break;
         case 'datetime':
-            $code .= "echo MD3DateTimePicker::dateTimePicker('demo_datetime', '$label', '$value');";
+            $code .= "echo MD3DateTimePicker::dateTime('demo_datetime', \$options);";
             break;
         default:
-            $code .= "echo MD3DateTimePicker::datePicker('demo_date', '$label', '$value');";
+            $code .= "echo MD3DateTimePicker::date('demo_date', \$options);";
     }
 
     return $code;
@@ -1776,20 +1846,21 @@ function generateHeader($values) {
 
     $hasSubtitle = !empty($subtitle) && $subtitle !== 'Optional subtitle text';
 
+    // Use the demo method with appropriate icon based on type
+    $icon = 'dashboard';
     switch ($type) {
         case 'medium':
-            return $hasSubtitle
-                ? MD3Header::medium($title, $subtitle)
-                : MD3Header::medium($title);
+            $icon = 'article';
+            break;
         case 'small':
-            return $hasSubtitle
-                ? MD3Header::small($title, $subtitle)
-                : MD3Header::small($title);
-        default:
-            return $hasSubtitle
-                ? MD3Header::large($title, $subtitle)
-                : MD3Header::large($title);
+            $icon = 'description';
+            break;
+        default: // large
+            $icon = 'dashboard';
     }
+
+    $finalTitle = $hasSubtitle ? $title . ' - ' . $subtitle : $title;
+    return MD3Header::demo($finalTitle, $icon);
 }
 
 function generateHeaderPHP($values) {
@@ -1802,21 +1873,23 @@ function generateHeaderPHP($values) {
     $code = "<?php\n";
     $code .= "require_once 'src/MD3Header.php';\n\n";
 
+    // Use the demo method with appropriate icon based on type
+    $icon = 'dashboard';
     switch ($type) {
         case 'medium':
-            $code .= $hasSubtitle
-                ? "echo MD3Header::medium('$title', '$subtitle');"
-                : "echo MD3Header::medium('$title');";
+            $icon = 'article';
             break;
         case 'small':
-            $code .= $hasSubtitle
-                ? "echo MD3Header::small('$title', '$subtitle');"
-                : "echo MD3Header::small('$title');";
+            $icon = 'description';
             break;
-        default:
-            $code .= $hasSubtitle
-                ? "echo MD3Header::large('$title', '$subtitle');"
-                : "echo MD3Header::large('$title');";
+        default: // large
+            $icon = 'dashboard';
+    }
+
+    if ($hasSubtitle) {
+        $code .= "echo MD3Header::demo('$title - $subtitle', '$icon');";
+    } else {
+        $code .= "echo MD3Header::demo('$title', '$icon');";
     }
 
     return $code;
@@ -1898,6 +1971,183 @@ function generateSnackbarPHP($values) {
     $code .= "}\n\n";
     $code .= "echo \$triggerButton . \$snackbar;\n";
     $code .= "echo '<script>document.getElementById(\"' . \$triggerId . '\").onclick = function() { const snackbar = document.getElementById(\"' . \$snackbarId . '\"); if (snackbar && window.snackbarManager) { window.snackbarManager.show(snackbar); } };</script>';";
+
+    return $code;
+}
+
+// NavigationBar Functions
+function generateNavigationbar($values) {
+    $type = $values['type'] ?? 'standard';
+    $itemCount = (int)($values['items'] ?? 4);
+
+    // Generate sample navigation items
+    $items = [];
+    $icons = ['home', 'search', 'favorite', 'person', 'settings'];
+    $labels = ['Home', 'Search', 'Favorites', 'Profile', 'Settings'];
+
+    for ($i = 0; $i < min($itemCount, 5); $i++) {
+        $items[] = [
+            'icon' => $icons[$i],
+            'label' => $labels[$i],
+            'href' => '#',
+            'active' => $i === 0 // First item is active
+        ];
+    }
+
+    $options = ['id' => 'demo-navigation-bar'];
+
+    switch ($type) {
+        case 'floating':
+            return MD3NavigationBar::floating($items, $options);
+        case 'iconsOnly':
+            return MD3NavigationBar::iconsOnly($items, $options);
+        default:
+            return MD3NavigationBar::create($items, $options);
+    }
+}
+
+function generateNavigationbarPHP($values) {
+    $type = $values['type'] ?? 'standard';
+    $itemCount = (int)($values['items'] ?? 4);
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3NavigationBar.php';\n\n";
+    $code .= "\$items = [\n";
+
+    $icons = ['home', 'search', 'favorite', 'person', 'settings'];
+    $labels = ['Home', 'Search', 'Favorites', 'Profile', 'Settings'];
+
+    for ($i = 0; $i < min($itemCount, 5); $i++) {
+        $active = $i === 0 ? 'true' : 'false';
+        $code .= "    ['icon' => '{$icons[$i]}', 'label' => '{$labels[$i]}', 'href' => '#', 'active' => $active],\n";
+    }
+
+    $code .= "];\n\n";
+    $code .= "\$options = ['id' => 'demo-navigation-bar'];\n\n";
+
+    switch ($type) {
+        case 'floating':
+            $code .= "echo MD3NavigationBar::floating(\$items, \$options);";
+            break;
+        case 'iconsOnly':
+            $code .= "echo MD3NavigationBar::iconsOnly(\$items, \$options);";
+            break;
+        default:
+            $code .= "echo MD3NavigationBar::create(\$items, \$options);";
+    }
+
+    return $code;
+}
+
+// Divider Functions
+function generateDivider($values) {
+    $type = $values['type'] ?? 'horizontal';
+    $inset = $values['inset'] ?? false;
+
+    $options = ['id' => 'demo-divider'];
+    if ($inset) {
+        $options['inset'] = true;
+    }
+
+    switch ($type) {
+        case 'vertical':
+            $height = $values['height'] ?? '24px';
+            $options['height'] = $height;
+            return MD3Divider::vertical($options);
+        default:
+            return MD3Divider::horizontal($options);
+    }
+}
+
+function generateDividerPHP($values) {
+    $type = $values['type'] ?? 'horizontal';
+    $inset = $values['inset'] ?? false;
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Divider.php';\n\n";
+    $code .= "\$options = ['id' => 'demo-divider'];\n";
+
+    if ($inset) {
+        $code .= "\$options['inset'] = true;\n";
+    }
+
+    switch ($type) {
+        case 'vertical':
+            $height = addslashes($values['height'] ?? '24px');
+            $code .= "\$options['height'] = '$height';\n";
+            $code .= "echo MD3Divider::vertical(\$options);";
+            break;
+        default:
+            $code .= "echo MD3Divider::horizontal(\$options);";
+    }
+
+    return $code;
+}
+
+// Carousel Functions
+function generateCarousel($values) {
+    $type = $values['type'] ?? 'standard';
+    $itemCount = (int)($values['items'] ?? 3);
+    $autoplay = $values['autoplay'] ?? false;
+    $showIndicators = $values['showIndicators'] ?? true;
+    $showArrows = $values['showArrows'] ?? true;
+
+    // Generate sample carousel items
+    $items = [];
+    for ($i = 1; $i <= min($itemCount, 5); $i++) {
+        $items[] = [
+            'content' => "<div style='padding: 40px; text-align: center; background: linear-gradient(45deg, var(--md-sys-color-primary-container), var(--md-sys-color-secondary-container)); color: var(--md-sys-color-on-primary-container); border-radius: 8px;'>
+                <h3>Slide $i</h3>
+                <p>This is carousel content for slide number $i. Carousels are great for showcasing multiple items or images.</p>
+            </div>"
+        ];
+    }
+
+    $options = [
+        'id' => 'demo-carousel',
+        'autoplay' => $autoplay,
+        'showIndicators' => $showIndicators,
+        'showArrows' => $showArrows
+    ];
+
+    switch ($type) {
+        case 'hero':
+            return MD3Carousel::hero($items, $options);
+        default:
+            return MD3Carousel::create($items, $options);
+    }
+}
+
+function generateCarouselPHP($values) {
+    $type = $values['type'] ?? 'standard';
+    $itemCount = (int)($values['items'] ?? 3);
+    $autoplay = $values['autoplay'] ? 'true' : 'false';
+    $showIndicators = $values['showIndicators'] ? 'true' : 'false';
+    $showArrows = $values['showArrows'] ? 'true' : 'false';
+
+    $code = "<?php\n";
+    $code .= "require_once 'src/MD3Carousel.php';\n\n";
+    $code .= "\$items = [\n";
+
+    for ($i = 1; $i <= min($itemCount, 5); $i++) {
+        $code .= "    ['content' => \"<div style='padding: 40px; text-align: center; background: linear-gradient(45deg, var(--md-sys-color-primary-container), var(--md-sys-color-secondary-container)); color: var(--md-sys-color-on-primary-container); border-radius: 8px;'><h3>Slide $i</h3><p>This is carousel content for slide number $i.</p></div>\"],\n";
+    }
+
+    $code .= "];\n\n";
+    $code .= "\$options = [\n";
+    $code .= "    'id' => 'demo-carousel',\n";
+    $code .= "    'autoplay' => $autoplay,\n";
+    $code .= "    'showIndicators' => $showIndicators,\n";
+    $code .= "    'showArrows' => $showArrows\n";
+    $code .= "];\n\n";
+
+    switch ($type) {
+        case 'hero':
+            $code .= "echo MD3Carousel::hero(\$items, \$options);";
+            break;
+        default:
+            $code .= "echo MD3Carousel::create(\$items, \$options);";
+    }
 
     return $code;
 }

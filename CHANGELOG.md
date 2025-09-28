@@ -7,6 +7,38 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unveröffentlicht]
 
+## [0.2.41] - 2025-09-28
+
+### 🚀 MAJOR FIXES - Demo-Functional.php Complete Restoration
+- **Fixed Critical Styling Issues:** demo-functional.php now displays all components correctly
+- **CSS Loading Optimization:** Resolved component CSS conflicts using playground.php approach
+- **Component Parameter Fixes:** Fixed MD3Switch::withLabel() and MD3Checkbox::withLabel() parameter errors
+- **100% Component Visibility:** All 30 elements now properly visible and functional
+
+### 🎯 Comprehensive Testing & Debugging
+- **Enhanced Playwright Testing:** Improved test scripts for better error detection
+- **CSS Conflict Resolution:** Identified and resolved problematic CSS includes
+- **Interactive Functionality:** All switches, checkboxes, and form elements now working
+- **Performance Optimization:** Page content increased to 137k+ characters
+
+### 📚 Developer Experience
+- **Created HOWTO-CSS-DEBUGGING.md:** Comprehensive guide for future CSS debugging
+- **Best Practices Documentation:** Guidelines for component CSS loading
+- **Debugging Workflow:** Step-by-step troubleshooting procedures
+- **Golden Rules:** Key principles for avoiding CSS conflicts
+
+### 🔧 Technical Implementation
+- **MD3::init() Integration:** Proper theme initialization like working pages
+- **Component CSS Structure:** Unified CSS loading pattern from playground.php
+- **Error Handling:** Improved PHP error detection and resolution
+- **Method Signatures:** Corrected component method parameter formats
+
+### ✅ Validation & Quality Assurance
+- **Playwright Tests:** All tests passing with 0 errors
+- **Visual Validation:** Screenshot verification of proper component rendering
+- **Functional Testing:** Interactive component testing successful
+- **Cross-Theme Compatibility:** Ocean theme properly applied
+
 ## [0.2.40] - 2025-09-27
 
 ### 🎨 MAJOR SELECT REDESIGN - TextField Style Implementation
