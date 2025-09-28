@@ -13,8 +13,22 @@ class MD3Button
      */
     public static function filled(string $text, ?string $href = null, array $attributes = []): string
     {
-        $classes = ['md3-button', 'md3-button--filled'];
-        return self::renderButton($text, $href, $attributes, $classes);
+        $icon = $attributes['data-icon'] ?? '';
+        $onclick = $attributes['onclick'] ?? '';
+        $content = '';
+
+        if ($icon) {
+            $content .= '<span class="material-symbols-outlined">' . htmlspecialchars($icon) . '</span>';
+        }
+        $content .= htmlspecialchars($text);
+
+        if ($href) {
+            $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+            return '<a href="' . htmlspecialchars($href) . '"' . $clickHandler . ' style="text-decoration: none;"><md-filled-button>' . $content . '</md-filled-button></a>';
+        }
+
+        $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+        return '<md-filled-button' . $clickHandler . '>' . $content . '</md-filled-button>';
     }
 
     /**
@@ -22,8 +36,22 @@ class MD3Button
      */
     public static function outlined(string $text, ?string $href = null, array $attributes = []): string
     {
-        $classes = ['md3-button', 'md3-button--outlined'];
-        return self::renderButton($text, $href, $attributes, $classes);
+        $icon = $attributes['data-icon'] ?? '';
+        $onclick = $attributes['onclick'] ?? '';
+        $content = '';
+
+        if ($icon) {
+            $content .= '<span class="material-symbols-outlined">' . htmlspecialchars($icon) . '</span>';
+        }
+        $content .= htmlspecialchars($text);
+
+        if ($href) {
+            $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+            return '<a href="' . htmlspecialchars($href) . '"' . $clickHandler . ' style="text-decoration: none;"><md-outlined-button>' . $content . '</md-outlined-button></a>';
+        }
+
+        $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+        return '<md-outlined-button' . $clickHandler . '>' . $content . '</md-outlined-button>';
     }
 
     /**
@@ -31,8 +59,22 @@ class MD3Button
      */
     public static function text(string $text, ?string $href = null, array $attributes = []): string
     {
-        $classes = ['md3-button', 'md3-button--text'];
-        return self::renderButton($text, $href, $attributes, $classes);
+        $icon = $attributes['data-icon'] ?? '';
+        $onclick = $attributes['onclick'] ?? '';
+        $content = '';
+
+        if ($icon) {
+            $content .= '<span class="material-symbols-outlined">' . htmlspecialchars($icon) . '</span>';
+        }
+        $content .= htmlspecialchars($text);
+
+        if ($href) {
+            $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+            return '<a href="' . htmlspecialchars($href) . '"' . $clickHandler . ' style="text-decoration: none;"><md-text-button>' . $content . '</md-text-button></a>';
+        }
+
+        $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+        return '<md-text-button' . $clickHandler . '>' . $content . '</md-text-button>';
     }
 
     /**
@@ -40,8 +82,22 @@ class MD3Button
      */
     public static function elevated(string $text, ?string $href = null, array $attributes = []): string
     {
-        $classes = ['md3-button', 'md3-button--elevated'];
-        return self::renderButton($text, $href, $attributes, $classes);
+        $icon = $attributes['data-icon'] ?? '';
+        $onclick = $attributes['onclick'] ?? '';
+        $content = '';
+
+        if ($icon) {
+            $content .= '<span class="material-symbols-outlined">' . htmlspecialchars($icon) . '</span>';
+        }
+        $content .= htmlspecialchars($text);
+
+        if ($href) {
+            $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+            return '<a href="' . htmlspecialchars($href) . '"' . $clickHandler . ' style="text-decoration: none;"><md-elevated-button>' . $content . '</md-elevated-button></a>';
+        }
+
+        $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+        return '<md-elevated-button' . $clickHandler . '>' . $content . '</md-elevated-button>';
     }
 
     /**
@@ -49,8 +105,22 @@ class MD3Button
      */
     public static function tonal(string $text, ?string $href = null, array $attributes = []): string
     {
-        $classes = ['md3-button', 'md3-button--tonal'];
-        return self::renderButton($text, $href, $attributes, $classes);
+        $icon = $attributes['data-icon'] ?? '';
+        $onclick = $attributes['onclick'] ?? '';
+        $content = '';
+
+        if ($icon) {
+            $content .= '<span class="material-symbols-outlined">' . htmlspecialchars($icon) . '</span>';
+        }
+        $content .= htmlspecialchars($text);
+
+        if ($href) {
+            $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+            return '<a href="' . htmlspecialchars($href) . '"' . $clickHandler . ' style="text-decoration: none;"><md-tonal-button>' . $content . '</md-tonal-button></a>';
+        }
+
+        $clickHandler = $onclick ? ' onclick="' . htmlspecialchars($onclick) . '"' : '';
+        return '<md-tonal-button' . $clickHandler . '>' . $content . '</md-tonal-button>';
     }
 
     /**

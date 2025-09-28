@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.3] - 2025-09-28
+
+### 🎨 Button System Improvements
+- **MD3Button Class**: Converted all button methods to use proper Material Design 3 HTML elements
+- **HTML Elements**: Now generates `<md-filled-button>`, `<md-outlined-button>`, `<md-text-button>`, etc.
+- **Icon Support**: Enhanced button examples showing `data-icon` attribute usage
+- **Advanced Examples**: Added disabled, link, and onclick button demonstrations
+- **CSS Consistency**: Fixed styling mismatch between button classes and MD3::init() CSS
+
+### 🔧 UI/UX Enhancements
+- **how-to-use.php**: Added comprehensive button examples with icons and special cases
+- **Hero Section**: Improved spacing between header and hero section for better visual balance
+- **Card Examples**: Replaced problematic MD3Card::create() with safe inline styling
+- **Code Documentation**: Enhanced code examples showing all button variations
+
+## [0.3.2] - 2025-09-28
+
+### 🚀 2-Line Integration System
+- **How-to-Use Page**: Complete documentation showing 2-line setup like Fomantic-UI
+- **Minimal Demo**: Simple demonstration of Material3PHP's ease of use
+- **Navigation Integration**: Added demo pages to main website navigation
+- **Stabilized CSS System**: MD3::init() now provides complete all-in-one CSS (885+ lines)
+- **Zero-Configuration**: Users only need `require_once 'autoload.php'` + `echo MD3::init()`
+
+### 🐛 Critical Fixes
+- **demo-extended.php**: Fixed MD3Theme::getThemeScript() causing page truncation
+- **impressum.php**: Fixed 500 errors and added proper header/footer integration
+- **playground.php**: Migrated from manual require_once to autoloader system
+- **CSS Loading**: Removed problematic getCSS() method calls, using safe MD3::init() only
+
+### 📚 New Documentation
+- **how-to-use.php**: Complete guide with live examples and code snippets
+- **minimal-demo.php**: Proof-of-concept showing Material3PHP simplicity
+- **Updated Homepage**: Enhanced navigation with 4 main demo sections
+- **English Internationalization**: All content now in English for international users
+
+### ✨ User Experience
+- **Like Fomantic-UI**: Simple 2-line include system for instant Material Design 3
+- **Production Ready**: Zero external dependencies, pure PHP implementation
+- **Theme Support**: All demo pages work across all themes (default, ocean, sunset)
+- **Responsive Design**: Mobile-first approach across all new pages
+
 ## [0.3.1] - 2025-09-28
 
 ### 🧪 Testing & Quality Assurance

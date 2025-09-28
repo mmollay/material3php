@@ -8,37 +8,9 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
+    require_once 'autoload.php';
+
     try {
-        require_once 'src/MD3.php';
-        require_once 'src/MD3Button.php';
-        require_once 'src/MD3TextField.php';
-        require_once 'src/MD3Search.php';
-        require_once 'src/MD3Select.php';
-        require_once 'src/MD3Card.php';
-        require_once 'src/MD3List.php';
-        require_once 'src/MD3NavigationBar.php';
-        require_once 'src/MD3NavigationDrawer.php';
-        require_once 'src/MD3NavigationRail.php';
-        require_once 'src/MD3Menu.php';
-        require_once 'src/MD3Dialog.php';
-        require_once 'src/MD3FloatingActionButton.php';
-        require_once 'src/MD3IconButton.php';
-        require_once 'src/MD3Chip.php';
-        require_once 'src/MD3Progress.php';
-        require_once 'src/MD3Slider.php';
-        require_once 'src/MD3Switch.php';
-        require_once 'src/MD3Checkbox.php';
-        require_once 'src/MD3Radio.php';
-        require_once 'src/MD3Tabs.php';
-        require_once 'src/MD3Tooltip.php';
-        require_once 'src/MD3Breadcrumb.php';
-        require_once 'src/MD3Toolbar.php';
-        require_once 'src/MD3Badge.php';
-        require_once 'src/MD3BottomSheet.php';
-        require_once 'src/MD3DateTimePicker.php';
-        require_once 'src/MD3Header.php';
-        require_once 'src/MD3Snackbar.php';
-        require_once 'src/MD3Theme.php';
 
         // Get theme from URL parameter or default
         $currentTheme = $_GET['theme'] ?? 'default';

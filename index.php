@@ -199,15 +199,25 @@
 
     <!-- Quick Navigation -->
     <div class="quick-nav">
+        <a href="how-to-use.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
+            <span class="material-symbols-outlined icon">school</span>
+            <h3>How to Use</h3>
+            <p>Complete guide with examples and 2-line setup instructions</p>
+        </a>
+        <a href="minimal-demo.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
+            <span class="material-symbols-outlined icon">flash_on</span>
+            <h3>Quick Demo</h3>
+            <p>Minimal demo showing Material3PHP's simplicity</p>
+        </a>
         <a href="playground.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
             <span class="material-symbols-outlined icon">science</span>
             <h3>Interactive Playground</h3>
-            <p>Live component editor mit allen Konfigurationsoptionen</p>
+            <p>Live component editor with all configuration options</p>
         </a>
         <a href="demo-extended.php<?php echo $currentTheme !== 'default' ? '?theme=' . $currentTheme : ''; ?>" class="nav-card">
             <span class="material-symbols-outlined icon">dashboard</span>
             <h3>Component Gallery</h3>
-            <p>Alle implementierten Komponenten in einer Übersicht</p>
+            <p>Complete overview of all implemented components</p>
         </a>
     </div>
 

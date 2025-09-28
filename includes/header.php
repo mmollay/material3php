@@ -23,6 +23,14 @@ $pageConfigs = [
         'title' => 'MD3 Playground',
         'icon' => 'science'
     ],
+    'how-to-use.php' => [
+        'title' => 'How to Use',
+        'icon' => 'school'
+    ],
+    'minimal-demo.php' => [
+        'title' => 'Quick Demo',
+        'icon' => 'flash_on'
+    ],
     'contact.php' => [
         'title' => 'Contact',
         'icon' => 'contact_phone'
@@ -61,6 +69,18 @@ $navMenuItems = [
         'icon' => 'science',
         'label' => 'Playground',
         'active' => $currentScript === 'playground.php'
+    ],
+    [
+        'href' => 'how-to-use.php',
+        'icon' => 'school',
+        'label' => 'How to Use',
+        'active' => $currentScript === 'how-to-use.php'
+    ],
+    [
+        'href' => 'minimal-demo.php',
+        'icon' => 'flash_on',
+        'label' => 'Quick Demo',
+        'active' => $currentScript === 'minimal-demo.php'
     ],
     [
         'type' => 'divider'

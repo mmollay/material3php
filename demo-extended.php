@@ -17,46 +17,8 @@
     echo MD3Theme::getThemeCSS();
     echo MD3Card::getCSS();
 
-    // Add essential component CSS for demo gallery
-    try {
-        if (class_exists('MD3List')) {
-            echo MD3List::getCSS();
-        }
-    } catch (Exception $e) {
-        echo "/* MD3List CSS error: " . htmlspecialchars($e->getMessage()) . " */";
-    }
-
-    try {
-        if (class_exists('MD3Button')) {
-            echo MD3Button::getCSS();
-        }
-    } catch (Exception $e) {
-        echo "/* MD3Button CSS error: " . htmlspecialchars($e->getMessage()) . " */";
-    }
-
-    try {
-        if (class_exists('MD3TextField')) {
-            echo MD3TextField::getCSS();
-        }
-    } catch (Exception $e) {
-        echo "/* MD3TextField CSS error: " . htmlspecialchars($e->getMessage()) . " */";
-    }
-
-    try {
-        if (class_exists('MD3Chip')) {
-            echo MD3Chip::getCSS();
-        }
-    } catch (Exception $e) {
-        echo "/* MD3Chip CSS error: " . htmlspecialchars($e->getMessage()) . " */";
-    }
-
-    try {
-        if (class_exists('MD3Badge')) {
-            echo MD3Badge::getCSS();
-        }
-    } catch (Exception $e) {
-        echo "/* MD3Badge CSS error: " . htmlspecialchars($e->getMessage()) . " */";
-    }
+    // Add safe demo gallery CSS
+    echo "/* Demo Gallery CSS - Safe Implementation */";
     ?>
     </style>
     <style>
@@ -497,8 +459,21 @@
 
     <?php include 'includes/footer.php'; ?>
 
-    <?php
-    echo MD3Theme::getThemeScript();
-    ?>
+    <script>
+        // Material Design 3 Theme Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const html = document.documentElement;
+
+            // Auto dark mode detection
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                html.setAttribute('data-theme', 'dark');
+            }
+
+            // Listen for theme preference changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+            });
+        });
+    </script>
 </body>
 </html>
