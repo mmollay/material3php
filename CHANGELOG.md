@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2025-09-28
+
+### 🧪 Testing & Quality Assurance
+- **Playwright Integration**: Added comprehensive Playwright testing framework for browser automation
+- **Internationalization Verification**: Confirmed complete German-to-English translation in demo-extended.php
+- **Multi-theme Testing**: Verified functionality across all themes (default, sunset, ocean)
+- **Responsive Design Testing**: Confirmed mobile and tablet compatibility
+- **CSS Loading Validation**: Added MD3List, MD3Button, MD3TextField, MD3Chip, and MD3Badge CSS imports
+
+### 🐛 Bug Fixes
+- **Demo Gallery CSS**: Fixed missing component styling in demo-extended.php
+- **Theme Consistency**: Resolved theme jumping issue with Standard Purple theme
+- **Component Display**: Ensured all MD3 components render with proper styling
+
+### 🔧 Development Tools
+- **Package.json**: Added Node.js project configuration for testing tools
+- **Test Coverage**: Created automated tests for core functionality and internationalization
+- **Quality Metrics**: Established testing baseline for future development
+
 ## [0.3.0] - 2025-09-28
 
 ### 🌍 International Release

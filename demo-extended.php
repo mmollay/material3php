@@ -16,6 +16,47 @@
     <?php
     echo MD3Theme::getThemeCSS();
     echo MD3Card::getCSS();
+
+    // Add essential component CSS for demo gallery
+    try {
+        if (class_exists('MD3List')) {
+            echo MD3List::getCSS();
+        }
+    } catch (Exception $e) {
+        echo "/* MD3List CSS error: " . htmlspecialchars($e->getMessage()) . " */";
+    }
+
+    try {
+        if (class_exists('MD3Button')) {
+            echo MD3Button::getCSS();
+        }
+    } catch (Exception $e) {
+        echo "/* MD3Button CSS error: " . htmlspecialchars($e->getMessage()) . " */";
+    }
+
+    try {
+        if (class_exists('MD3TextField')) {
+            echo MD3TextField::getCSS();
+        }
+    } catch (Exception $e) {
+        echo "/* MD3TextField CSS error: " . htmlspecialchars($e->getMessage()) . " */";
+    }
+
+    try {
+        if (class_exists('MD3Chip')) {
+            echo MD3Chip::getCSS();
+        }
+    } catch (Exception $e) {
+        echo "/* MD3Chip CSS error: " . htmlspecialchars($e->getMessage()) . " */";
+    }
+
+    try {
+        if (class_exists('MD3Badge')) {
+            echo MD3Badge::getCSS();
+        }
+    } catch (Exception $e) {
+        echo "/* MD3Badge CSS error: " . htmlspecialchars($e->getMessage()) . " */";
+    }
     ?>
     </style>
     <style>
@@ -107,67 +148,67 @@
 
     <!-- Lists Demo -->
     <div class="demo-section">
-        <h2><?php echo MD3::icon('list'); ?> Listen (Funktional)</h2>
+        <h2><?php echo MD3::icon('list'); ?> Lists (Functional)</h2>
 
         <div class="demo-grid">
             <div class="component-demo">
-                <h3>Navigationsliste</h3>
+                <h3>Navigation List</h3>
                 <?php
                 echo MD3List::navigation([
                     ['text' => 'Dashboard', 'icon' => 'dashboard', 'href' => '#dashboard', 'badge' => '3'],
                     ['text' => 'Projekte', 'icon' => 'work', 'href' => '#projects'],
-                    ['text' => 'Einstellungen', 'icon' => 'settings', 'href' => '#settings'],
+                    ['text' => 'Settings', 'icon' => 'settings', 'href' => '#settings'],
                     ['text' => 'Hilfe', 'icon' => 'help', 'href' => '#help']
                 ], '#dashboard');
                 ?>
             </div>
 
             <div class="component-demo">
-                <h3>Klickbare Liste mit Badges</h3>
+                <h3>Clickable List with Badges</h3>
                 <?php
                 echo MD3List::simple([
                     ['text' => 'Inbox', 'icon' => 'inbox', 'badge' => '12', 'href' => '#inbox'],
                     ['text' => 'Starred', 'icon' => 'star', 'badge' => '2', 'onclick' => 'alert("Starred angeklickt!")'],
-                    ['text' => 'Sent mail', 'icon' => 'send', 'meta' => 'vor 2h', 'href' => '#sent'],
-                    ['text' => 'Drafts', 'icon' => 'drafts', 'meta' => '5 Entwürfe', 'href' => '#drafts']
+                    ['text' => 'Sent mail', 'icon' => 'send', 'meta' => '2h ago', 'href' => '#sent'],
+                    ['text' => 'Drafts', 'icon' => 'drafts', 'meta' => '5 Drafts', 'href' => '#drafts']
                 ]);
                 ?>
             </div>
 
             <div class="component-demo">
-                <h3>Liste mit Avatars</h3>
+                <h3>List with Avatars</h3>
                 <?php
                 echo MD3List::withAvatars([
                     ['text' => 'Max Mustermann', 'avatar' => 'MM', 'meta' => 'online'],
-                    ['text' => 'Anna Schmidt', 'avatar' => 'AS', 'meta' => 'vor 5 min'],
+                    ['text' => 'Anna Schmidt', 'avatar' => 'AS', 'meta' => '5 min ago'],
                     ['text' => 'Peter Weber', 'avatar' => 'PW', 'meta' => 'offline']
                 ]);
                 ?>
             </div>
 
             <div class="component-demo">
-                <h3>Zwei-Zeilen Liste mit Meta</h3>
+                <h3>Two-Line List with Meta</h3>
                 <?php
                 echo MD3List::twoLine([
                     [
                         'title' => 'Brunch this weekend?',
                         'subtitle' => 'Ali Connors — I\'ll be in your neighborhood...',
                         'icon' => 'person',
-                        'meta' => '2 Min',
+                        'meta' => '2 min',
                         'href' => '#message1'
                     ],
                     [
                         'title' => 'Summer BBQ',
                         'subtitle' => 'to Alex, Scott, Jennifer — Wish I could come...',
                         'icon' => 'person',
-                        'meta' => '1 Std',
+                        'meta' => '1 hour',
                         'onclick' => 'alert("BBQ Message geöffnet!")'
                     ],
                     [
                         'title' => 'Meeting Reminder',
                         'subtitle' => 'Daily standup meeting at 9:00 AM tomorrow',
                         'icon' => 'event',
-                        'meta' => 'heute',
+                        'meta' => 'today',
                         'href' => '#meeting'
                     ]
                 ]);
@@ -175,20 +216,20 @@
             </div>
 
             <div class="component-demo">
-                <h3>Drei-Zeilen Liste</h3>
+                <h3>Three-Line List</h3>
                 <?php
                 echo MD3List::threeLine([
                     [
-                        'title' => 'Projektupdate',
+                        'title' => 'Project Update',
                         'subtitle' => 'Fortschritt beim neuen Feature',
                         'description' => 'Das neue Dashboard-Feature ist zu 85% abgeschlossen und wird nächste Woche deployed.',
                         'icon' => 'update',
                         'onclick' => 'alert("Projektdetails öffnen!")'
                     ],
                     [
-                        'title' => 'Systemwartung',
-                        'subtitle' => 'Geplante Wartung am Wochenende',
-                        'description' => 'Server werden am Samstag zwischen 2-4 Uhr gewartet. Kurze Ausfallzeiten möglich.',
+                        'title' => 'System Maintenance',
+                        'subtitle' => 'Scheduled Weekend Maintenance',
+                        'description' => 'Servers will be maintained on Saturday between 2-4 AM. Brief outages possible.',
                         'icon' => 'build',
                         'href' => '#maintenance'
                     ]
@@ -197,7 +238,7 @@
             </div>
 
             <div class="component-demo">
-                <h3>Auswählbare Liste (funktional)</h3>
+                <h3>Selectable List (Functional)</h3>
                 <form style="background: var(--md-sys-color-surface-container-lowest); padding: 12px; border-radius: 8px; margin-bottom: 16px;">
                     <?php
                     echo MD3List::selectable([
@@ -207,7 +248,7 @@
                     ], 'notifications[]', 'checkbox');
                     ?>
                     <div style="margin-top: 12px;">
-                        <button type="submit" style="padding: 8px 16px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; border-radius: 4px; cursor: pointer;">Einstellungen speichern</button>
+                        <button type="submit" style="padding: 8px 16px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; border-radius: 4px; cursor: pointer;">Save Settings</button>
                     </div>
                 </form>
             </div>
@@ -258,18 +299,18 @@
                     'PHP Library',
                     'Web Components',
                     'User Interface'
-                ], 'Suche mit Vorschlägen...');
+                ], 'Search with suggestions...');
                 ?>
             </div>
 
             <div class="component-demo">
-                <h3>Suche mit Filtern</h3>
+                <h3>Search with Filters</h3>
                 <?php
                 echo MD3Search::withFilters('filter_search', [
-                    ['label' => 'Dokumente', 'value' => 'docs'],
-                    ['label' => 'Bilder', 'value' => 'images'],
+                    ['label' => 'Documents', 'value' => 'docs'],
+                    ['label' => 'Images', 'value' => 'images'],
                     ['label' => 'Videos', 'value' => 'videos']
-                ], 'Gefilterte Suche...');
+                ], 'Filtered search...');
                 ?>
             </div>
         </div>
@@ -284,8 +325,8 @@
                 <h3>Assist Chips</h3>
                 <?php
                 $assistChips = [
-                    MD3Chip::assist('Wetter', ['icon' => 'cloud']),
-                    MD3Chip::assist('Verkehr', ['icon' => 'traffic']),
+                    MD3Chip::assist('Weather', ['icon' => 'cloud']),
+                    MD3Chip::assist('Traffic', ['icon' => 'traffic']),
                     MD3Chip::assist('Restaurant', ['icon' => 'restaurant'])
                 ];
                 echo MD3Chip::set($assistChips, ['variant' => 'assist']);
@@ -296,9 +337,9 @@
                 <h3>Filter Chips</h3>
                 <?php
                 $filterOptions = [
-                    ['label' => 'Alle', 'value' => 'all', 'selected' => true],
-                    ['label' => 'Ungelesen', 'value' => 'unread'],
-                    ['label' => 'Wichtig', 'value' => 'important', 'icon' => 'star']
+                    ['label' => 'All', 'value' => 'all', 'selected' => true],
+                    ['label' => 'Unread', 'value' => 'unread'],
+                    ['label' => 'Important', 'value' => 'important', 'icon' => 'star']
                 ];
                 echo MD3Chip::filterSet($filterOptions, 'email_filter');
                 ?>
@@ -308,7 +349,7 @@
                 <h3>Input Chips</h3>
                 <?php
                 echo MD3Chip::inputField('tags', [
-                    'placeholder' => 'Tag hinzufügen...',
+                    'placeholder' => 'Add tag...',
                     'chips' => ['PHP', 'Material Design', 'Web']
                 ]);
                 ?>
@@ -318,16 +359,16 @@
 
     <!-- Form Controls Demo -->
     <div class="demo-section">
-        <h2><?php echo MD3::icon('tune'); ?> Formular-Kontrollen</h2>
+        <h2><?php echo MD3::icon('tune'); ?> Form Controls</h2>
 
         <div class="demo-grid">
             <div class="component-demo">
                 <h3>Switches</h3>
                 <div class="demo-form-controls">
                     <?php
-                    echo MD3Switch::withLabel('notifications', 'Benachrichtigungen aktivieren', ['value' => '1', 'checked' => true]);
-                    echo MD3Switch::withLabel('dark_mode', 'Dunkles Design', ['value' => '1', 'checked' => false]);
-                    echo MD3Switch::withLabel('auto_sync', 'Automatische Synchronisation', ['value' => '1', 'checked' => false]);
+                    echo MD3Switch::withLabel('notifications', 'Enable notifications', ['value' => '1', 'checked' => true]);
+                    echo MD3Switch::withLabel('dark_mode', 'Dark mode', ['value' => '1', 'checked' => false]);
+                    echo MD3Switch::withLabel('auto_sync', 'Automatic synchronization', ['value' => '1', 'checked' => false]);
                     ?>
                 </div>
             </div>
@@ -336,9 +377,9 @@
                 <h3>Checkboxes</h3>
                 <div class="demo-form-controls">
                     <?php
-                    echo MD3Checkbox::withLabel('terms', 'AGBs akzeptieren', ['value' => '1', 'checked' => false]);
-                    echo MD3Checkbox::withLabel('newsletter', 'Newsletter abonnieren', ['value' => '1', 'checked' => true]);
-                    echo MD3Checkbox::withLabel('marketing', 'Marketing E-Mails erhalten', ['value' => '1', 'checked' => false]);
+                    echo MD3Checkbox::withLabel('terms', 'Accept terms', ['value' => '1', 'checked' => false]);
+                    echo MD3Checkbox::withLabel('newsletter', 'Subscribe to newsletter', ['value' => '1', 'checked' => true]);
+                    echo MD3Checkbox::withLabel('marketing', 'Receive marketing emails', ['value' => '1', 'checked' => false]);
                     ?>
                 </div>
             </div>
@@ -347,9 +388,9 @@
                 <h3>Radio Buttons</h3>
                 <?php
                 echo MD3Radio::group('payment_method', [
-                    ['label' => 'Kreditkarte', 'value' => 'credit'],
+                    ['label' => 'Credit Card', 'value' => 'credit'],
                     ['label' => 'PayPal', 'value' => 'paypal'],
-                    ['label' => 'Banküberweisung', 'value' => 'transfer']
+                    ['label' => 'Bank Transfer', 'value' => 'transfer']
                 ], 'credit');
                 ?>
             </div>
@@ -362,30 +403,30 @@
 
         <div class="demo-grid">
             <div class="component-demo">
-                <h3>Basis Tooltips</h3>
+                <h3>Basic Tooltips</h3>
                 <div class="demo-buttons">
                     <div class="tooltip-demo">
                         <?php
-                        echo MD3Button::filled('Hover mich', null, ['id' => 'tooltip-button-1']);
-                        echo MD3Tooltip::basic('Das ist ein einfacher Tooltip', 'tooltip-button-1');
+                        echo MD3Button::filled('Hover me', null, ['id' => 'tooltip-button-1']);
+                        echo MD3Tooltip::basic('This is a simple tooltip', 'tooltip-button-1');
                         ?>
                     </div>
 
                     <div class="tooltip-demo">
                         <?php
-                        echo MD3Button::outlined('Mit Icon', null, ['id' => 'tooltip-button-2']);
-                        echo MD3Tooltip::withIcon('Tooltip mit Icon', 'star', 'tooltip-button-2');
+                        echo MD3Button::outlined('With Icon', null, ['id' => 'tooltip-button-2']);
+                        echo MD3Tooltip::withIcon('Tooltip with icon', 'star', 'tooltip-button-2');
                         ?>
                     </div>
                 </div>
             </div>
 
             <div class="component-demo">
-                <h3>Hilfe-Tooltips</h3>
+                <h3>Help Tooltips</h3>
                 <div style="display: flex; align-items: center; gap: 8px;">
-                    <span>Komplexe Einstellung</span>
+                    <span>Complex Setting</span>
                     <?php
-                    echo MD3Tooltip::help('Dies ist eine erweiterte Einstellung, die nur von erfahrenen Benutzern geändert werden sollte.', 'help-1');
+                    echo MD3Tooltip::help('This is an advanced setting that should only be changed by experienced users.', 'help-1');
                     ?>
                 </div>
             </div>
@@ -397,7 +438,7 @@
                     echo MD3Button::elevated('Rich Tooltip', null, ['id' => 'rich-tooltip-button']);
                     echo MD3Tooltip::rich(
                         'Material Design 3',
-                        'Ein umfassendes Design-System von Google für moderne Benutzeroberflächen.',
+                        'A comprehensive design system by Google for modern user interfaces.',
                         'rich-tooltip-button'
                     );
                     ?>
@@ -408,10 +449,10 @@
 
     <!-- Integration Demo -->
     <div class="demo-section">
-        <h2><?php echo MD3::icon('integration_instructions'); ?> Integration Beispiel</h2>
+        <h2><?php echo MD3::icon('integration_instructions'); ?> Integration Example</h2>
 
         <div class="component-demo">
-            <h3>Komplettes Formular</h3>
+            <h3>Complete Form</h3>
             <form style="max-width: 600px;">
                 <div class="demo-fields">
                     <?php
@@ -419,32 +460,32 @@
                     echo MD3TextField::emailOutlined('email', 'E-Mail');
 
                     echo '<div style="margin: 16px 0;">';
-                    echo '<p style="margin-bottom: 8px; font-weight: 500;">Interessen:</p>';
+                    echo '<p style="margin-bottom: 8px; font-weight: 500;">Interests:</p>';
                     $interests = [
-                        ['label' => 'Technologie', 'value' => 'tech'],
+                        ['label' => 'Technology', 'value' => 'tech'],
                         ['label' => 'Design', 'value' => 'design', 'selected' => true],
-                        ['label' => 'Entwicklung', 'value' => 'dev']
+                        ['label' => 'Development', 'value' => 'dev']
                     ];
                     echo MD3Chip::filterSet($interests, 'interests');
                     echo '</div>';
 
                     echo '<div style="margin: 16px 0;">';
-                    echo MD3Switch::withLabel('subscribe', 'Newsletter abonnieren', ['value' => '1', 'checked' => true]);
+                    echo MD3Switch::withLabel('subscribe', 'Subscribe to newsletter', ['value' => '1', 'checked' => true]);
                     echo '</div>';
 
                     echo '<div style="margin: 16px 0;">';
                     echo MD3Radio::group('contact_preference', [
-                        ['label' => 'E-Mail', 'value' => 'email'],
-                        ['label' => 'Telefon', 'value' => 'phone'],
-                        ['label' => 'Post', 'value' => 'mail']
+                        ['label' => 'Email', 'value' => 'email'],
+                        ['label' => 'Phone', 'value' => 'phone'],
+                        ['label' => 'Mail', 'value' => 'mail']
                     ], 'email');
                     echo '</div>';
                     ?>
 
                     <div class="demo-buttons" style="margin-top: 24px;">
                         <?php
-                        echo MD3Button::filled('Absenden');
-                        echo MD3Button::outlined('Abbrechen');
+                        echo MD3Button::filled('Submit');
+                        echo MD3Button::outlined('Cancel');
                         ?>
                     </div>
                 </div>
