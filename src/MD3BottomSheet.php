@@ -1,6 +1,5 @@
 <?php
 
-require_once 'MD3.php';
 
 /**
  * MD3BottomSheet - Material Design 3 Bottom Sheet Components

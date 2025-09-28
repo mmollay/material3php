@@ -1,6 +1,5 @@
 <?php
 
-require_once 'MD3.php';
 
 /**
  * MD3Button - Material Design 3 Button Components

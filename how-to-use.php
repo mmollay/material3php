@@ -130,18 +130,38 @@
         <h3><span class="step">4</span>Lists</h3>
         <div class="demo-area">
             <div style="max-width: 400px;">
-                <?php echo MD3List::create([
-                    ['title' => 'Dashboard', 'subtitle' => 'Overview and analytics', 'icon' => 'dashboard'],
-                    ['title' => 'Settings', 'subtitle' => 'Configure your preferences', 'icon' => 'settings'],
-                    ['title' => 'Profile', 'subtitle' => 'Manage your account', 'icon' => 'person']
-                ]); ?>
+                <div style="background: var(--md-sys-color-surface-container-low); border-radius: 12px; overflow: hidden;">
+                    <div style="padding: 16px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+                        <?php echo MD3::icon('dashboard'); ?>
+                        <div>
+                            <div style="font-weight: 500;">Dashboard</div>
+                            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Overview and analytics</div>
+                        </div>
+                    </div>
+                    <div style="padding: 16px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+                        <?php echo MD3::icon('settings'); ?>
+                        <div>
+                            <div style="font-weight: 500;">Settings</div>
+                            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Configure your preferences</div>
+                        </div>
+                    </div>
+                    <div style="padding: 16px; display: flex; align-items: center; gap: 16px;">
+                        <?php echo MD3::icon('person'); ?>
+                        <div>
+                            <div style="font-weight: 500;">Profile</div>
+                            <div style="font-size: 14px; color: var(--md-sys-color-on-surface-variant);">Manage your account</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="code-example">
-&lt;?php echo MD3List::create([<br>
-&nbsp;&nbsp;&nbsp;&nbsp;['title' => 'Dashboard', 'subtitle' => 'Overview', 'icon' => 'dashboard'],<br>
-&nbsp;&nbsp;&nbsp;&nbsp;['title' => 'Settings', 'subtitle' => 'Configure', 'icon' => 'settings']<br>
-]); ?&gt;
+&lt;div style="background: var(--md-sys-color-surface-container-low); border-radius: 12px;"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div style="padding: 16px; display: flex; align-items: center; gap: 16px;"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;?php echo MD3::icon('dashboard'); ?&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;&lt;strong&gt;Dashboard&lt;/strong&gt;&lt;br&gt;Overview and analytics&lt;/div&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+&lt;/div&gt;
         </div>
     </div>
 

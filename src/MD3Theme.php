@@ -1,6 +1,5 @@
 <?php
 
-require_once 'MD3.php';
 
 /**
  * MD3Theme - Material Design 3 Theme System

@@ -1,0 +1,307 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - button "menu Menu expand_more" [ref=e6] [cursor=pointer]:
+          - generic [ref=e7] [cursor=pointer]: menu
+          - generic [ref=e8] [cursor=pointer]: Menu
+          - generic [ref=e9] [cursor=pointer]: expand_more
+        - heading "science MD3 Playground" [level=1] [ref=e10]:
+          - generic [ref=e11]: science
+          - text: MD3 Playground
+      - generic [ref=e12]:
+        - button "dark_mode" [ref=e13] [cursor=pointer]:
+          - generic [ref=e14] [cursor=pointer]: dark_mode
+        - button "palette Ocean Blue expand_more" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17] [cursor=pointer]: palette
+          - generic [ref=e18] [cursor=pointer]: Ocean Blue
+          - generic [ref=e19] [cursor=pointer]: expand_more
+  - generic [ref=e20]:
+    - navigation [ref=e21]:
+      - generic [ref=e22]:
+        - heading "Basic Components" [level=3] [ref=e23]
+        - link "smart_button Button" [ref=e24] [cursor=pointer]:
+          - /url: "?component=button&theme=ocean"
+          - generic [ref=e25] [cursor=pointer]: smart_button
+          - text: Button
+        - link "radio_button_unchecked Icon Button" [ref=e26] [cursor=pointer]:
+          - /url: "?component=iconbutton&theme=ocean"
+          - generic [ref=e27] [cursor=pointer]: radio_button_unchecked
+          - text: Icon Button
+        - link "text_fields TextField" [ref=e28] [cursor=pointer]:
+          - /url: "?component=textfield&theme=ocean"
+          - generic [ref=e29] [cursor=pointer]: text_fields
+          - text: TextField
+        - link "search Search Bar" [ref=e30] [cursor=pointer]:
+          - /url: "?component=search&theme=ocean"
+          - generic [ref=e31] [cursor=pointer]: search
+          - text: Search Bar
+        - link "web_stories Card" [ref=e32] [cursor=pointer]:
+          - /url: "?component=card&theme=ocean"
+          - generic [ref=e33] [cursor=pointer]: web_stories
+          - text: Card
+      - generic [ref=e34]:
+        - heading "Navigation" [level=3] [ref=e35]
+        - link "bottom_navigation Nav Bar" [ref=e36] [cursor=pointer]:
+          - /url: "?component=navigation&theme=ocean"
+          - generic [ref=e37] [cursor=pointer]: bottom_navigation
+          - text: Nav Bar
+        - link "menu_open Nav Drawer" [ref=e38] [cursor=pointer]:
+          - /url: "?component=navigationdrawer&theme=ocean"
+          - generic [ref=e39] [cursor=pointer]: menu_open
+          - text: Nav Drawer
+        - link "dock_to_left Nav Rail" [ref=e40] [cursor=pointer]:
+          - /url: "?component=navigationrail&theme=ocean"
+          - generic [ref=e41] [cursor=pointer]: dock_to_left
+          - text: Nav Rail
+        - link "chevron_right Breadcrumb" [ref=e42] [cursor=pointer]:
+          - /url: "?component=breadcrumb&theme=ocean"
+          - generic [ref=e43] [cursor=pointer]: chevron_right
+          - text: Breadcrumb
+        - link "view_headline Toolbar" [ref=e44] [cursor=pointer]:
+          - /url: "?component=toolbar&theme=ocean"
+          - generic [ref=e45] [cursor=pointer]: view_headline
+          - text: Toolbar
+        - link "more_vert Menu" [ref=e46] [cursor=pointer]:
+          - /url: "?component=menu&theme=ocean"
+          - generic [ref=e47] [cursor=pointer]: more_vert
+          - text: Menu
+        - link "tab Tabs" [ref=e48] [cursor=pointer]:
+          - /url: "?component=tabs&theme=ocean"
+          - generic [ref=e49] [cursor=pointer]: tab
+          - text: Tabs
+      - generic [ref=e50]:
+        - heading "Overlays" [level=3] [ref=e51]
+        - link "open_in_new Dialog" [ref=e52] [cursor=pointer]:
+          - /url: "?component=dialog&theme=ocean"
+          - generic [ref=e53] [cursor=pointer]: open_in_new
+          - text: Dialog
+        - link "help Tooltip" [ref=e54] [cursor=pointer]:
+          - /url: "?component=tooltip&theme=ocean"
+          - generic [ref=e55] [cursor=pointer]: help
+          - text: Tooltip
+        - link "vertical_align_bottom Bottom Sheet" [ref=e56] [cursor=pointer]:
+          - /url: "?component=bottomsheet&theme=ocean"
+          - generic [ref=e57] [cursor=pointer]: vertical_align_bottom
+          - text: Bottom Sheet
+        - link "notifications Snackbar" [ref=e58] [cursor=pointer]:
+          - /url: "?component=snackbar&theme=ocean"
+          - generic [ref=e59] [cursor=pointer]: notifications
+          - text: Snackbar
+      - generic [ref=e60]:
+        - heading "Form Controls" [level=3] [ref=e61]
+        - link "arrow_drop_down Select" [ref=e62] [cursor=pointer]:
+          - /url: "?component=select&theme=ocean"
+          - generic [ref=e63] [cursor=pointer]: arrow_drop_down
+          - text: Select
+        - link "toggle_on Switch" [ref=e64] [cursor=pointer]:
+          - /url: "?component=switch&theme=ocean"
+          - generic [ref=e65] [cursor=pointer]: toggle_on
+          - text: Switch
+        - link "check_box Checkbox" [ref=e66] [cursor=pointer]:
+          - /url: "?component=checkbox&theme=ocean"
+          - generic [ref=e67] [cursor=pointer]: check_box
+          - text: Checkbox
+        - link "radio_button_checked Radio" [ref=e68] [cursor=pointer]:
+          - /url: "?component=radio&theme=ocean"
+          - generic [ref=e69] [cursor=pointer]: radio_button_checked
+          - text: Radio
+        - link "tune Slider" [ref=e70] [cursor=pointer]:
+          - /url: "?component=slider&theme=ocean"
+          - generic [ref=e71] [cursor=pointer]: tune
+          - text: Slider
+        - link "progress_activity Progress" [ref=e72] [cursor=pointer]:
+          - /url: "?component=progress&theme=ocean"
+          - generic [ref=e73] [cursor=pointer]: progress_activity
+          - text: Progress
+        - link "calendar_today Date/Time Picker" [ref=e74] [cursor=pointer]:
+          - /url: "?component=datetimepicker&theme=ocean"
+          - generic [ref=e75] [cursor=pointer]: calendar_today
+          - text: Date/Time Picker
+      - generic [ref=e76]:
+        - heading "Collections" [level=3] [ref=e77]
+        - link "list List" [ref=e78] [cursor=pointer]:
+          - /url: "?component=list&theme=ocean"
+          - generic [ref=e79] [cursor=pointer]: list
+          - text: List
+        - link "label Chip" [ref=e80] [cursor=pointer]:
+          - /url: "?component=chip&theme=ocean"
+          - generic [ref=e81] [cursor=pointer]: label
+          - text: Chip
+        - link "circle Badge" [ref=e82] [cursor=pointer]:
+          - /url: "?component=badge&theme=ocean"
+          - generic [ref=e83] [cursor=pointer]: circle
+          - text: Badge
+        - link "title Header" [ref=e84] [cursor=pointer]:
+          - /url: "?component=header&theme=ocean"
+          - generic [ref=e85] [cursor=pointer]: title
+          - text: Header
+      - generic [ref=e86]:
+        - heading "Info" [level=3] [ref=e87]
+        - generic [ref=e88]:
+          - strong [ref=e90]: v0.3.3
+          - generic [ref=e91]: 28 Components
+          - generic [ref=e92]: Ocean Theme
+    - main [ref=e93]:
+      - generic [ref=e94]:
+        - generic [ref=e96] [cursor=pointer]: Click me
+        - generic [ref=e97]:
+          - heading "code PHP Code" [level=4] [ref=e98]:
+            - generic [ref=e99]: code
+            - text: PHP Code
+          - generic [ref=e100]:
+            - button "Copy" [ref=e101] [cursor=pointer]
+            - code [ref=e102]: <?php require_once 'src/MD3Button.php'; echo MD3Button::filled('Click me', null);
+        - generic [ref=e103]:
+          - heading "html Generated HTML" [level=4] [ref=e104]:
+            - generic [ref=e105]: html
+            - text: Generated HTML
+          - generic [ref=e106]:
+            - button "Copy" [ref=e107] [cursor=pointer]
+            - code [ref=e108]: <md-filled-button>Click me</md-filled-button>
+      - generic [ref=e109]:
+        - heading "tune Component Controls" [level=3] [ref=e110]:
+          - generic [ref=e111]: tune
+          - text: Component Controls
+        - generic [ref=e112]:
+          - generic [ref=e113]:
+            - generic [ref=e114]: Button Type
+            - combobox [ref=e115] [cursor=pointer]:
+              - option "Filled" [selected]
+              - option "Outlined"
+              - option "Text"
+              - option "Elevated"
+              - option "Tonal"
+          - generic [ref=e116]:
+            - generic [ref=e117]: Button Text
+            - textbox [ref=e118]: Click me
+          - generic [ref=e119]:
+            - generic [ref=e120]: Icon (optional)
+            - textbox "e.g. favorite, add, delete" [ref=e121]
+          - generic [ref=e122] [cursor=pointer]:
+            - generic [ref=e123] [cursor=pointer]: Disabled
+            - checkbox [ref=e124] [cursor=pointer]
+        - generic [ref=e125]:
+          - generic [ref=e126]:
+            - heading "info Material Design 3 PHP Library" [level=3] [ref=e127]:
+              - generic [ref=e128]: info
+              - text: Material Design 3 PHP Library
+            - generic [ref=e129]: v0.3.3
+          - generic [ref=e130]:
+            - generic [ref=e131]:
+              - strong [ref=e132]: "Build:"
+              - text: 2025-09-28
+            - generic [ref=e133]:
+              - strong [ref=e134]: "PHP:"
+              - text: 8.2.4
+            - generic [ref=e135]:
+              - strong [ref=e136]: "Komponenten:"
+              - text: "31"
+            - generic [ref=e137]:
+              - strong [ref=e138]: "Offline:"
+              - text: ✅
+  - contentinfo [ref=e139]:
+    - generic [ref=e140]:
+      - generic [ref=e141]:
+        - generic [ref=e142]:
+          - heading "Material Design 3 PHP Library" [level=3] [ref=e143]
+          - paragraph [ref=e144]: Pure PHP implementation of Google's Material Design 3 system
+          - generic [ref=e145]:
+            - generic [ref=e146]:
+              - generic [ref=e147]: widgets
+              - strong [ref=e148]: "31"
+              - text: Components
+            - generic [ref=e149]:
+              - generic [ref=e150]: code
+              - strong [ref=e151]: Pure PHP
+            - generic [ref=e152]:
+              - generic [ref=e153]: check_circle
+              - strong [ref=e154]: MD3 Compliant
+        - generic [ref=e155]:
+          - heading "Quick Links" [level=4] [ref=e156]
+          - list [ref=e157]:
+            - listitem [ref=e158]:
+              - link "home Home" [ref=e159] [cursor=pointer]:
+                - /url: index.php?theme=ocean
+                - generic [ref=e160] [cursor=pointer]: home
+                - text: Home
+            - listitem [ref=e161]:
+              - link "dashboard Component Gallery" [ref=e162] [cursor=pointer]:
+                - /url: demo-extended.php?theme=ocean
+                - generic [ref=e163] [cursor=pointer]: dashboard
+                - text: Component Gallery
+            - listitem [ref=e164]:
+              - link "science Interactive Playground" [ref=e165] [cursor=pointer]:
+                - /url: playground.php?theme=ocean
+                - generic [ref=e166] [cursor=pointer]: science
+                - text: Interactive Playground
+        - generic [ref=e167]:
+          - heading "Resources" [level=4] [ref=e168]
+          - list [ref=e169]:
+            - listitem [ref=e170]:
+              - link "history Changelog" [ref=e171] [cursor=pointer]:
+                - /url: CHANGELOG.md
+                - generic [ref=e172] [cursor=pointer]: history
+                - text: Changelog
+            - listitem [ref=e173]:
+              - link "code GitHub Repository" [ref=e174] [cursor=pointer]:
+                - /url: https://github.com/mmollay/material3php
+                - generic [ref=e175] [cursor=pointer]: code
+                - text: GitHub Repository
+            - listitem [ref=e176]:
+              - link "design_services Material Design 3" [ref=e177] [cursor=pointer]:
+                - /url: https://m3.material.io
+                - generic [ref=e178] [cursor=pointer]: design_services
+                - text: Material Design 3
+            - listitem [ref=e179]:
+              - link "smart_toy Built with Claude Code" [ref=e180] [cursor=pointer]:
+                - /url: https://claude.ai/code
+                - generic [ref=e181] [cursor=pointer]: smart_toy
+                - text: Built with Claude Code
+        - generic [ref=e182]:
+          - heading "Legal" [level=4] [ref=e183]
+          - list [ref=e184]:
+            - listitem [ref=e185]:
+              - link "info Legal Notice" [ref=e186] [cursor=pointer]:
+                - /url: impressum.php?theme=ocean
+                - generic [ref=e187] [cursor=pointer]: info
+                - text: Legal Notice
+            - listitem [ref=e188]:
+              - link "privacy_tip Privacy Policy" [ref=e189] [cursor=pointer]:
+                - /url: privacy-policy.php?theme=ocean
+                - generic [ref=e190] [cursor=pointer]: privacy_tip
+                - text: Privacy Policy
+            - listitem [ref=e191]:
+              - link "contact_phone Contact" [ref=e192] [cursor=pointer]:
+                - /url: contact.php?theme=ocean
+                - generic [ref=e193] [cursor=pointer]: contact_phone
+                - text: Contact
+        - generic [ref=e194]:
+          - heading "Version Info" [level=4] [ref=e195]
+          - generic [ref=e196]:
+            - generic [ref=e197]:
+              - generic [ref=e198]: new_releases
+              - generic [ref=e199]: v0.3.3
+            - paragraph [ref=e200]: "Updated: 2025-09-28"
+            - generic [ref=e202]: PHP 8.2.4 • 31 Components • CSS-only Implementation
+      - generic [ref=e203]:
+        - generic [ref=e204]:
+          - paragraph [ref=e205]:
+            - text: © 2025 Material Design 3 PHP Library • Made with
+            - generic [ref=e206]: favorite
+            - text: for pure PHP implementations
+          - paragraph [ref=e207]:
+            - text: 🤖 Developed with
+            - link "Claude Code" [ref=e208] [cursor=pointer]:
+              - /url: https://claude.ai/code
+            - text: • Design System by
+            - link "Google Material Design" [ref=e209] [cursor=pointer]:
+              - /url: https://m3.material.io
+        - link "keyboard_arrow_up Back to Top" [ref=e211] [cursor=pointer]:
+          - /url: "#top"
+          - generic [ref=e212] [cursor=pointer]: keyboard_arrow_up
+          - generic [ref=e213] [cursor=pointer]: Back to Top
+```

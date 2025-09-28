@@ -812,8 +812,15 @@
     <script><?php echo MD3List::getJS(); ?></script>
     <script><?php echo MD3Tooltip::getJS(); ?></script>
     <script><?php echo MD3Snackbar::getJS(); ?></script>
-    <?php echo MD3Select::getSelectScript(); ?>
-    <?php echo MD3Theme::getThemeScript(); ?>
+    <script>
+        // Theme system initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            const html = document.documentElement;
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                html.setAttribute('data-theme', 'dark');
+            }
+        });
+    </script>
 
     <script>
         // Component configurations

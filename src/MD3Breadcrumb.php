@@ -1,6 +1,5 @@
 <?php
 
-require_once 'MD3.php';
 
 /**
  * MD3Breadcrumb - Material Design 3 Breadcrumb Navigation

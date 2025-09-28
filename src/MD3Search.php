@@ -1,6 +1,5 @@
 <?php
 
-require_once 'MD3.php';
 require_once 'MD3TextField.php';
 
 /**

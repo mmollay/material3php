@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.4] - 2025-09-28
+
+### 🔧 Critical Playground Fixes
+- **Autoloader Issues**: Removed all conflicting `require_once` statements from MD3 component files
+- **MD3Select Rewrite**: Complete rewrite using proper Material Design 3 `<md-filled-select>` and `<md-outlined-select>` elements
+- **Playground Stability**: Fixed undefined method errors in playground.php for select and theme scripts
+- **Component Testing**: Added comprehensive Playwright tests for playground components (5/6 passing)
+
+### 🎨 Material Design 3 Compliance
+- **Proper HTML Elements**: MD3Select now generates correct `<md-select-option>` elements with `slot="headline"`
+- **CSS Token Integration**: Full integration with Material Design 3 design tokens and theme system
+- **Component Performance**: Improved loading times by removing circular dependencies
+
 ## [0.3.3] - 2025-09-28
 
 ### 🎨 Button System Improvements

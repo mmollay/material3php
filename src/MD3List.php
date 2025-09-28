@@ -1,6 +1,5 @@
 <?php
 
-require_once 'MD3.php';
 
 /**
  * MD3List - Material Design 3 List Components

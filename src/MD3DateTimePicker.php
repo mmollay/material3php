@@ -1,7 +1,5 @@
 <?php
 
-require_once 'MD3.php';
-
 /**
  * MD3DateTimePicker - Material Design 3 Date and Time Picker Components
  * Generates functional HTML for Material Design 3 date and time pickers

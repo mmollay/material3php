@@ -74,7 +74,6 @@ class MD3NavigationBar
 
         $iconHtml = '';
         if ($icon) {
-            require_once 'MD3.php';
             $iconHtml = MD3::icon($icon);
         }
 

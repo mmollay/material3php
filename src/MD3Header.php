@@ -25,7 +25,6 @@ class MD3Header
      */
     public static function create(string $title, string $icon = 'home', string $currentTheme = 'default', string $currentPage = '', array $options = []): string
     {
-        require_once 'MD3.php';
         require_once 'MD3Theme.php';
 
         $id = $options['id'] ?? 'md3-header-' . uniqid();
