@@ -1,22 +1,14 @@
 <!DOCTYPE html>
-<html lang="de" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impressum - Material Design 3 PHP Library</title>
-    <meta name="description" content="Impressum und rechtliche Informationen der Material Design 3 PHP Library von SSI - Martin Mollay">
+    <title>Legal Notice - Material Design 3 PHP Library</title>
+    <meta name="description" content="Legal notice and information about the Material Design 3 PHP Library by SSI - Martin Mollay">
     <meta name="robots" content="noindex, nofollow">
 
     <?php
-    require_once 'src/MD3.php';
-    require_once 'src/MD3Button.php';
-    require_once 'src/MD3Card.php';
-    require_once 'src/MD3Theme.php';
-    require_once 'src/MD3Header.php';
-    require_once 'src/MD3NavigationBar.php';
-    require_once 'src/MD3Breadcrumb.php';
-    require_once 'src/MD3List.php';
-    require_once 'src/MD3Divider.php';
+    require_once 'autoload.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
@@ -26,11 +18,7 @@
     <style>
     <?php
     echo MD3Theme::getThemeCSS();
-    echo MD3Header::getCSS();
-    echo MD3NavigationBar::getCSS();
     echo MD3Card::getCSS();
-    echo MD3List::getCSS();
-    echo MD3::getVersionCSS();
     ?>
         body {
             margin: 0;
@@ -169,35 +157,35 @@
         <div class="page-header">
             <h1 class="page-title">
                 <?php echo MD3::icon('info'); ?>
-                Impressum
+                Legal Notice
             </h1>
-            <p class="page-subtitle">Rechtliche Informationen gemäß österreichischem Recht</p>
+            <p class="page-subtitle">Legal information according to Austrian law</p>
         </div>
 
         <!-- Company Information -->
         <div class="legal-section">
             <?php echo MD3Card::elevated('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('business') . ' Unternehmensinformationen
+                    ' . MD3::icon('business') . ' Company Information
                 </h2>
                 <div class="contact-info">
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">corporate_fare</span>
-                        <span class="contact-label">Firmenname:</span>
+                        <span class="contact-label">Company Name:</span>
                         <span class="contact-value"><strong>SSI - Service Support Internet</strong></span>
                     </div>
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">person</span>
-                        <span class="contact-label">Geschäftsführer:</span>
+                        <span class="contact-label">CEO:</span>
                         <span class="contact-value">Martin Mollay</span>
                     </div>
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">location_on</span>
-                        <span class="contact-label">Adresse:</span>
+                        <span class="contact-label">Address:</span>
                         <span class="contact-value">
                             Saubersdorfergasse 14<br>
                             2700 Wiener Neustadt<br>
-                            Österreich
+                            Austria
                         </span>
                     </div>
                 </div>
@@ -208,12 +196,12 @@
         <div class="legal-section">
             <?php echo MD3Card::elevated('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('contact_phone') . ' Kontaktdaten
+                    ' . MD3::icon('contact_phone') . ' Contact Information
                 </h2>
                 <div class="contact-info">
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">phone</span>
-                        <span class="contact-label">Telefon:</span>
+                        <span class="contact-label">Phone:</span>
                         <span class="contact-value"><a href="tel:+4365025226266">+43 650 25 26 266</a></span>
                     </div>
                     <div class="contact-item">
@@ -228,8 +216,8 @@
                     </div>
                 </div>
                 <div class="business-hours">
-                    <strong>' . MD3::icon('schedule') . ' Geschäftszeiten:</strong><br>
-                    Montag - Samstag: 08:00 - 18:00 Uhr
+                    <strong>' . MD3::icon('schedule') . ' Business Hours:</strong><br>
+                    Monday - Saturday: 08:00 - 18:00 (CET)
                 </div>
             '); ?>
         </div>
@@ -238,28 +226,28 @@
         <div class="legal-section">
             <?php echo MD3Card::elevated('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('gavel') . ' Rechtliche Angaben
+                    ' . MD3::icon('gavel') . ' Legal Information
                 </h2>
                 <div class="contact-info">
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">receipt_long</span>
-                        <span class="contact-label">UID-Nummer:</span>
+                        <span class="contact-label">VAT Number:</span>
                         <span class="contact-value">ATU 41596803</span>
                     </div>
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">account_balance</span>
-                        <span class="contact-label">Steuernummer:</span>
-                        <span class="contact-value">425 / 4315 (Finanzamt Wiener Neustadt)</span>
+                        <span class="contact-label">Tax Number:</span>
+                        <span class="contact-value">425 / 4315 (Tax Office Wiener Neustadt)</span>
                     </div>
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">business_center</span>
-                        <span class="contact-label">Mitglied bei:</span>
-                        <span class="contact-value">Wirtschaftskammer Österreich</span>
+                        <span class="contact-label">Member of:</span>
+                        <span class="contact-value">Austrian Chamber of Commerce</span>
                     </div>
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">policy</span>
-                        <span class="contact-label">Anwendbares Recht:</span>
-                        <span class="contact-value">Österreichisches Recht</span>
+                        <span class="contact-label">Applicable Law:</span>
+                        <span class="contact-value">Austrian Law</span>
                     </div>
                 </div>
             '); ?>
@@ -269,7 +257,7 @@
         <div class="legal-section">
             <?php echo MD3Card::outlined('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('account_balance') . ' Bankverbindung
+                    ' . MD3::icon('account_balance') . ' Banking Information
                 </h2>
                 <div class="contact-info">
                     <div class="contact-item">
@@ -290,10 +278,10 @@
         <div class="legal-section">
             <?php echo MD3Card::surface('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('code') . ' Über dieses Projekt
+                    ' . MD3::icon('code') . ' About this Project
                 </h2>
                 <p style="color: var(--md-sys-color-on-surface-variant); margin: 0 0 16px 0;">
-                    Die <strong>Material Design 3 PHP Library</strong> ist eine Open-Source-Implementierung von Googles Material Design 3 System in reinem PHP.
+                    The <strong>Material Design 3 PHP Library</strong> is an open source implementation of Google's Material Design 3 system in pure PHP.
                 </p>
                 <div class="contact-info">
                     <div class="contact-item">
@@ -308,7 +296,7 @@
                     </div>
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">smart_toy</span>
-                        <span class="contact-label">Entwickelt mit:</span>
+                        <span class="contact-label">Developed with:</span>
                         <span class="contact-value"><a href="https://claude.ai/code" target="_blank">Claude Code</a></span>
                     </div>
                 </div>
@@ -317,9 +305,9 @@
 
         <!-- Disclaimer -->
         <div class="disclaimer">
-            <h3><?php echo MD3::icon('warning'); ?> Haftungsausschluss</h3>
+            <h3><?php echo MD3::icon('warning'); ?> Disclaimer</h3>
             <p>
-                Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.
+                The contents of this website have been created with the greatest care. However, we cannot guarantee the accuracy, completeness and timeliness of the content. As service providers, we are responsible for our own content on these pages according to general laws pursuant to Section 7, Paragraph 1 of the German Telemedia Act (TMG).
             </p>
         </div>
 
@@ -328,7 +316,7 @@
             <?php
             $themeParam = $currentTheme !== 'default' ? '?theme=' . $currentTheme : '';
             echo '<a href="index.php' . $themeParam . '" style="text-decoration: none;">';
-            echo MD3Button::outlined('← Zurück zur Startseite');
+            echo MD3Button::outlined('← Back to Homepage');
             echo '</a>';
             ?>
         </div>
@@ -337,7 +325,6 @@
     <?php include 'includes/footer.php'; ?>
 
     <?php
-    echo MD3Header::getScript();
     echo MD3Theme::getThemeScript();
     ?>
 

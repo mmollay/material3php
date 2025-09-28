@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="de" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kontakt - Material Design 3 PHP Library</title>
-    <meta name="description" content="Kontaktieren Sie SSI - Martin Mollay für Fragen zur Material Design 3 PHP Library und professionelle Webentwicklung">
+    <title>Contact - Material Design 3 PHP Library</title>
+    <meta name="description" content="Contact SSI - Martin Mollay for questions about the Material Design 3 PHP Library and professional web development">
     <meta name="robots" content="noindex, nofollow">
 
     <?php
@@ -181,26 +181,26 @@
         <div class="page-header">
             <h1 class="page-title">
                 <?php echo MD3::icon('contact_phone'); ?>
-                Kontakt
+                Contact
             </h1>
-            <p class="page-subtitle">Nehmen Sie Kontakt mit uns auf - wir helfen gerne weiter</p>
+            <p class="page-subtitle">Get in touch with us - we're happy to help</p>
         </div>
 
         <!-- Contact Information -->
         <div class="contact-section">
             <?php echo MD3Card::elevated('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('person') . ' Direkter Kontakt
+                    ' . MD3::icon('person') . ' Direct Contact
                 </h2>
                 <div class="contact-info">
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">person</span>
-                        <span class="contact-label">Ansprechpartner:</span>
-                        <span class="contact-value"><strong>Martin Mollay</strong><br>Geschäftsführer</span>
+                        <span class="contact-label">Contact Person:</span>
+                        <span class="contact-value"><strong>Martin Mollay</strong><br>CEO</span>
                     </div>
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">phone</span>
-                        <span class="contact-label">Telefon:</span>
+                        <span class="contact-label">Phone:</span>
                         <span class="contact-value"><a href="tel:+4365025226266">+43 650 25 26 266</a></span>
                     </div>
                     <div class="contact-item">
@@ -210,23 +210,23 @@
                     </div>
                     <div class="contact-item">
                         <span class="material-symbols-outlined contact-icon">location_on</span>
-                        <span class="contact-label">Adresse:</span>
+                        <span class="contact-label">Address:</span>
                         <span class="contact-value">
                             SSI - Service Support Internet<br>
                             Saubersdorfergasse 14<br>
                             2700 Wiener Neustadt<br>
-                            Österreich
+                            Austria
                         </span>
                     </div>
                 </div>
                 <div class="business-hours">
-                    <strong>' . MD3::icon('schedule') . ' Geschäftszeiten:</strong><br>
-                    Montag - Samstag: 08:00 - 18:00 Uhr
+                    <strong>' . MD3::icon('schedule') . ' Business Hours:</strong><br>
+                    Monday - Saturday: 08:00 - 18:00 (CET)
                 </div>
                 <div class="response-times">
-                    <strong>' . MD3::icon('schedule_send') . ' Antwortzeiten:</strong><br>
-                    E-Mail: Innerhalb von 24 Stunden<br>
-                    Telefon: Sofort während der Geschäftszeiten
+                    <strong>' . MD3::icon('schedule_send') . ' Response Times:</strong><br>
+                    Email: Within 24 hours<br>
+                    Phone: Immediately during business hours
                 </div>
             '); ?>
         </div>
@@ -235,37 +235,37 @@
         <div class="contact-section">
             <?php echo MD3Card::outlined('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('mail') . ' Nachricht senden
+                    ' . MD3::icon('mail') . ' Send Message
                 </h2>
                 <p style="color: var(--md-sys-color-on-surface-variant); margin: 0 0 24px 0;">
-                    Haben Sie Fragen zur Material Design 3 PHP Library oder benötigen Sie Unterstützung bei Ihrem Projekt? Kontaktieren Sie uns gerne!
+                    Do you have questions about the Material Design 3 PHP Library or need support with your project? Feel free to contact us!
                 </p>
                 <form class="contact-form" action="#" method="POST" onsubmit="return submitContactForm(event)">
                     <div class="form-row">
                         <div class="form-field">
-                            ' . MD3TextField::filled('name', 'Ihr Name', ['required' => true]) . '
+                            ' . MD3TextField::filled('name', 'Your Name', ['required' => true]) . '
                         </div>
                         <div class="form-field">
-                            ' . MD3TextField::filled('email', 'E-Mail Adresse', ['required' => true, 'type' => 'email']) . '
+                            ' . MD3TextField::filled('email', 'Email Address', ['required' => true, 'type' => 'email']) . '
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-field">
-                            ' . MD3TextField::filled('company', 'Unternehmen (optional)') . '
+                            ' . MD3TextField::filled('company', 'Company (optional)') . '
                         </div>
                         <div class="form-field">
-                            ' . MD3TextField::filled('phone', 'Telefon (optional)', ['type' => 'tel']) . '
+                            ' . MD3TextField::filled('phone', 'Phone (optional)', ['type' => 'tel']) . '
                         </div>
                     </div>
                     <div class="form-field">
-                        ' . MD3TextField::filled('subject', 'Betreff', ['required' => true]) . '
+                        ' . MD3TextField::filled('subject', 'Subject', ['required' => true]) . '
                     </div>
                     <div class="form-field">
-                        ' . MD3TextField::filled('message', 'Ihre Nachricht', ['required' => true, 'rows' => 6, 'multiline' => true]) . '
+                        ' . MD3TextField::filled('message', 'Your Message', ['required' => true, 'rows' => 6, 'multiline' => true]) . '
                     </div>
                     <div class="form-actions">
-                        ' . MD3Button::text('Zurücksetzen', ['type' => 'reset', 'onclick' => 'resetContactForm()']) . '
-                        ' . MD3Button::filled('Nachricht senden', ['type' => 'submit']) . '
+                        ' . MD3Button::text('Reset', ['type' => 'reset', 'onclick' => 'resetContactForm()']) . '
+                        ' . MD3Button::filled('Send Message', ['type' => 'submit']) . '
                     </div>
                 </form>
             '); ?>
@@ -278,7 +278,7 @@
                     ' . MD3::icon('support') . ' Material Design 3 PHP Support
                 </h2>
                 <p style="color: var(--md-sys-color-on-surface-variant); margin: 0 0 16px 0;">
-                    Die Material Design 3 PHP Library ist ein Open-Source-Projekt. Für Support und Beiträge:
+                    The Material Design 3 PHP Library is an open source project. For support and contributions:
                 </p>
                 <div class="contact-info">
                     <div class="contact-item">
@@ -305,7 +305,7 @@
             <?php
             $themeParam = $currentTheme !== 'default' ? '?theme=' . $currentTheme : '';
             echo '<a href="index.php' . $themeParam . '" style="text-decoration: none;">';
-            echo MD3Button::outlined('← Zurück zur Startseite');
+            echo MD3Button::outlined('← Back to Homepage');
             echo '</a>';
             ?>
         </div>
@@ -323,22 +323,22 @@
 
         // Basic validation
         if (!data.name || !data.email || !data.subject || !data.message) {
-            showSnackbar('Bitte füllen Sie alle Pflichtfelder aus.', 'error');
+            showSnackbar('Please fill in all required fields.', 'error');
             return false;
         }
 
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(data.email)) {
-            showSnackbar('Bitte geben Sie eine gültige E-Mail-Adresse ein.', 'error');
+            showSnackbar('Please enter a valid email address.', 'error');
             return false;
         }
 
         // Simulate form submission
-        showSnackbar('Nachricht wird gesendet...', 'info');
+        showSnackbar('Sending message...', 'info');
 
         setTimeout(() => {
-            showSnackbar('Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns bald bei Ihnen.', 'success');
+            showSnackbar('Thank you! Your message has been sent successfully. We will get back to you soon.', 'success');
             event.target.reset();
         }, 1500);
 
@@ -346,7 +346,7 @@
     }
 
     function resetContactForm() {
-        showSnackbar('Formular wurde zurückgesetzt.', 'info');
+        showSnackbar('Form has been reset.', 'info');
     }
 
     function showSnackbar(message, type = 'info') {
@@ -402,7 +402,6 @@
     </style>
 
     <?php
-    echo MD3Header::getScript();
     echo MD3Theme::getThemeScript();
     ?>
 

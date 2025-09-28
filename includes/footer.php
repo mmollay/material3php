@@ -64,11 +64,11 @@ $themeParam = $currentTheme !== 'default' ? '?theme=' . $currentTheme : '';
             </div>
 
             <div class="footer-section">
-                <h4>Rechtliches</h4>
+                <h4>Legal</h4>
                 <ul class="footer-links">
-                    <li><a href="impressum.php<?php echo $themeParam; ?>"><?php echo MD3::icon('info'); ?> Impressum</a></li>
-                    <li><a href="datenschutz.php<?php echo $themeParam; ?>"><?php echo MD3::icon('privacy_tip'); ?> Datenschutz</a></li>
-                    <li><a href="contact.php<?php echo $themeParam; ?>"><?php echo MD3::icon('contact_phone'); ?> Kontakt</a></li>
+                    <li><a href="impressum.php<?php echo $themeParam; ?>"><?php echo MD3::icon('info'); ?> Legal Notice</a></li>
+                    <li><a href="datenschutz.php<?php echo $themeParam; ?>"><?php echo MD3::icon('privacy_tip'); ?> Privacy Policy</a></li>
+                    <li><a href="contact.php<?php echo $themeParam; ?>"><?php echo MD3::icon('contact_phone'); ?> Contact</a></li>
                 </ul>
             </div>
 

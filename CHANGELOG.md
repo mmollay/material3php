@@ -1,11 +1,41 @@
 # Changelog
 
-Alle wichtigen Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
+All notable changes to this project will be documented in this file.
 
-Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
-und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unveröffentlicht]
+## [Unreleased]
+
+## [0.3.0] - 2025-09-28
+
+### 🌍 International Release
+- **MAJOR**: Converted entire website to English for international accessibility
+- **BREAKING**: All content now in English (Datenschutz → Privacy Policy, Impressum → Legal Notice, Kontakt → Contact)
+- **Autoloader System**: Complete migration from manual require_once to PSR-4 autoloader
+- **Error Fixes**: Resolved 500 errors in datenschutz.php and demo-extended.php
+- **CSS/JS Optimization**: Removed problematic MD3 method calls, using only safe methods
+
+### 🔧 Technical Improvements
+- **Systematic Autoloader**: All PHP files now use autoload.php consistently
+- **Safe Method Usage**: Only MD3Theme::getThemeCSS(), MD3Card::getCSS(), MD3Theme::getThemeScript()
+- **Header/Footer Updates**: Navigation and footer links updated to English
+- **GitHub Workflow**: Comprehensive workflow documentation and checklist system
+
+### 📋 Development Standards
+- **Two-Repository Strategy**: Main branch (library) + Website branch (demo)
+- **Version Management**: Semantic versioning with git tags and comprehensive changelog
+- **Quality Assurance**: Consistent MD3 ecosystem usage throughout all components
+- **International Standards**: UTF-8, English language, prepared for multilingual expansion
+
+### 🗂️ File Changes
+- All `.php` files: Language attribute changed from `de` to `en`
+- `datenschutz.php`: Complete translation to English, removed problematic MD3Header::getScript()
+- `contact.php`: Full English translation, form validation messages updated
+- `impressum.php`: Legal Notice translation, removed problematic getScript() calls
+- `demo-extended.php`: Autoloader implementation, removed all problematic CSS/JS method calls
+- `includes/header.php`: Navigation menu translated to English
+- `includes/footer.php`: Footer links and sections translated to English
 
 ## [0.2.43] - 2025-09-28
 

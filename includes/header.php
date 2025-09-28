@@ -24,15 +24,15 @@ $pageConfigs = [
         'icon' => 'science'
     ],
     'contact.php' => [
-        'title' => 'Kontakt',
+        'title' => 'Contact',
         'icon' => 'contact_phone'
     ],
     'impressum.php' => [
-        'title' => 'Impressum',
+        'title' => 'Legal Notice',
         'icon' => 'info'
     ],
     'datenschutz.php' => [
-        'title' => 'Datenschutz',
+        'title' => 'Privacy Policy',
         'icon' => 'privacy_tip'
     ],
 ];
@@ -68,13 +68,13 @@ $navMenuItems = [
     [
         'href' => 'contact.php',
         'icon' => 'contact_phone',
-        'label' => 'Kontakt',
+        'label' => 'Contact',
         'active' => $currentScript === 'contact.php'
     ],
     [
         'href' => 'impressum.php',
         'icon' => 'info',
-        'label' => 'Impressum',
+        'label' => 'Legal Notice',
         'active' => $currentScript === 'impressum.php'
     ],
 ];

@@ -1,42 +1,11 @@
 <!DOCTYPE html>
-<html lang="de" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Material Design 3 PHP Library - Erweiterte Demo</title>
+    <title>Material Design 3 PHP Library - Component Gallery</title>
     <?php
-    require_once 'src/MD3.php';
-    require_once 'src/MD3Button.php';
-    require_once 'src/MD3TextField.php';
-    require_once 'src/MD3Card.php';
-    require_once 'src/MD3Breadcrumb.php';
-    require_once 'src/MD3Dialog.php';
-    require_once 'src/MD3List.php';
-    require_once 'src/MD3Search.php';
-    require_once 'src/MD3Chip.php';
-    require_once 'src/MD3Progress.php';
-    require_once 'src/MD3Slider.php';
-    require_once 'src/MD3Tooltip.php';
-    require_once 'src/MD3Switch.php';
-    require_once 'src/MD3Checkbox.php';
-    require_once 'src/MD3Radio.php';
-    require_once 'src/MD3Tabs.php';
-    require_once 'src/MD3Theme.php';
-    require_once 'src/MD3Select.php';
-    require_once 'src/MD3Header.php';
-    require_once 'src/MD3NavigationBar.php';
-    require_once 'src/MD3Breadcrumb.php';
-    require_once 'src/MD3Badge.php';
-    require_once 'src/MD3Snackbar.php';
-    require_once 'src/MD3BottomSheet.php';
-    require_once 'src/MD3DateTimePicker.php';
-    require_once 'src/MD3Menu.php';
-    require_once 'src/MD3Toolbar.php';
-    require_once 'src/MD3FloatingActionButton.php';
-    require_once 'src/MD3NavigationBar.php';
-    require_once 'src/MD3NavigationDrawer.php';
-    require_once 'src/MD3Divider.php';
-    require_once 'src/MD3Carousel.php';
+    require_once 'autoload.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
@@ -46,30 +15,7 @@
     <style>
     <?php
     echo MD3Theme::getThemeCSS();
-    echo MD3Header::getCSS();
-    echo MD3NavigationBar::getCSS();
-    echo MD3List::getCSS();
     echo MD3Card::getCSS();
-    echo MD3Search::getCSS();
-    echo MD3Chip::getCSS();
-    echo MD3Progress::getCSS();
-    echo MD3Slider::getCSS();
-    echo MD3Switch::getCSS();
-    echo MD3Checkbox::getCSS();
-    echo MD3Radio::getCSS();
-    echo MD3Tabs::getCSS();
-    echo MD3Tooltip::getCSS();
-    echo MD3Badge::getCSS();
-    echo MD3Snackbar::getCSS();
-    echo MD3BottomSheet::getCSS();
-    echo MD3DateTimePicker::getCSS();
-    echo MD3Menu::getCSS();
-    echo MD3Toolbar::getCSS();
-    echo MD3FloatingActionButton::getCSS();
-    echo MD3NavigationBar::getCSS();
-    echo MD3NavigationDrawer::getCSS();
-    echo MD3Divider::getCSS();
-    echo MD3Carousel::getCSS();
     ?>
     </style>
     <style>
@@ -513,31 +459,10 @@
         </footer>
     </div>
 
-    <?php
-    // Include JavaScript for interactive components
-    echo MD3Header::getScript();
-    echo MD3Search::getSearchScript();
-    ?>
-    <script>
-    <?php
-    echo MD3Chip::getJS();
-    echo MD3Progress::getJS();
-    echo MD3Slider::getJS();
-    echo MD3Switch::getJS();
-    echo MD3Checkbox::getJS();
-    echo MD3Radio::getJS();
-    echo MD3Tabs::getJS();
-    echo MD3Tooltip::getJS();
-    echo MD3List::getJS();
-    echo MD3Snackbar::getJS();
-    echo MD3Badge::getScript();
-    ?>
-    </script>
     <?php include 'includes/footer.php'; ?>
 
     <?php
     echo MD3Theme::getThemeScript();
-    echo MD3Menu::getScript();
     ?>
 </body>
 </html>

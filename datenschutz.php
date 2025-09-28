@@ -1,22 +1,14 @@
 <!DOCTYPE html>
-<html lang="de" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datenschutz - Material Design 3 PHP Library</title>
-    <meta name="description" content="Datenschutzerklärung für die Material Design 3 PHP Library - Informationen über Datenverarbeitung und Ihre Rechte">
+    <title>Privacy Policy - Material Design 3 PHP Library</title>
+    <meta name="description" content="Privacy Policy for the Material Design 3 PHP Library - Information about data processing and your rights">
     <meta name="robots" content="noindex, nofollow">
 
     <?php
-    require_once 'src/MD3.php';
-    require_once 'src/MD3Button.php';
-    require_once 'src/MD3Card.php';
-    require_once 'src/MD3Theme.php';
-    require_once 'src/MD3Header.php';
-    require_once 'src/MD3NavigationBar.php';
-    require_once 'src/MD3Breadcrumb.php';
-    require_once 'src/MD3List.php';
-    require_once 'src/MD3Divider.php';
+    require_once 'autoload.php';
 
     // Get theme from URL parameter or default
     $currentTheme = $_GET['theme'] ?? 'default';
@@ -26,11 +18,7 @@
     <style>
     <?php
     echo MD3Theme::getThemeCSS();
-    echo MD3Header::getCSS();
-    echo MD3NavigationBar::getCSS();
     echo MD3Card::getCSS();
-    echo MD3List::getCSS();
-    echo MD3::getVersionCSS();
     ?>
         body {
             margin: 0;
@@ -212,37 +200,37 @@
         <div class="page-header">
             <h1 class="page-title">
                 <?php echo MD3::icon('privacy_tip'); ?>
-                Datenschutzerklärung
+                Privacy Policy
             </h1>
-            <p class="page-subtitle">Informationen über die Verarbeitung Ihrer personenbezogenen Daten</p>
+            <p class="page-subtitle">Information about the processing of your personal data</p>
         </div>
 
         <!-- Responsible Party -->
         <div class="privacy-section">
             <?php echo MD3Card::elevated('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('person') . ' Verantwortlicher
+                    ' . MD3::icon('person') . ' Data Controller
                 </h2>
                 <div class="privacy-content">
-                    <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+                    <p>Responsible for data processing on this website:</p>
                     <div class="contact-info">
                         <div class="contact-item">
                             <span class="material-symbols-outlined contact-icon">corporate_fare</span>
-                            <span class="contact-label">Unternehmen:</span>
+                            <span class="contact-label">Company:</span>
                             <span class="contact-value"><strong>SSI - Service Support Internet</strong></span>
                         </div>
                         <div class="contact-item">
                             <span class="material-symbols-outlined contact-icon">person</span>
-                            <span class="contact-label">Geschäftsführer:</span>
+                            <span class="contact-label">CEO:</span>
                             <span class="contact-value">Martin Mollay</span>
                         </div>
                         <div class="contact-item">
                             <span class="material-symbols-outlined contact-icon">location_on</span>
-                            <span class="contact-label">Adresse:</span>
+                            <span class="contact-label">Address:</span>
                             <span class="contact-value">
                                 Saubersdorfergasse 14<br>
                                 2700 Wiener Neustadt<br>
-                                Österreich
+                                Austria
                             </span>
                         </div>
                         <div class="contact-item">
@@ -252,7 +240,7 @@
                         </div>
                         <div class="contact-item">
                             <span class="material-symbols-outlined contact-icon">phone</span>
-                            <span class="contact-label">Telefon:</span>
+                            <span class="contact-label">Phone:</span>
                             <span class="contact-value"><a href="tel:+4365025226266">+43 650 25 26 266</a></span>
                         </div>
                     </div>
@@ -264,54 +252,54 @@
         <div class="privacy-section">
             <?php echo MD3Card::outlined('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('data_usage') . ' Überblick der Datenverarbeitung
+                    ' . MD3::icon('data_usage') . ' Data Processing Overview
                 </h2>
                 <div class="privacy-content">
-                    <p>Diese Website ist eine Demonstrationsseite für die <strong>Material Design 3 PHP Library</strong>.
-                    Es werden nur die minimal notwendigen Daten verarbeitet, um die Funktionalität der Website zu gewährleisten.</p>
+                    <p>This website is a demonstration site for the <strong>Material Design 3 PHP Library</strong>.
+                    Only the minimally necessary data is processed to ensure the functionality of the website.</p>
 
                     <div class="important-notice">
-                        <strong>' . MD3::icon('info') . ' Wichtiger Hinweis:</strong><br>
-                        Diese Website dient ausschließlich der Demonstration der MD3 PHP Library.
-                        Es werden keine persönlichen Daten dauerhaft gespeichert oder an Dritte weitergegeben.
+                        <strong>' . MD3::icon('info') . ' Important Notice:</strong><br>
+                        This website serves exclusively as a demonstration of the MD3 PHP Library.
+                        No personal data is permanently stored or shared with third parties.
                     </div>
 
-                    <h3>Automatisch erhobene Daten</h3>
-                    <p>Beim Besuch unserer Website werden automatisch folgende Informationen erfasst:</p>
+                    <h3>Automatically Collected Data</h3>
+                    <p>When visiting our website, the following information is automatically collected:</p>
                     <div class="table-container">
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Datenart</th>
-                                    <th>Zweck</th>
-                                    <th>Rechtsgrundlage</th>
-                                    <th>Speicherdauer</th>
+                                    <th>Data Type</th>
+                                    <th>Purpose</th>
+                                    <th>Legal Basis</th>
+                                    <th>Storage Duration</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>IP-Adresse</td>
-                                    <td>Technische Bereitstellung</td>
-                                    <td>Berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO)</td>
-                                    <td>7 Tage (Server-Logs)</td>
+                                    <td>IP Address</td>
+                                    <td>Technical provision</td>
+                                    <td>Legitimate interest (Art. 6 Para. 1 lit. f GDPR)</td>
+                                    <td>7 days (Server logs)</td>
                                 </tr>
                                 <tr>
-                                    <td>Browser-Informationen</td>
-                                    <td>Kompatibilität, Fehleranalyse</td>
-                                    <td>Berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO)</td>
-                                    <td>Sessionbasiert</td>
+                                    <td>Browser information</td>
+                                    <td>Compatibility, error analysis</td>
+                                    <td>Legitimate interest (Art. 6 Para. 1 lit. f GDPR)</td>
+                                    <td>Session-based</td>
                                 </tr>
                                 <tr>
-                                    <td>Zugriffszeitpunkt</td>
-                                    <td>Sicherheit, Analyse</td>
-                                    <td>Berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO)</td>
-                                    <td>7 Tage (Server-Logs)</td>
+                                    <td>Access time</td>
+                                    <td>Security, analysis</td>
+                                    <td>Legitimate interest (Art. 6 Para. 1 lit. f GDPR)</td>
+                                    <td>7 days (Server logs)</td>
                                 </tr>
                                 <tr>
-                                    <td>Theme-Präferenzen</td>
-                                    <td>Benutzerfreundlichkeit</td>
-                                    <td>Berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO)</td>
-                                    <td>Local Storage (browserbasiert)</td>
+                                    <td>Theme preferences</td>
+                                    <td>User experience</td>
+                                    <td>Legitimate interest (Art. 6 Para. 1 lit. f GDPR)</td>
+                                    <td>Local Storage (browser-based)</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -324,25 +312,25 @@
         <div class="privacy-section">
             <?php echo MD3Card::surface('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('contact_mail') . ' Kontaktformular
+                    ' . MD3::icon('contact_mail') . ' Contact Form
                 </h2>
                 <div class="privacy-content">
-                    <p>Wenn Sie unser Kontaktformular nutzen, verarbeiten wir folgende Daten:</p>
+                    <p>When you use our contact form, we process the following data:</p>
                     <ul>
-                        <li><strong>Name:</strong> Zur persönlichen Ansprache</li>
-                        <li><strong>E-Mail-Adresse:</strong> Zur Beantwortung Ihrer Anfrage</li>
-                        <li><strong>Unternehmen (optional):</strong> Für geschäftliche Kontexte</li>
-                        <li><strong>Telefonnummer (optional):</strong> Für direkten Kontakt</li>
-                        <li><strong>Nachrichteninhalt:</strong> Zur Bearbeitung Ihres Anliegens</li>
+                        <li><strong>Name:</strong> For personal addressing</li>
+                        <li><strong>Email address:</strong> To respond to your inquiry</li>
+                        <li><strong>Company (optional):</strong> For business contexts</li>
+                        <li><strong>Phone number (optional):</strong> For direct contact</li>
+                        <li><strong>Message content:</strong> To process your request</li>
                     </ul>
 
-                    <h3>Rechtsgrundlage</h3>
-                    <p>Die Verarbeitung erfolgt auf Basis Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)
-                    und zur Erfüllung vorvertraglicher Maßnahmen (Art. 6 Abs. 1 lit. b DSGVO).</p>
+                    <h3>Legal Basis</h3>
+                    <p>Processing is based on your consent (Art. 6 Para. 1 lit. a GDPR)
+                    and for the performance of pre-contractual measures (Art. 6 Para. 1 lit. b GDPR).</p>
 
-                    <h3>Speicherdauer</h3>
-                    <p>Ihre Kontaktdaten werden für die Dauer der Bearbeitung Ihrer Anfrage plus
-                    3 Jahre zur Dokumentation gespeichert, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+                    <h3>Storage Duration</h3>
+                    <p>Your contact data will be stored for the duration of processing your inquiry plus
+                    3 years for documentation purposes, unless legal retention obligations exist.</p>
                 </div>
             '); ?>
         </div>
@@ -351,24 +339,24 @@
         <div class="privacy-section">
             <?php echo MD3Card::elevated('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('gavel') . ' Ihre Rechte
+                    ' . MD3::icon('gavel') . ' Your Rights
                 </h2>
                 <div class="privacy-content">
-                    <p>Sie haben folgende Rechte bezüglich Ihrer personenbezogenen Daten:</p>
+                    <p>You have the following rights regarding your personal data:</p>
                     <ul>
-                        <li><strong>Auskunftsrecht (Art. 15 DSGVO):</strong> Sie können Auskunft über die von uns verarbeiteten personenbezogenen Daten verlangen.</li>
-                        <li><strong>Berichtigungsrecht (Art. 16 DSGVO):</strong> Sie können die Berichtigung unrichtiger oder die Vervollständigung unvollständiger Daten verlangen.</li>
-                        <li><strong>Löschungsrecht (Art. 17 DSGVO):</strong> Sie können die Löschung Ihrer personenbezogenen Daten verlangen.</li>
-                        <li><strong>Einschränkungsrecht (Art. 18 DSGVO):</strong> Sie können die Einschränkung der Verarbeitung verlangen.</li>
-                        <li><strong>Datenübertragbarkeit (Art. 20 DSGVO):</strong> Sie können die Übertragung Ihrer Daten in einem strukturierten Format verlangen.</li>
-                        <li><strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Sie können der Verarbeitung Ihrer Daten widersprechen.</li>
-                        <li><strong>Beschwerderecht:</strong> Sie können sich bei einer Aufsichtsbehörde beschweren.</li>
+                        <li><strong>Right to access (Art. 15 GDPR):</strong> You can request information about the personal data we process.</li>
+                        <li><strong>Right to rectification (Art. 16 GDPR):</strong> You can request the correction of incorrect or completion of incomplete data.</li>
+                        <li><strong>Right to erasure (Art. 17 GDPR):</strong> You can request the deletion of your personal data.</li>
+                        <li><strong>Right to restriction (Art. 18 GDPR):</strong> You can request the restriction of processing.</li>
+                        <li><strong>Data portability (Art. 20 GDPR):</strong> You can request the transfer of your data in a structured format.</li>
+                        <li><strong>Right to object (Art. 21 GDPR):</strong> You can object to the processing of your data.</li>
+                        <li><strong>Right to complain:</strong> You can file a complaint with a supervisory authority.</li>
                     </ul>
 
                     <div class="important-notice">
-                        <strong>' . MD3::icon('contact_phone') . ' Kontakt für Datenschutzanfragen:</strong><br>
-                        E-Mail: <a href="mailto:office@ssi.at">office@ssi.at</a><br>
-                        Telefon: <a href="tel:+4365025226266">+43 650 25 26 266</a>
+                        <strong>' . MD3::icon('contact_phone') . ' Contact for privacy inquiries:</strong><br>
+                        Email: <a href="mailto:office@ssi.at">office@ssi.at</a><br>
+                        Phone: <a href="tel:+4365025226266">+43 650 25 26 266</a>
                     </div>
                 </div>
             '); ?>
@@ -378,23 +366,23 @@
         <div class="privacy-section">
             <?php echo MD3Card::outlined('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('settings') . ' Technische Informationen
+                    ' . MD3::icon('settings') . ' Technical Information
                 </h2>
                 <div class="privacy-content">
-                    <h3>Cookies und Local Storage</h3>
-                    <p>Diese Website verwendet minimale technische Speicherung:</p>
+                    <h3>Cookies and Local Storage</h3>
+                    <p>This website uses minimal technical storage:</p>
                     <ul>
-                        <li><strong>Theme-Einstellungen:</strong> Ihre Farbschema-Präferenzen werden im Browser Local Storage gespeichert</li>
-                        <li><strong>Session-Daten:</strong> Temporäre Daten für die Funktionalität der Website</li>
-                        <li><strong>Keine Tracking-Cookies:</strong> Wir verwenden keine Cookies für Tracking oder Analyse</li>
+                        <li><strong>Theme settings:</strong> Your color scheme preferences are stored in browser Local Storage</li>
+                        <li><strong>Session data:</strong> Temporary data for website functionality</li>
+                        <li><strong>No tracking cookies:</strong> We do not use cookies for tracking or analytics</li>
                     </ul>
 
-                    <h3>Hosting und Server</h3>
-                    <p>Diese Website wird in Österreich gehostet. Server-Logs werden für maximal 7 Tage zu Sicherheitszwecken aufbewahrt.</p>
+                    <h3>Hosting and Server</h3>
+                    <p>This website is hosted in Austria. Server logs are kept for a maximum of 7 days for security purposes.</p>
 
-                    <h3>Keine Drittanbieter-Services</h3>
-                    <p>Diese Demonstrationsseite nutzt keine externen Analyse-Tools, Social Media Plugins oder andere Drittanbieter-Services,
-                    die Ihre Daten verarbeiten könnten.</p>
+                    <h3>No Third-party Services</h3>
+                    <p>This demonstration site does not use external analytics tools, social media plugins, or other third-party services
+                    that could process your data.</p>
                 </div>
             '); ?>
         </div>
@@ -403,19 +391,19 @@
         <div class="privacy-section">
             <?php echo MD3Card::surface('
                 <h2 style="color: var(--md-sys-color-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
-                    ' . MD3::icon('update') . ' Änderungen dieser Datenschutzerklärung
+                    ' . MD3::icon('update') . ' Changes to this Privacy Policy
                 </h2>
                 <div class="privacy-content">
-                    <p>Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf anzupassen, um sie an geänderte Rechtslagen
-                    oder bei Änderungen unserer Dienste anzupassen. Die jeweils aktuelle Datenschutzerklärung ist
-                    stets unter dieser Adresse abrufbar.</p>
+                    <p>We reserve the right to adapt this privacy policy as needed to comply with changed legal situations
+                    or when changes are made to our services. The current privacy policy is
+                    always available at this address.</p>
 
-                    <p><strong>Stand dieser Datenschutzerklärung:</strong> <?php echo date('d.m.Y'); ?></p>
+                    <p><strong>Last updated:</strong> <?php echo date('d.m.Y'); ?></p>
 
                     <div class="important-notice">
-                        <strong>' . MD3::icon('info') . ' Open Source Projekt:</strong><br>
-                        Diese Material Design 3 PHP Library ist ein Open Source Projekt.
-                        Der Quellcode ist öffentlich auf <a href="https://github.com/mmollay/material3php" target="_blank">GitHub</a> verfügbar.
+                        <strong>' . MD3::icon('info') . ' Open Source Project:</strong><br>
+                        This Material Design 3 PHP Library is an open source project.
+                        The source code is publicly available on <a href="https://github.com/mmollay/material3php" target="_blank">GitHub</a>.
                     </div>
                 </div>
             '); ?>
@@ -426,7 +414,7 @@
             <?php
             $themeParam = $currentTheme !== 'default' ? '?theme=' . $currentTheme : '';
             echo '<a href="index.php' . $themeParam . '" style="text-decoration: none;">';
-            echo MD3Button::outlined('← Zurück zur Startseite');
+            echo MD3Button::outlined('← Back to Homepage');
             echo '</a>';
             ?>
         </div>
@@ -435,7 +423,6 @@
     <?php include 'includes/footer.php'; ?>
 
     <?php
-    echo MD3Header::getScript();
     echo MD3Theme::getThemeScript();
     ?>
 
